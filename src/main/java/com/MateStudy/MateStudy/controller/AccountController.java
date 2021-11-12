@@ -31,5 +31,7 @@ public class AccountController {
         log.info("failed");
         //return new ResponseEntity(HttpStatus.BAD_REQUEST);
         return "redirect:/";
+
+        //
     }
 }
