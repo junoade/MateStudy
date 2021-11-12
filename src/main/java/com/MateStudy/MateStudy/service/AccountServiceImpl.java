@@ -26,4 +26,17 @@ public class AccountServiceImpl implements AccountService {
         }
         return "Failed";
     }
+
+    @Override
+    public void modify(Long id, String pwd) {
+        Optional<Member> userWrapper = userRepository.findById(id);
+        userWrapper.ifPresent(selectUser ->{
+            log.info("id : "+selectUser.getId()+", pwd : "+selectUser.getPwd());
+
+            selectUser.setPwd(pwd);
+            userRepository.save(selectUser);
+
+            log.info("pwd : "+selectUser.getPwd());
+        });
+    }
 }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,6 +21,12 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    @PostMapping("/modify")
+    public String modify(UserRequest request) throws Exception {
+        accountService.modify(request.getId(), request.getPassword());
+        return "redirect:/";
+    }
+
     @PostMapping("/login")
     public String login(UserRequest request) throws Exception {
         log.info("로그인 시도");
@@ -31,5 +38,7 @@ public class AccountController {
         log.info("failed");
         //return new ResponseEntity(HttpStatus.BAD_REQUEST);
         return "redirect:/";
+
+        //
     }
 }
