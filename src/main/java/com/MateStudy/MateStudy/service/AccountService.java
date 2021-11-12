@@ -1,5 +1,5 @@
 package com.MateStudy.MateStudy.service;
 
 public interface AccountService {
-    String login(String id, String pwd) throws Exception;
+    String login(Long id, String pwd) throws Exception;
 }
