@@ -13,15 +13,15 @@ import java.util.Date;
 @Getter
 @Setter
 public class Member {
-    @Id
+    /*@Id
     @GeneratedValue
-    private long seq;
+    private long seq;*/
 
-    @Column(unique = true)
-    private String id;
+    @Id
+    private Long id;
 
     @Column(nullable = false)
-    private String password;
+    private String pwd;
 
     @Column(nullable = false)
     private String name;
@@ -29,17 +29,18 @@ public class Member {
     @Column(nullable = false)
     private String email;
 
-    @Column(name = "role")
+    @Column(nullable = false)
+    private String phone;
+
     @Enumerated(EnumType.STRING)
-    private UserRole role = UserRole.ROLE_VISITOR;
+    private UserRole role;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    private Date createAt;
+    private Date createDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
-    private Date updateAt;
-
+    private Date updateDate;
 
 }

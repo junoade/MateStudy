@@ -18,10 +18,10 @@ public class AccountServiceImpl implements AccountService {
 
     /* check users with userId */
     @Override
-    public String login(String id, String pwd) throws Exception {
+    public String login(Long id, String pwd) throws Exception {
         log.info("AccountServiceImpl : "+id+" "+ pwd);
         Optional<Member> userWrapper = userRepository.findById(id);
-        if(userWrapper.get().getPassword().equals(pwd)){
+        if(userWrapper.get().getPwd().equals(pwd)){
             return "Success";
         }
         return "Failed";
