@@ -28,4 +28,9 @@ public class MainController {
     public String main(){
         return "main";
     }
+
+    @GetMapping("/password")
+    public String password(){
+        return "password";
+    }
 }
