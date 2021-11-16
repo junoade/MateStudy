@@ -42,4 +42,9 @@ public class MainController {
         model.addAttribute("userName", param);
         return "main";
     }
+
+    @GetMapping("/password")
+    public String password(){
+        return "password";
+    }
 }
