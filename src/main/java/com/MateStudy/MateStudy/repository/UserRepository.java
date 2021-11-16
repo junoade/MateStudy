@@ -19,4 +19,9 @@ public interface UserRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
 
     Optional<Member> findById(Long id);
+
+    /*  복잡한 쿼리문의 경우 @Query 어노테이션을 활용할 수 있다.
+     *  SQL의 where구문에 대해 파라미터 바인딩 기능 제공한다.
+     *  Native SQL 처리를 할 수 있다. JPA 를 사용하는 장점은 잃을 수 있으나, 복잡한 JOIN 구문을 처리하기 위해 사용된다.
+     * */
 }
