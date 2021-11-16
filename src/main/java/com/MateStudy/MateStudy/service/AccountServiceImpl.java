@@ -17,32 +17,44 @@ public class AccountServiceImpl implements AccountService {
     private UserRepository userRepository;
 
     /* 최준호
-    * long 타입의 학번정보와 pwd를 받아
-    * 기존 학번 정보를 조회하고, pwd를 비교한다음 로그인을 처리하는 로직
-    * */
+     * long 타입의 학번정보와 pwd를 받아
+     * 기존 학번 정보를 조회하고, pwd를 비교한다음 로그인을 처리하는 로직
+     * */
     @Override
     public String login(Long id, String pwd) throws Exception {
-        log.info("AccountServiceImpl : "+id+" "+ pwd);
+        log.info("AccountServiceImpl : " + id + " " + pwd);
         Optional<Member> userWrapper = userRepository.findById(id);
-        if(userWrapper.get().getPwd().equals(pwd)){
+        if (userWrapper.get().getPwd().equals(pwd)) {
             return "Success";
         }
         return "Failed";
     }
+
     /* 이정욱
-    * long 타입의 학번 정보와 pwd를 받아
-    * 기존의 학번 정보를 조회하고, pwd를 변경하는 로직
-    * */
+     * long 타입의 학번 정보와 pwd를 받아
+     * 기존의 학번 정보를 조회하고, pwd를 변경하는 로직
+     * */
     @Override
     public void modify(Long id, String pwd) {
         Optional<Member> userWrapper = userRepository.findById(id);
-        userWrapper.ifPresent(selectUser ->{
-            log.info("id : "+selectUser.getId()+", pwd : "+selectUser.getPwd());
+        userWrapper.ifPresent(selectUser -> {
+            log.info("id : " + selectUser.getId() + ", pwd : " + selectUser.getPwd());
 
             selectUser.setPwd(pwd);
             userRepository.save(selectUser);
 
-            log.info("pwd : "+selectUser.getPwd());
+            log.info("pwd : " + selectUser.getPwd());
         });
+    }
+
+    /**
+     * 최준호
+     * long 타입의 학번 정보 받아서
+     * 사용자 이름을 반환해줌
+     */
+    @Override
+    public String getName(Long id) throws Exception {
+        Optional<Member> userWrapper = userRepository.findById(id);
+        return userWrapper.map(Member::getName).orElse("Unknown");
     }
 }
