@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class UserRepositoryTest {
     @Autowired
-    UserRepository userRepository;
+    MemberRepository userRepository;
 
     /** 최준호
      * 회원 도메인과 관련하여 JPA Repositroy를 상속받은 UserRepositroy의 의존성 주입이 잘 되는지 테스트

@@ -6,7 +6,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequest {
+public class MemberRequest {
     private Long id;
     private String password;
 }

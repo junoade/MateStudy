@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th= "http://www.thymeleaf.org">
+<html lang="ko" xmlns:th= "http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 
@@ -22,7 +22,7 @@
             rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/mainStyle.css" rel="stylesheet">
+    <link href="/css/mainStyle.css" rel="stylesheet">
 
 </head>
 
@@ -334,7 +334,7 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${userName}">Username</span>님
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small" sec:authentication="name"></span>님
                             <img class="img-profile rounded-circle"
                                  src="image/main/undraw_profile.svg">
                         </a>
@@ -735,7 +735,7 @@
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="/logout">Logout</a>
+                <a class="btn btn-primary" href="/member/logout">Logout</a>
                 <!-- <a class="btn btn-primary" href="../../../../../../Desktop/소프트웨어공학/플젝/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/login.html">Logout</a> -->
             </div>
         </div>
