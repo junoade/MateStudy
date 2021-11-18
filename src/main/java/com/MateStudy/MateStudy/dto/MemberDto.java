@@ -1,7 +1,7 @@
 package com.MateStudy.MateStudy.dto;
 
 import com.MateStudy.MateStudy.domain.account.Member;
-import com.MateStudy.MateStudy.domain.account.UserRole;
+import com.MateStudy.MateStudy.domain.account.MemberRole;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ public class MemberDto {
     private String name;
     private String email;
     private String phone;
-    private UserRole role;
+    private MemberRole role;
 
     public Member toEntity(){
         return Member.builder()

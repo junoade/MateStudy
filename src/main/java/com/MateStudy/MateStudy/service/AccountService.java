@@ -1,9 +1,9 @@
 package com.MateStudy.MateStudy.service;
 
 import com.MateStudy.MateStudy.domain.account.Member;
-import com.MateStudy.MateStudy.domain.account.UserRole;
+import com.MateStudy.MateStudy.domain.account.MemberRole;
 import com.MateStudy.MateStudy.dto.MemberDto;
-import com.MateStudy.MateStudy.repository.UserRepository;
+import com.MateStudy.MateStudy.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import java.util.Optional;
 public class AccountService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private MemberRepository userRepository;
 
     /* 최준호
      * long 타입의 학번정보와 pwd를 받아
@@ -76,11 +76,12 @@ public class AccountService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         if (("admin@example.com").equals(id)) {
-            authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
+            authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue()));
         } else {
-            authorities.add(new SimpleGrantedAuthority(UserRole.STUDENT.getValue()));
+            authorities.add(new SimpleGrantedAuthority(MemberRole.STUDENT.getValue()));
         }
 
+        /* TODO User를 상속하는 DTO 클래스 만들어서 반환해주기 */
         return new User(userEntity.getId(), userEntity.getPwd(), authorities);
     }
 

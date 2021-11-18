@@ -34,7 +34,7 @@ public class Member {
     private String phone;
 
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private MemberRole role;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
