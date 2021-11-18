@@ -12,24 +12,25 @@ import java.util.Date;
 @Table(name = "MEMBER")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Member {
     /*@Id
     @GeneratedValue
     private long seq;*/
 
     @Id
-    private Long id;
+    private String id;
 
     @Column(nullable = false)
     private String pwd;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String phone;
 
     @Enumerated(EnumType.STRING)
@@ -43,4 +44,9 @@ public class Member {
     @UpdateTimestamp
     private Date updateDate;
 
+    @Builder
+    public Member(String id, String pwd){
+        this.id = id;
+        this.pwd = pwd;
+    }
 }
