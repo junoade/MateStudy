@@ -10,9 +10,12 @@
 <body>
 <form action="/member/signUp" method="post">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    <input name="username" placeholder="학번">
-    <input name="password" placeholder="비밀번호">
-    <button type="submit">비밀번호 변경</button>
+    <input name="id" placeholder="학번">
+    <input name="pwd" placeholder="비밀번호">
+    <input name="name" placeholder="이름">
+    <input name="email" placeholder="이메일">
+    <input name="phone" placeholder="전화번호">
+    <button type="submit">sign up</button>
 </form>
 </body>
 </html>

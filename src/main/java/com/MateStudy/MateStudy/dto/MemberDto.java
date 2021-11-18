@@ -22,12 +22,18 @@ public class MemberDto {
         return Member.builder()
                 .id(id)
                 .pwd(pwd)
+                .name(name)
+                .email(email)
+                .phone(phone)
                 .build();
     }
 
     @Builder
-    public MemberDto(String id, String pwd){
+    public MemberDto(String id, String pwd, String name, String email, String phone){
         this.id = id;
         this.pwd = pwd;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
     }
 }

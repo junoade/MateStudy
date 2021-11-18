@@ -24,13 +24,13 @@ public class Member {
     @Column(nullable = false)
     private String pwd;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String phone;
 
     @Enumerated(EnumType.STRING)
@@ -45,8 +45,11 @@ public class Member {
     private Date updateDate;
 
     @Builder
-    public Member(String id, String pwd){
+    public Member(String id, String pwd, String name, String email, String phone){
         this.id = id;
         this.pwd = pwd;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
     }
 }
