@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/css/**", "/js/**", "/image/**").permitAll()
                     .antMatchers("/","member/login","/member/signUp",
                             "/member/password","/member/js/login/validation.js").permitAll()
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
                     .and()
                 .formLogin()
                     .loginPage("/member/login")
