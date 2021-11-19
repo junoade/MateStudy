@@ -28,7 +28,7 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Mate Study</h1>
                                 </div>
-                                <form class="user" action="/member/login" method="post">
+                                <form sec:authorize="isAnonymous()" class="user" action="/member/login" method="post">
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user"
@@ -50,10 +50,15 @@
                                         로그인
                                     </button>
                                 </form>
+
+                                <div sec:authorize="isAuthenticated()">
+                                    <h1>사용자 정보 표시해주세요 여기</h1>
+                                </div>
                                 <hr>
                                 <div class="text-center">
-                                    <a sec:authorize="isAuthenticated()" class="small" href="/password">비밀번호 변경</a>
-                                    <a sec:authorize="isAuthenticated()" class="small" >로그아웃</a>
+                                    <a class="small" href="/member/password">비밀번호 변경</a>
+                                    <a sec:authorize="isAnonymous()" class="small" href="/member/signUp" >회원가입</a>
+                                    <a sec:authorize="isAuthenticated()" class="small" href="/member/logout">로그아웃</a>
                                 </div>
                                 <div class="text-center">
                                     <a class="small" href="https://github.com/junoade/MateStudy">Github</a>

@@ -27,7 +27,7 @@ import java.util.Optional;
 public class AccountService implements UserDetailsService {
 
     @Autowired
-    private MemberRepository userRepository;
+    private MemberRepository memberRepository;
 
     /* 최준호
      * long 타입의 학번정보와 pwd를 받아
@@ -65,12 +65,26 @@ public class AccountService implements UserDetailsService {
         log.info("signing up...");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPwd(passwordEncoder.encode(memberDto.getPwd()));
-        userRepository.save(memberDto.toEntity());
+        memberRepository.save(memberDto.toEntity());
+    }
+
+    public void modify(String id, String pwd){
+        log.info("modify pwd...");
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        Optional<Member> member = memberRepository.findById(id);
+        member.ifPresent(selectUser -> {
+            log.info("id : " + selectUser.getId() + ", pwd : " + selectUser.getPwd());
+
+            selectUser.setPwd(passwordEncoder.encode(pwd));
+            memberRepository.save(selectUser);
+
+            log.info("pwd : " + selectUser.getPwd());
+        });
     }
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        Optional<Member> userEntityWrapper = userRepository.findById(id);
+        Optional<Member> userEntityWrapper = memberRepository.findById(id);
         Member userEntity = userEntityWrapper.get();
 
         List<GrantedAuthority> authorities = new ArrayList<>();

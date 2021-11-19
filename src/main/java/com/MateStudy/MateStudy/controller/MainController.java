@@ -37,15 +37,29 @@ public class MainController {
     public String login(){
         return "index";
     }
+
     @GetMapping("/member/signUp")
     public String signUpPage(){
         return "signUp";
     }
+
     @PostMapping("/member/signUp")
     public String signUp(MemberDto memberDto){
         accountService.signUp(memberDto);
-        return "redirect:main";
+        return "redirect:../main";
     }
+
+    @GetMapping("/member/password")
+    public String passwordPage() {
+        return "/password";
+    }
+
+    @PostMapping("/member/password")
+    public String password(String id, String password){
+        accountService.modify(id,password);
+        return "redirect:../main";
+    }
+
     @GetMapping("/member/denied")
     public String denied(){
         return "denied";
