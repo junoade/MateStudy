@@ -16,6 +16,9 @@
   --purple: #6f42c1;
   --pink: #e83e8c;
   --red: #e74a3b;
+  --dday: #e74a3b;
+  --close: #f6c23e;
+  --relax: #4e73df;
   --orange: #fd7e14;
   --yellow: #f6c23e;
   --green: #1cc88a;
@@ -4136,7 +4139,6 @@ input[type="button"].btn-block {
 .navbar-nav {
   display: flex;
   flex-direction: column;
-  padding-left: 0;
   margin-bottom: 0;
   list-style: none;
 }
@@ -10203,8 +10205,10 @@ a:focus {
 
 .topbar .nav-item .nav-link {
   height: 4.375rem;
+  width: 100rem;
   display: flex;
   align-items: center;
+  text-align: left;
   padding: 0 0.75rem;
 }
 
@@ -10283,6 +10287,9 @@ a:focus {
 @media (min-width: 576px) {
   .topbar .dropdown {
     position: relative;
+  }
+  .topbar.notice{
+    float: left;
   }
   .topbar .dropdown .dropdown-menu {
     width: auto;
