@@ -11,6 +11,9 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
+  --dday: #e74a3b;
+  --tommorrow: #fd7e14;
+  --free: #1cc88a;
   --blue: #4e73df;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -581,6 +584,13 @@ pre code {
   .container, .container-sm, .container-md, .container-lg, .container-xl {
     max-width: 1140px;
   }
+}
+.timeline{
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-right: -0.75rem;
+  margin-left: -0.75rem;
 }
 
 .row {
@@ -9560,6 +9570,7 @@ button.bg-dark:focus {
   text-transform: uppercase !important;
 }
 
+
 .text-capitalize {
   text-transform: capitalize !important;
 }
@@ -10320,7 +10331,7 @@ a:focus {
   color: #858796;
 }
 
-.sidebar {
+.sidebar{
   width: 6.5rem;
   min-height: 100vh;
 }
@@ -10512,6 +10523,7 @@ a:focus {
   .sidebar {
     width: 14rem !important;
   }
+
   .sidebar .nav-item .collapse {
     position: relative;
     left: 0;
@@ -10520,18 +10532,22 @@ a:focus {
     -webkit-animation: none;
     animation: none;
   }
+
   .sidebar .nav-item .collapse .collapse-inner {
     border-radius: 0;
     box-shadow: none;
   }
+
   .sidebar .nav-item .collapsing {
     display: block;
     transition: height 0.15s ease;
   }
+
   .sidebar .nav-item .collapse,
   .sidebar .nav-item .collapsing {
     margin: 0 1rem;
   }
+
   .sidebar .nav-item .nav-link {
     display: block;
     width: 100%;
@@ -10539,14 +10555,17 @@ a:focus {
     padding: 1rem;
     width: 14rem;
   }
+
   .sidebar .nav-item .nav-link i {
     font-size: 0.85rem;
     margin-right: 0.25rem;
   }
+
   .sidebar .nav-item .nav-link span {
     font-size: 0.85rem;
     display: inline;
   }
+
   .sidebar .nav-item .nav-link[data-toggle="collapse"]::after {
     width: 1rem;
     text-align: center;
@@ -10557,18 +10576,23 @@ a:focus {
     content: '\f107';
     font-family: 'Font Awesome 5 Free';
   }
+
   .sidebar .nav-item .nav-link[data-toggle="collapse"].collapsed::after {
     content: '\f105';
   }
+
   .sidebar .sidebar-brand .sidebar-brand-icon i {
     font-size: 2rem;
   }
+
   .sidebar .sidebar-brand .sidebar-brand-text {
     display: inline;
   }
+
   .sidebar .sidebar-heading {
     text-align: left;
   }
+
   .sidebar.toggled {
     overflow: visible;
     width: 6.5rem !important;
