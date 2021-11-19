@@ -10,7 +10,7 @@
     <link href="/css/mainStyle.css" rel="stylesheet"/>
 </head>
 <body>
-<header th:insert="common/header.html"></header>
+<header th:insert="common/board-header.html"></header>
 <div class="container">
     <form th:action="@{'/board/edit/' + ${post.id}}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
