@@ -10212,6 +10212,12 @@ a:focus {
   margin: auto 1rem;
 }
 
+.topbar .notice{
+  background-color: #0f6848;
+  text-align: center;
+  vertical-align: middle;
+}
+
 .topbar .nav-item .nav-link {
   height: 4.375rem;
   display: flex;
