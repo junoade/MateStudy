@@ -73,6 +73,11 @@ public class MainController {
         return "denied";
     }
 
+    @GetMapping("/grade")
+    public String grade(){
+        return "grade";
+    }
+
     @GetMapping("/hw-admin")
     public String homeWorkAdmin(){
         return "homework-admin";
