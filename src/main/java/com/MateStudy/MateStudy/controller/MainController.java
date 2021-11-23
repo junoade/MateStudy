@@ -73,4 +73,13 @@ public class MainController {
         return "denied";
     }
 
+    @GetMapping("/hw-admin")
+    public String homeWorkAdmin(){
+        return "homework-admin";
+    }
+
+    @GetMapping("/hw-student")
+    public String homeWorkStudent(){
+        return "homework-student";
+    }
 }
