@@ -53,6 +53,12 @@ public class MemberRepositoryTest {
             member.addMemberRole(MemberRole.STUDENT);
             memRepository.save(member);
         }
+
+        Member member = Member.builder()
+                        .id("0000000000").pwd(passwordEncoder.encode("1234"))
+                        .name("운영자").email("0000@0000").phone("000-0000-0000").build();
+        member.addMemberRole(MemberRole.ADMIN);
+        memRepository.save(member);
         log.info("DONE");
     }
 

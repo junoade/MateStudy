@@ -73,18 +73,27 @@ public class MainController {
         return "denied";
     }
 
-    @GetMapping("/grade")
-    public String grade(){
+    @GetMapping("homework/grade")
+    public String grade(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
+        model.addAttribute("name",cmDTO.getAuthorities());
         return "grade";
     }
 
-    @GetMapping("/hw-admin")
-    public String homeWorkAdmin(){
+    @GetMapping("/homework")
+    public String homework(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
+        if(cmDTO.getAuthorities().toString().equals("[ADMIN]")){
+            return homeWorkAdmin(cmDTO, model);
+        }else{
+            return homeWorkStudent(cmDTO, model);
+        }
+    }
+
+    public String homeWorkAdmin(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
+        model.addAttribute("name",cmDTO.getAuthorities());
         return "homework-admin";
     }
 
-    @GetMapping("/hw-student")
-    public String homeWorkStudent(){
+    public String homeWorkStudent(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
         return "homework-student";
     }
 }
