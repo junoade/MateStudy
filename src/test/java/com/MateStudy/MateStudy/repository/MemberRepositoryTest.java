@@ -10,6 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Slf4j
@@ -60,6 +64,36 @@ public class MemberRepositoryTest {
         member.addMemberRole(MemberRole.ADMIN);
         memRepository.save(member);
         log.info("DONE");
+    }
+
+    /** 최준호
+     * CSV 파일을 읽어 학생 멤버 등록
+     */
+
+    @Test
+    public void testStudentSignwithCSV(){
+        log.info("INSERT DUMMY MEMBER INTO THE DATABASE");
+        final int COL_SIZE = 4;
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        BufferedReader br;
+        try{
+            br = Files.newBufferedReader(Paths.get("sampleDummy/sampleStudent.csv"));
+            String line = "";
+            // 1행씩 반복
+            while((line = br.readLine()) != null){
+                String data[] = line.split(",");
+                if(data.length == COL_SIZE) {
+                    Member member = Member.builder().id(data[0]).pwd(passwordEncoder.encode("1234"))
+                            .name(data[1]).email(data[2]).phone(data[3]).build();
+                    member.addMemberRole(MemberRole.STUDENT);
+                    memRepository.save(member);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Test
