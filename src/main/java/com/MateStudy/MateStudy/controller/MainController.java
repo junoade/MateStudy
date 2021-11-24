@@ -79,21 +79,5 @@ public class MainController {
         return "grade";
     }
 
-    @GetMapping("/homework")
-    public String homework(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
-        if(cmDTO.getAuthorities().toString().equals("[ADMIN]")){
-            return homeWorkAdmin(cmDTO, model);
-        }else{
-            return homeWorkStudent(cmDTO, model);
-        }
-    }
 
-    public String homeWorkAdmin(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
-        model.addAttribute("name",cmDTO.getAuthorities());
-        return "homework-admin";
-    }
-
-    public String homeWorkStudent(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
-        return "homework-student";
-    }
 }
