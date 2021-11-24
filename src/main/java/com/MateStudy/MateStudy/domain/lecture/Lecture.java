@@ -23,7 +23,7 @@ public class Lecture extends BaseEntity {
 
     @Id
     @Column(name="subCode")
-    private long subCode; // 분반번호
+    private Long subCode; // 분반번호
 
     @Column(nullable = false)
     private String lecTitle;

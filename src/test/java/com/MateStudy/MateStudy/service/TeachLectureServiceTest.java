@@ -60,7 +60,7 @@ public class TeachLectureServiceTest {
     @Transactional
     public void testSetInstructor(){
         boolean testStatus = false;
-        Optional<Lecture> lecture = lectureRepository.getOneLecture("CSE4058", 1L);
+        Optional<Lecture> lecture = lectureRepository.getOneLecture("CSE4036", 1L);
         log.info(lecture.toString());
         Optional<Member> instructor = memberRepository.findById("2017120002");
         log.info(instructor.toString());
@@ -80,7 +80,7 @@ public class TeachLectureServiceTest {
          * 하나의 Transcation으로 처리하기 위해 @Transional 필요
          * 이때 테스트케이스라면, commit; 하지않고 rollback; 하여 명시적으로 아래에 코드 작성함.
          */
-        //TestTransaction.flagForCommit();
+        TestTransaction.flagForCommit();
         Assertions.assertTrue(testStatus);
     }
 
