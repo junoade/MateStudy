@@ -32,7 +32,7 @@
         <tr class="text-center" th:each="post : ${postList}">
           <td>
             <a th:href="@{'/hw/'+${post.lecCode}}">
-                <span th:text="${post.lecTitle}"
+                <span th:text="${post.lecTitle}"></span>
             </a>
           </td>
         </tr>

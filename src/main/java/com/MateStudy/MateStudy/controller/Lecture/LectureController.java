@@ -24,7 +24,7 @@ public class LectureController {
 
     @GetMapping("/lecture-admin")
     public String lecture(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
-        List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(cmDTO.getId());
+        List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(cmDTO.getName());
         model.addAttribute("postList", lectureDtoList);
         return "lecture/lecture-admin";
     }
