@@ -60,7 +60,7 @@ public class TeachLectureServiceTest {
     @Transactional
     public void testSetInstructor(){
         boolean testStatus = false;
-        Optional<Lecture> lecture = lectureRepository.getOneLecture("CSE4036", 1L);
+        Optional<Lecture> lecture = lectureRepository.getOneLecture("CSE4058", 1L);
         log.info(lecture.toString());
         Optional<Member> instructor = memberRepository.findById("2017120002");
         log.info(instructor.toString());

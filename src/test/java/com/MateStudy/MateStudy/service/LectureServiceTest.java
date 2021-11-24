@@ -43,7 +43,7 @@ public class LectureServiceTest {
      * 최준호
      * 강좌 학수번호-분반정보로 정보를 갖고 올 수 있는지 확인
      */
-//    @Transactional
+    @Transactional
     @Test
     public void testGetLecture() {
         log.info("Test : 학수번호-분반정보로 정보를 갖고 올 수 있는지 확인");
