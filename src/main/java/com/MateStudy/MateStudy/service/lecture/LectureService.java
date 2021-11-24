@@ -1,6 +1,7 @@
 package com.MateStudy.MateStudy.service.lecture;
 
 import com.MateStudy.MateStudy.domain.lecture.Lecture;
+import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
 import com.MateStudy.MateStudy.repository.MemberRepository;
 import com.MateStudy.MateStudy.repository.lecture.LectureRepository;
 import lombok.AllArgsConstructor;
@@ -35,5 +36,19 @@ public class LectureService {
         log.info("> isLectureExist? ");
         Optional<Lecture> lecture = lecRepository.getOneLecture(lectureCode, subCode);
         return lecture.isPresent();
+    }
+
+    public LectureDto getLecture(String lecCode, Long subCode){
+        Optional<Lecture> lecture = lecRepository.getOneLecture(lecCode, subCode);
+        LectureDto lectureDto = LectureDto.builder()
+                .lecCode(lecture.get().getLecCode())
+                .subCode(lecture.get().getSubCode())
+                .lecTitle(lecture.get().getLecTitle())
+                .build();
+        return lectureDto;
+    }
+
+    public void saveLecture(LectureDto lectureDto){
+        lecRepository.save(lectureDto.toEntity());
     }
 }
