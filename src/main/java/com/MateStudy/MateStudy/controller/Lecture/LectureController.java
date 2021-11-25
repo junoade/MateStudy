@@ -27,6 +27,7 @@ public class LectureController {
     public String lecture(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
         List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(cmDTO.getId());
         model.addAttribute("name",cmDTO.getName());
+        model.addAttribute("role",cmDTO.getAuthorities().toString());
         model.addAttribute("postList", lectureDtoList);
         return "lecture/lecture-admin";
     }

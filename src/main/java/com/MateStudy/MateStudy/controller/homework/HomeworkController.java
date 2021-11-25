@@ -47,10 +47,13 @@ public class HomeworkController {
         String id = cmDTO.getId();
         String name = cmDTO.getName();
         List<Assign_HomeworkDto> ahdList = teachLectureService.getAllHomework(id);
+        List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(id);
 
         model.addAttribute("name",name);
+        model.addAttribute("role",cmDTO.getAuthorities().toString());
         model.addAttribute("instId",id);
         model.addAttribute("allHomeworkList",ahdList);
+        model.addAttribute("lectures",lectureDtoList);
         return "/homework/homework-admin";
     }
 
@@ -61,11 +64,15 @@ public class HomeworkController {
         String id = cmDTO.getId();
         String name = cmDTO.getName();
         List<Assign_HomeworkDto> ahdList = teachLectureService.getHomework(id,lecCode,subCode);
+        List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(id);
+
         model.addAttribute("name",name);
+        model.addAttribute("role",cmDTO.getAuthorities().toString());
         model.addAttribute("instId",id);
         model.addAttribute("lecCode",lecCode);
         model.addAttribute("subCode",subCode);
         model.addAttribute("homeworkList",ahdList);
+        model.addAttribute("lectures",lectureDtoList);
         return "/homework/homework-admin-detail";
     }
 
