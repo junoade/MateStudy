@@ -22,41 +22,6 @@
             <nav th:replace="fragments/topbar.html :: nav(${name})"></nav>
 
             <!-- Begin Page Content -->
-            <table class="table">
-                <thead class="thead-light">
-                <tr class="text-center">
-                    <th scope="col">instId</th>
-                    <th scope="col">lecCode</th>
-                    <th scope="col">subCode</th>
-                    <th scope="col">title</th>
-                    <th scope="col">content</th>
-                    <th scope="col">dueDate</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="text-center" th:each="homework : ${allHomeworkList}">
-                    <td>
-                        <span th:text="${homework.instId}"></span>
-                    </td>
-                    <td>
-                        <span th:text="${homework.lecCode}"></span>
-                    </td>
-                    <td>
-                        <span th:text="${homework.subCode}"></span>
-                    </td>
-                    <td>
-                        <span th:text="${homework.title}"></span>
-                    </td>
-                    <td>
-                        <span th:text="${homework.content}"></span>
-                    </td>
-                    <td>
-                        <span th:text="${#temporals.format(homework.dueDate,'yyyy-MM-dd HH:mm')}"></span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
             <div class="container-fluid">
 
                 <!-- Page Heading -->
@@ -76,7 +41,7 @@
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             과제 수
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">3개</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${allHomeworkList.size()}">3개</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -138,13 +103,14 @@
                 <!-- Content Row -->
                 <div class="row">
                     <!-- Content Column -->
-                    <div class="col-lg-4 mb-4">
+                    <div class="col-lg-4 mb-4" th:each="homework : ${allHomeworkList}">
 
                         <!-- 과제 카드 -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <div class="row align-items-center">
-                                    <div class="col-10"><h6 class="m-0 font-weight-bold text-primary">실습 2주차 과제</h6>
+                                    <div class="col-10"><h6 class="m-0 font-weight-bold text-primary"
+                                    th:text="'('+${homework.lecCode}+'_'+${homework.subCode}+') '+${homework.title}">실습 2주차 과제</h6>
                                     </div>
                                     <div class="col-2"><input type="checkbox" data-toggle="switchbutton" data-size="sm" checked></div>
                                 </div>
@@ -156,7 +122,7 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-center mb-4">
                                     <i class="fas fa-file"></i>
-                                    <a class="text-gray-800 ml-2" href="2주차 실습 자료 파일 주소">2주차 실습 자료.pdf</a>
+                                    <a class="text-gray-800 ml-2" href="2주차 실습 자료 파일 주소" th:text="${homework.content} + '파일명으로 변경예정'">2주차 실습 자료.pdf</a>
                                 </div>
                                 <h4 class="small font-weight-bold">제출 현황<span
                                         class="float-right">70%</span></h4>
@@ -174,121 +140,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col-lg-4 mb-4">
-
-                        <!-- 과제 카드 -->
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <div class="row align-items-center">
-                                    <div class="col-10"><h6 class="m-0 font-weight-bold text-primary">PA #1</h6></div>
-                                    <div class="col-2"><input type="checkbox" data-toggle="switchbutton" data-size="sm" checked></div>
-                                </div>
-                                <div class="d-inline-flex align-items-center">
-                                    <i class="fas fa-circle text-warning"></i>
-                                    <div class="text-dark ml-2">마감 3일전</div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-center mb-4">
-                                    <i class="fas fa-file"></i>
-                                    <a class="text-gray-800 ml-2" href="2주차 실습 자료 파일 주소">PA #1.pdf</a>
-                                </div>
-                                <h4 class="small font-weight-bold">제출 현황<span
-                                        class="float-right">30%</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 30%"
-                                         aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <a herf="채점주소" class="btn btn-sm btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </span>
-                                        <span class="text">채점하기</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="col-lg-4 mb-4">
-
-                        <!-- 과제 카드 -->
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <div class="row align-items-center">
-                                    <div class="col-10"><h6 class="m-0 font-weight-bold text-primary">중간고사</h6></div>
-                                    <div class="col-2"><input type="checkbox" data-toggle="switchbutton" data-size="sm" checked></div>
-                                </div>
-                                <div class="d-inline-flex align-items-center">
-                                    <i class="fas fa-circle text-danger"></i>
-                                    <div class="text-dark ml-2">마감</div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-center mb-4">
-                                    <i class="fas fa-file"></i>
-                                    <a class="text-gray-800 ml-2" href="2주차 실습 자료 파일 주소">Midterm2021.pdf</a>
-                                </div>
-                                <h4 class="small font-weight-bold">제출 현황<span
-                                        class="float-right">100%</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
-                                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <a herf="채점주소" class="btn btn-sm btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </span>
-                                        <span class="text">채점하기</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="col-lg-4 mb-4">
-
-                        <!-- 과제 카드 -->
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <div class="row align-items-center">
-                                    <div class="col-10"><h6 class="m-0 font-weight-bold text-primary">실습 1주차 과제</h6>
-                                    </div>
-                                    <div class="col-2"><input type="checkbox" data-toggle="switchbutton" data-size="sm" checked></div>
-                                </div>
-                                <div class="d-inline-flex align-items-center">
-                                    <i class="fas fa-circle text-warning"></i>
-                                    <div class="text-dark ml-2">마감 2일전</div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-center mb-4">
-                                    <i class="fas fa-file"></i>
-                                    <a class="text-gray-800 ml-2" href="2주차 실습 자료 파일 주소">1주차 실습 자료.pdf</a>
-                                </div>
-                                <h4 class="small font-weight-bold">제출 현황<span
-                                        class="float-right">15%</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 15%"
-                                         aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <a herf="채점주소" class="btn btn-sm btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </span>
-                                        <span class="text">채점하기</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
 
                 </div>

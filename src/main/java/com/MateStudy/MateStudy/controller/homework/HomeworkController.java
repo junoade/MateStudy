@@ -3,6 +3,7 @@ package com.MateStudy.MateStudy.controller.homework;
 import com.MateStudy.MateStudy.dto.Lecture.Assign_HomeworkDto;
 import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
 import com.MateStudy.MateStudy.dto.security.CustomedMemberDTO;
+import com.MateStudy.MateStudy.repository.lecture.LectureRepository;
 import com.MateStudy.MateStudy.service.lecture.Assign_HomeworkService;
 import com.MateStudy.MateStudy.service.lecture.LectureService;
 import com.MateStudy.MateStudy.service.lecture.TeachLectureService;
@@ -60,7 +61,6 @@ public class HomeworkController {
         String id = cmDTO.getId();
         String name = cmDTO.getName();
         List<Assign_HomeworkDto> ahdList = teachLectureService.getHomework(id,lecCode,subCode);
-
         model.addAttribute("name",name);
         model.addAttribute("instId",id);
         model.addAttribute("lecCode",lecCode);

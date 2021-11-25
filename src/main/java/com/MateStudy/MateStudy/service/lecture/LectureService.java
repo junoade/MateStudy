@@ -40,6 +40,7 @@ public class LectureService {
     }
 
     /* 학수번호 - 분반코드를 통해 존재하는 강좌라면 주요 정보 반환 */
+    @Transactional
     public LectureDto getLecture(String lecCode, Long subCode) {
         Optional<Lecture> lecture = lecRepository.getOneLecture(lecCode, subCode);
         if (lecture.isPresent()) {
