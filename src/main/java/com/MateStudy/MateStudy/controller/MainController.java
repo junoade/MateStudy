@@ -73,7 +73,7 @@ public class MainController {
         return "denied";
     }
 
-    @GetMapping("homework/grade")
+    @GetMapping("/homework/grade")
     public String grade(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
         model.addAttribute("name",cmDTO.getAuthorities());
         return "grade";
