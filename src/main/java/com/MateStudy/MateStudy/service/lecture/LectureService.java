@@ -31,6 +31,7 @@ public class LectureService {
         return !list.isEmpty();
     }
 
+    /* 학수번호 - 분반코드를 통해 존재하는 강좌인지 먼저 확인하는 API 제공 */
     @Transactional
     public boolean isExistByWholeCode(String lectureCode, long subCode){
         log.info("> isLectureExist? ");
@@ -38,17 +39,27 @@ public class LectureService {
         return lecture.isPresent();
     }
 
+    /* 학수번호 - 분반코드를 통해 존재하는 강좌라면 주요 정보 반환 */
     public LectureDto getLecture(String lecCode, Long subCode){
-        Optional<Lecture> lecture = lecRepository.getOneLecture(lecCode, subCode);
-        LectureDto lectureDto = LectureDto.builder()
-                .lecCode(lecture.get().getLecCode())
-                .subCode(lecture.get().getSubCode())
-                .lecTitle(lecture.get().getLecTitle())
-                .build();
-        return lectureDto;
+        if(!isExistByWholeCode(lecCode, subCode)){
+            Optional<Lecture> lecture = lecRepository.getOneLecture(lecCode, subCode);
+            LectureDto lectureDto = LectureDto.builder()
+                    .lecCode(lecture.get().getLecCode())
+                    .subCode(lecture.get().getSubCode())
+                    .lecTitle(lecture.get().getLecTitle())
+                    .build();
+            return lectureDto;
+        }else{
+            log.info(">> THERE IS NO LECTURE searched by "+ lecCode +" "+ subCode+ ", problems in LectureService.java ");
+            return null;
+        }
     }
-
+    /* 사용자가 폼으로 입력한 LectureDto 로부터 Lecture 레파지토리에 저장함 */
     public void saveLecture(LectureDto lectureDto){
-        lecRepository.save(lectureDto.toEntity());
+        if(!isExistByWholeCode(lectureDto.getLecCode(), lectureDto.getSubCode())){
+            lecRepository.save(lectureDto.toEntity());
+        }else{
+            log.info(">> Already Existed Lecture, " + lectureDto.toString() +", problems in LectureService.java");
+        }
     }
 }
