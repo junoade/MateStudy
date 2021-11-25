@@ -22,11 +22,40 @@ public class Assign_HomeworkService {
     @Autowired
     private Assign_HomeworkRepository assign_homeworkRepository;
 
+    /**
+     * hwId와 함께 저장 하는 경우
+     * 따로 Assign_HomeworkDto의 교수자, 학수번호, 분반 검증 코드는 작성하지 않음
+     * try-catch문으로 save 안될 때 log 출력
+     * @param assign_homeworkDto
+     */
     @Transactional
     public void saveHomework(Assign_HomeworkDto assign_homeworkDto){
         log.info("saving...");
-        Teaching_Lecture teaching_lecture = new Teaching_Lecture();
-        assign_homeworkRepository.save(assign_homeworkDto.toEntity(teaching_lecture));
+        try {
+            assign_homeworkRepository.save(assign_homeworkDto.toEntityWithId());
+        }catch(Exception e){
+            log.info("invalid user data");
+            e.printStackTrace();
+        }
     }
+    /**
+     * hwId와 함께 저장하지 않는 경우
+     * 따로 Assign_HomeworkDto의 교수자, 학수번호, 분반 검증 코드는 작성하지 않음
+     * try-catch문으로 save 안될 때 log 출력
+     * @param assign_homeworkDto
+     */
+    @Transactional
+    public void saveHomeworkAuto(Assign_HomeworkDto assign_homeworkDto){
+        log.info("saving...");
+        try {
+            assign_homeworkRepository.save(assign_homeworkDto.toEntityAuto());
+        }catch(Exception e){
+            log.info("invalid user data");
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 }

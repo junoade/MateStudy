@@ -30,10 +30,22 @@ public class Assign_hw_serviceTest {
     @Autowired
     Assign_HomeworkRepository ahwRepository;
 
+    /* 의존성 주입 테스트 */
     @Test
-    public void testClassTLR() {
-        log.info("Test case : 강좌 도메인 관련 JPA Repository 의존성 주입 테스트");
+    public void testClassAHWS() {
         String proxyName = ahwService.getClass().getName();
+        log.info("result : " + proxyName);
+        Assertions.assertNotNull(proxyName);
+    }
+    @Test
+    public void testClassLR() {
+        String proxyName = lectureRepository.getClass().getName();
+        log.info("result : " + proxyName);
+        Assertions.assertNotNull(proxyName);
+    }
+    @Test
+    public void testClassAHWR() {
+        String proxyName = ahwRepository.getClass().getName();
         log.info("result : " + proxyName);
         Assertions.assertNotNull(proxyName);
     }
@@ -54,15 +66,28 @@ public class Assign_hw_serviceTest {
         AHW_DtoTest ahwDto = new AHW_DtoTest(instId, lecCode, subCode, title, content, dueDate, isDone);
 
         if(lectureRepository.getCurrentLecture(ahwDto.getInstId(), ahwDto.getLecCode(), ahwDto.getSubCode()).isPresent()){
-            Assign_Homework homework = Assign_Homework.builder()
-                    .hwId(hwId)
-                    .instId(ahwDto.getInstId())
-                    .lecCode(ahwDto.getLecCode())
-                    .subCode(ahwDto.getSubCode())
-                    .title(ahwDto.getTitle())
-                    .content(ahwDto.getContent())
-                    .dueDate(ahwDto.getDueDate())
-                    .isDone(ahwDto.getIsDone()).build();
+            ahwRepository.save(ahwDto.toEntityWithId());
+            testStatus = true;
+        }
+        Assertions.assertTrue(testStatus);
+    }
+
+    @Test
+    @Transactional
+    public void testSaveHWwithAuto(){
+        boolean testStatus = false;;
+        String instId = "2017120002";
+        String lecCode = "CSE4058";
+        Long subCode = 1L;
+        String title="테스트 과제1";
+        String content="안녕하세요 테스트 과제입니다.";
+        LocalDateTime dueDate = LocalDateTime.of(2021,12,10,23,0);
+        Boolean isDone = LocalDateTime.now().isAfter(dueDate); // dueDate를 지나가면 isDone True
+
+        AHW_DtoTest ahwDto = new AHW_DtoTest(instId, lecCode, subCode, title, content, dueDate, isDone);
+
+        if(lectureRepository.getCurrentLecture(ahwDto.getInstId(), ahwDto.getLecCode(), ahwDto.getSubCode()).isPresent()){
+            Assign_Homework homework = ahwDto.toEntityAuto();
             ahwRepository.save(homework);
             testStatus = true;
         }

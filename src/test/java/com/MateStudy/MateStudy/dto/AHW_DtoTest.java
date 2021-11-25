@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public class AHW_DtoTest {
-    //private Long hwId;
+    private Long hwId;
     private String instId;
     private String lecCode;
     private Long subCode;
@@ -21,7 +21,8 @@ public class AHW_DtoTest {
     private LocalDateTime dueDate; // <-
     private Boolean isDone;
 
-    public Assign_Homework toEntity(Teaching_Lecture t_lec) {
+    /* hwId 자동 생성할 떄 */
+    public Assign_Homework toEntityAuto(){
         return Assign_Homework.builder()
                 .instId(instId)
                 .lecCode(lecCode)
@@ -31,16 +32,41 @@ public class AHW_DtoTest {
                 .dueDate(dueDate)
                 .isDone(false)
                 .build();
-    }
 
-    public AHW_DtoTest(String instId, String lecCode, Long subCode,
-                       String title, String content, LocalDateTime dueDate, Boolean isDone) {
+    }
+    public AHW_DtoTest( String instId, String lecCode, Long subCode,
+                               String title, String content, LocalDateTime dueDate, Boolean isDone){
         this.instId = instId;
         this.lecCode = lecCode;
         this.subCode = subCode;
         this.title = title;
         this.content = content;
         this.dueDate = dueDate;
-        this.isDone = false;
+        this.isDone = isDone;
+    }
+
+    /* hwId 명시적으로 지정할 때 */
+    public Assign_Homework toEntityWithId(){
+        return Assign_Homework.builder()
+                .hwId(hwId)
+                .instId(instId)
+                .lecCode(lecCode)
+                .subCode(subCode)
+                .title(title)
+                .content(content)
+                .dueDate(dueDate)
+                .isDone(false)
+                .build();
+    }
+    public AHW_DtoTest(Long hwId, String instId, String lecCode, Long subCode,
+                              String title, String content, LocalDateTime dueDate, Boolean isDone){
+        this.hwId = hwId;
+        this.instId = instId;
+        this.lecCode = lecCode;
+        this.subCode = subCode;
+        this.title = title;
+        this.content = content;
+        this.dueDate = dueDate;
+        this.isDone = isDone;
     }
 }
