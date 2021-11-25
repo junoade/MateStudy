@@ -67,7 +67,7 @@ public class HomeworkController {
 
     @PostMapping("/homework/register")
     public String homeworkRegister(Assign_HomeworkDto assignHomeworkDto){
-        assgin_homeworkService.saveHomework(assignHomeworkDto);
+        assgin_homeworkService.saveHomeworkAuto(assignHomeworkDto);
         return "redirect:/main";
     }
 }

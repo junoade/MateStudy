@@ -5,6 +5,7 @@ import com.MateStudy.MateStudy.domain.lecture.Teaching_Lecture;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -23,6 +24,7 @@ public class Assign_HomeworkDto {
     private Long subCode;
     private String title;
     private String content;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dueDate;
     private Boolean isDone;
 
