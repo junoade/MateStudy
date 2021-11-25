@@ -1,4 +1,4 @@
-package com.MateStudy.MateStudy.dto.Lecture;
+package com.MateStudy.MateStudy.dto;
 
 import com.MateStudy.MateStudy.domain.homework.Assign_Homework;
 import com.MateStudy.MateStudy.domain.lecture.Teaching_Lecture;
@@ -11,21 +11,18 @@ import java.time.LocalDateTime;
 @ToString
 @Data
 @NoArgsConstructor
-public class Assign_HomeworkDto {
-    private Long hwId;
-    private Teaching_Lecture t_lec;
+public class AHW_DtoTest {
+    //private Long hwId;
     private String instId;
     private String lecCode;
     private Long subCode;
     private String title;
     private String content;
-    private LocalDateTime dueDate;
+    private LocalDateTime dueDate; // <-
     private Boolean isDone;
 
-    public Assign_Homework toEntity(Teaching_Lecture t_lec){
+    public Assign_Homework toEntity(Teaching_Lecture t_lec) {
         return Assign_Homework.builder()
-                .hwId(hwId)
-                .t_lec(t_lec)
                 .instId(instId)
                 .lecCode(lecCode)
                 .subCode(subCode)
@@ -36,15 +33,14 @@ public class Assign_HomeworkDto {
                 .build();
     }
 
-    public Assign_HomeworkDto(Long hwId, String instId, String lecCode, Long subCode,
-                              String title, String content, LocalDateTime dueDate, Boolean isDone){
-        this.hwId = hwId;
+    public AHW_DtoTest(String instId, String lecCode, Long subCode,
+                       String title, String content, LocalDateTime dueDate, Boolean isDone) {
         this.instId = instId;
         this.lecCode = lecCode;
         this.subCode = subCode;
         this.title = title;
         this.content = content;
         this.dueDate = dueDate;
-        this.isDone = isDone;
+        this.isDone = false;
     }
 }

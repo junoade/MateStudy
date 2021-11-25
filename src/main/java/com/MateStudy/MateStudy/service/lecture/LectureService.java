@@ -41,18 +41,20 @@ public class LectureService {
 
     /* 학수번호 - 분반코드를 통해 존재하는 강좌라면 주요 정보 반환 */
     public LectureDto getLecture(String lecCode, Long subCode){
-        if(!isExistByWholeCode(lecCode, subCode)){
+
             Optional<Lecture> lecture = lecRepository.getOneLecture(lecCode, subCode);
-            LectureDto lectureDto = LectureDto.builder()
-                    .lecCode(lecture.get().getLecCode())
-                    .subCode(lecture.get().getSubCode())
-                    .lecTitle(lecture.get().getLecTitle())
-                    .build();
-            return lectureDto;
-        }else{
-            log.info(">> THERE IS NO LECTURE searched by "+ lecCode +" "+ subCode+ ", problems in LectureService.java ");
-            return null;
-        }
+            if(lecture.isPresent()){
+                LectureDto lectureDto = LectureDto.builder()
+                        .lecCode(lecture.get().getLecCode())
+                        .subCode(lecture.get().getSubCode())
+                        .lecTitle(lecture.get().getLecTitle())
+                        .build();
+                return lectureDto;
+            }else{
+                log.info(">> THERE IS NO LECTURE searched by "+ lecCode +" "+ subCode+ ", problems in LectureService.java ");
+                return null;
+            }
+
     }
     /* 사용자가 폼으로 입력한 LectureDto 로부터 Lecture 레파지토리에 저장함 */
     public void saveLecture(LectureDto lectureDto){

@@ -53,7 +53,7 @@ public class Assign_Homework extends BaseEntity {
     private String content;
 
     @Column(name="dueDate")
-    private String dueDate;
+    private LocalDateTime dueDate; // 수정함
 
     @Column(name="isDone")
     private Boolean isDone;

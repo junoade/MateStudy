@@ -71,6 +71,7 @@ public class TeachLectureService {
         Optional<Lecture> lecture = lectureRepository.getOneLecture(lecCode, subCode);
         Optional<Member> instructor = memberRepository.findByName(id);
 
+        /* 존재하는 강좌, 교수자인지 검증 후 삽입*/
         if(lecture.isPresent() && instructor.isPresent()){
             Teaching_Lecture result = Teaching_Lecture.builder()
                     .instId(instructor.get())

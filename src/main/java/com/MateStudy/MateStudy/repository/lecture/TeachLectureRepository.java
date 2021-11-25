@@ -24,4 +24,10 @@ public interface TeachLectureRepository extends JpaRepository<Teaching_Lecture, 
 
     /* 교수자의 ID(학번)로부터 현재 맵핑된 실습(강좌), TEACH_LECTURE 엔티티의 리스트 반환 */
     List<Teaching_Lecture> findByInstId(Member id);
+
+    /**
+     * 현재 세션의 교수자의 정보로 부터 특정 강좌, 분반 찾기
+     */
+    @Query(value = "SELECT L FROM Member M, Teaching_Lecture L WHERE M.id = L.instId AND M.id = :instId AND L.lecCode= :lecCode AND L.subCode = :subCode")
+    Optional<Teaching_Lecture> getCurrentLecture(@Param("instId") String instId, @Param("lecCode") String lecCode, @Param("subCode") Long subCode);
 }
