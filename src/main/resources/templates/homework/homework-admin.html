@@ -141,45 +141,11 @@
                 <div class="row">
                     <!-- Content Column -->
                     <div class="col-lg-4 mb-4">
-
                         <!-- 과제 카드 -->
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <div class="row align-items-center">
-                                    <div class="col-10"><h6 class="m-0 font-weight-bold text-primary">실습 2주차 과제</h6>
-                                    </div>
-                                    <div class="col-2"><input type="checkbox" data-toggle="switchbutton" data-size="sm" checked></div>
-                                </div>
-                                <div class="d-inline-flex align-items-center">
-                                    <i class="fas fa-circle text-success"></i>
-                                    <div class="text-dark ml-2">마감 5일전</div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-center mb-4">
-                                    <i class="fas fa-file"></i>
-                                    <a class="text-gray-800 ml-2" href="2주차 실습 자료 파일 주소">2주차 실습 자료.pdf</a>
-                                </div>
-                                <h4 class="small font-weight-bold">제출 현황<span
-                                        class="float-right">70%</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 70%"
-                                         aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <a herf="채점주소" class="btn btn-sm btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </span>
-                                        <span class="text">채점하기</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        <block th:replace="fragments/hw-card-admin.html :: block"/>
                     </div>
 
                     <div class="col-lg-4 mb-4">
-
                         <!-- 과제 카드 -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -213,7 +179,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="col-lg-4 mb-4">
