@@ -53,20 +53,20 @@ public class HomeworkController {
         return "/homework/homework-admin";
     }
 
-    @GetMapping("/homework-student")
-    public String homeworkStudent(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
-        model.addAttribute("name",cmDTO.getName());
-        return "/homework/homework-student";
-    }
-
-    @GetMapping("/homework/register")
-    public String homeworkRegisterPage(@AuthenticationPrincipal CustomedMemberDTO cmDTO,
-                                        Model model){
+    @GetMapping("homework-admin/{lecCode}/{subCode}")
+    public String homeworkAdminDetail(@AuthenticationPrincipal CustomedMemberDTO cmDTO,
+                                      @PathVariable String lecCode, @PathVariable Long subCode,
+                                      Model model){
         String id = cmDTO.getId();
-        List<LectureDto> ldList = teachLectureService.getTeachLectureList(id);
+        String name = cmDTO.getName();
+        List<Assign_HomeworkDto> ahdList = teachLectureService.getHomework(id,lecCode,subCode);
+
+        model.addAttribute("name",name);
         model.addAttribute("instId",id);
-        model.addAttribute("lectureList",ldList);
-        return "/homework/homework-register";
+        model.addAttribute("lecCode",lecCode);
+        model.addAttribute("subCode",subCode);
+        model.addAttribute("homeworkList",ahdList);
+        return "/homework/homework-admin-detail";
     }
 
     @GetMapping("/homework/register/{lecCode}/{subCode}")
@@ -82,6 +82,12 @@ public class HomeworkController {
     @PostMapping("/homework/register")
     public String homeworkRegister(Assign_HomeworkDto assignHomeworkDto){
         assgin_homeworkService.saveHomeworkAuto(assignHomeworkDto);
-        return "redirect:/main";
+        return "redirect:/homework-admin/"+assignHomeworkDto.getLecCode()+'/'+assignHomeworkDto.getSubCode();
+    }
+
+    @GetMapping("/homework-student")
+    public String homeworkStudent(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
+        model.addAttribute("name",cmDTO.getName());
+        return "/homework/homework-student";
     }
 }

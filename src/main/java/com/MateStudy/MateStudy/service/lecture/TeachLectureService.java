@@ -69,12 +69,14 @@ public class TeachLectureService {
         }
         return lecList;
     }
-    //교수자가 등록한 전체 과제 반환
+
+    //교수자가 등록한 전체 과제리스트 반환
+    @Transactional
     public List<Assign_HomeworkDto> getAllHomework(String id){
         List<LectureDto> lectureDtoList = getTeachLectureList(id);
         List<Assign_HomeworkDto> ahdList = new ArrayList<>();
         for(LectureDto lDto : lectureDtoList){
-            List<Assign_Homework> ahList = new ArrayList<>();
+            List<Assign_Homework> ahList;
             ahList = assign_homeworkRepository
                     .getAssignedHomeworks(id, lDto.getLecCode(),lDto.getSubCode());
             for(Assign_Homework ah : ahList){
@@ -89,6 +91,27 @@ public class TeachLectureService {
                         .build();
                 ahdList.add(ahDto);
             }
+        }
+        return ahdList;
+    }
+    //교수자의 특정 과목에 대한 과제리스트 반환
+    @Transactional
+    public List<Assign_HomeworkDto> getHomework(String id, String lecCode, Long subCode){
+        Optional<Lecture> lecture = lectureRepository.getOneLecture(lecCode, subCode);
+        List<Assign_HomeworkDto> ahdList = new ArrayList<>();
+        List<Assign_Homework> ahList;
+        ahList = assign_homeworkRepository.getAssignedHomeworks(id,lecCode,subCode);
+        for(Assign_Homework ah : ahList){
+            Assign_HomeworkDto ahDto = Assign_HomeworkDto.builder()
+                    .instId(ah.getInstId())
+                    .lecCode(ah.getLecCode())
+                    .subCode(ah.getSubCode())
+                    .title(ah.getTitle())
+                    .content(ah.getContent())
+                    .dueDate(ah.getDueDate())
+                    .isDone(ah.getIsDone())
+                    .build();
+            ahdList.add(ahDto);
         }
         return ahdList;
     }
