@@ -22,10 +22,10 @@ public class LectureService {
     private LectureRepository lecRepository;
 
     /* 학수번호, 분반정보로 강의 찾기
-    * Lecture 엔티티는 fetch 방법이 LazyType이라 Transactional로 데이터베이스 연결 이후에도 접근하게끔
-    *  */
+     * Lecture 엔티티는 fetch 방법이 LazyType이라 Transactional로 데이터베이스 연결 이후에도 접근하게끔
+     *  */
     @Transactional
-    public boolean isExistByLecCode(String lectureCode){
+    public boolean isExistByLecCode(String lectureCode) {
         log.info("> isLecturesExist? ");
         List<Lecture> list = lecRepository.getLectures(lectureCode);
         return !list.isEmpty();
@@ -33,35 +33,35 @@ public class LectureService {
 
     /* 학수번호 - 분반코드를 통해 존재하는 강좌인지 먼저 확인하는 API 제공 */
     @Transactional
-    public boolean isExistByWholeCode(String lectureCode, long subCode){
+    public boolean isExistByWholeCode(String lectureCode, long subCode) {
         log.info("> isLectureExist? ");
         Optional<Lecture> lecture = lecRepository.getOneLecture(lectureCode, subCode);
         return lecture.isPresent();
     }
 
     /* 학수번호 - 분반코드를 통해 존재하는 강좌라면 주요 정보 반환 */
-    public LectureDto getLecture(String lecCode, Long subCode){
-
-            Optional<Lecture> lecture = lecRepository.getOneLecture(lecCode, subCode);
-            if(lecture.isPresent()){
-                LectureDto lectureDto = LectureDto.builder()
-                        .lecCode(lecture.get().getLecCode())
-                        .subCode(lecture.get().getSubCode())
-                        .lecTitle(lecture.get().getLecTitle())
-                        .build();
-                return lectureDto;
-            }else{
-                log.info(">> THERE IS NO LECTURE searched by "+ lecCode +" "+ subCode+ ", problems in LectureService.java ");
-                return null;
-            }
-
+    public LectureDto getLecture(String lecCode, Long subCode) {
+        Optional<Lecture> lecture = lecRepository.getOneLecture(lecCode, subCode);
+        if (lecture.isPresent()) {
+            LectureDto lectureDto = LectureDto.builder()
+                    .lecCode(lecture.get().getLecCode())
+                    .subCode(lecture.get().getSubCode())
+                    .lecTitle(lecture.get().getLecTitle())
+                    .build();
+            return lectureDto;
+        } else {
+            log.info(">> THERE IS NO LECTURE searched by " + lecCode + " " + subCode + ", problems in LectureService.java ");
+            return null;
+        }
     }
+
     /* 사용자가 폼으로 입력한 LectureDto 로부터 Lecture 레파지토리에 저장함 */
-    public void saveLecture(LectureDto lectureDto){
-        if(!isExistByWholeCode(lectureDto.getLecCode(), lectureDto.getSubCode())){
+    public void saveLecture(LectureDto lectureDto) {
+        /* TODO DB 두번 질의 하게 되는데 그냥 try - catch 가 나을까? */
+        if (!isExistByWholeCode(lectureDto.getLecCode(), lectureDto.getSubCode())) {
             lecRepository.save(lectureDto.toEntity());
-        }else{
-            log.info(">> Already Existed Lecture, " + lectureDto.toString() +", problems in LectureService.java");
+        } else {
+            log.info(">> Already Existed Lecture, " + lectureDto.toString() + ", problems in LectureService.java");
         }
     }
 }
