@@ -9,5 +9,4 @@ class MateStudyApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head.html :: head('채점관리')"></head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- 왼쪽 사이드바 -->
+    <ul th:replace="fragments/left-sidebar.html :: ul"></ul>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+           <!-- Top bar -->
+            <!-- ********************** 이름 어떻게 하는지 모르겠어요 ***************************** -->
+            <nav th:replace="fragments/topbar.html :: nav(${name})"></nav>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">실습과제 2주차 채점</h1>
+
+                <!-- DataTales Example -->
+                <div class="card shadow mt-4 mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">제출 목록</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>제출자</th>
+                                    <th>학번</th>
+                                    <th>파일이름</th>
+                                    <th>제출날짜</th>
+                                    <th>채점점수</th>
+                                    <th style="width: 10%">채점하기</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>제출자</th>
+                                    <th>학번</th>
+                                    <th>파일이름</th>
+                                    <th>제출날짜</th>
+                                    <th>채점점수</th>
+                                    <th style="width: 20%">채점하기</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr>
+                                    <td>김범규</td>
+                                    <td>2017112083</td>
+                                    <td><a href="파일경로">2017112083_김범규_2주차.pdf</a></td>
+                                    <td>2021/11/11</td>
+                                    <td>70</td>
+                                    <td>
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-8"><input type="number" class="form-control"
+                                                                          placeholder="점수 입력"></div>
+                                                <div class="col-4">
+                                                    <button type="submit" class="btn btn-primary">확인</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>박동국</td>
+                                    <td>2018112345</td>
+                                    <td><a href="파일경로">2017112345_박동국_2주차.pdf</a></td>
+                                    <td>2021/11/10</td>
+                                    <td>65</td>
+                                    <td>
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-8"><input type="number" class="form-control"
+                                                                          placeholder="점수 입력"></div>
+                                                <div class="col-4">
+                                                    <button type="submit" class="btn btn-primary">확인</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>배고파</td>
+                                    <td>2016147523</td>
+                                    <td><a href="파일경로">2016147523_배고파_2주차.pdf</a></td>
+                                    <td>2021/11/10</td>
+                                    <td>미채점</td>
+                                    <td>
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-8"><input type="number" class="form-control"
+                                                                          placeholder="점수 입력"></div>
+                                                <div class="col-4">
+                                                    <button type="submit" class="btn btn-primary">확인</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer th:replace="fragments/footer.html :: footer"></footer>
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="/logout">Logout</a>
+                <!-- <a class="btn btn-primary" href="../../../../../../Desktop/소프트웨어공학/플젝/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/login.html">Logout</a> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/script.html :: footer"></footer>
+</body>
+
+</html>

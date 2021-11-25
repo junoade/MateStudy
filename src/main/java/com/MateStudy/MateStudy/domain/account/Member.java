@@ -1,22 +1,25 @@
 package com.MateStudy.MateStudy.domain.account;
 
+import com.MateStudy.MateStudy.domain.common.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /* JPA를 사용해서 application.yml에서 create 또는 create-drop하게 되면 MEMBER라는 DB를 생성*/
 @Entity
-@Table(name = "MEMBER")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-public class Member {
-    /*@Id
-    @GeneratedValue
-    private long seq;*/
+@ToString
+@Table(name = "MEMBER")
+public class Member extends BaseEntity {
 
     @Id
     private String id;
@@ -33,23 +36,12 @@ public class Member {
     @Column(nullable = false)
     private String phone;
 
-    @Enumerated(EnumType.STRING)
-    private MemberRole role;
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<MemberRole> role = new HashSet<>();
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    private Date createDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @UpdateTimestamp
-    private Date updateDate;
-
-    @Builder
-    public Member(String id, String pwd, String name, String email, String phone){
-        this.id = id;
-        this.pwd = pwd;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
+    /* MEMBER ROLE를 별도로 뺴냄 */
+    public void addMemberRole(MemberRole memberRole){
+        role.add(memberRole);
     }
 }

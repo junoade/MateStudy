@@ -31,8 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/css/**", "/js/**", "/image/**").permitAll()
-                    .antMatchers("/","member/login","/member/signUp","/member/js/login/validation.js").permitAll()
-                    .anyRequest().authenticated()
+                    .antMatchers("/","member/login","/member/signUp",
+                            "/member/password","/member/js/login/validation.js").permitAll()
+                    .anyRequest().permitAll()
                     .and()
                 .formLogin()
                     .loginPage("/member/login")
@@ -41,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                    .logoutSuccessUrl("/member/login")
                     .and()
                 .exceptionHandling().accessDeniedPage("/member/denied");
     }
