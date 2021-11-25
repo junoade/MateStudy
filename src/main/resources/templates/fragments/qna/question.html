@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<block th:fragment="block">
+    <!-- Content Row -->
+    <div class="row rounded shadow bg-white p-4 ml-0 mr-0 mb-5">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="border-bottom pb-2">
+                    <span class="text text-primary">이름</span>
+                    <span class="text ml-2">1일 전</span>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="border-bottom pb-4">
+                            <span class="text text-dark">중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다중간
+                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
+                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
+                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
+                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
+                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
+                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.고사 3번 문제 질문이 있습니다.
+                                따로 이메일 보냈습니다.</span>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-10">
+                <textarea class="form-control " id="commentText" rows="2"></textarea>
+            </div>
+            <div class="d-flex col-2 align-items-center">
+                <button type="button" class="btn btn-primary ml-3">등록</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <!-- data-bs-target을 밑에 div id와 맞춰야 저 div만 접었다 폈다가 됨-->
+                <button type="button" class="btn btn-primary ml-3" data-bs-toggle="collapse" data-bs-target="#comment" role="button"
+                        aria-expanded="false" aria-controls="comment">댓글 보기</button>
+            </div>
+            <div class="collapse" id="comment">
+                <block th:replace="fragments/qna/comment.html :: block"></block>
+            </div>
+        </div>
+    </div>
+</block>
+</html>

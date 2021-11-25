@@ -1,6 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<head></head>
+<head th:replace="fragments/head.html :: head(title='질문게시판')"></head>
 
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- 왼쪽 사이드바 -->
+    <ul th:replace="fragments/left-sidebar.html :: ul"></ul>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <!-- ********************** 이름 어떻게 하는지 모르겠어요 ***************************** -->
+            <nav th:replace="fragments/topbar.html :: nav(${name})"></nav>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">질문 게시판</h1>
+                </div>
+                <div class="d-inline-flex mb-4">
+                    <button type="button" class="btn btn-primary toggle-btn">최근 질문</button>
+                    <button type="button" class="btn btn-secondary toggle-btn ml-2">나의 질문</button>
+                </div>
+
+                <!-- Content Row -->
+                <block th:replace="fragments/qna/question.html :: block"></block>
+                <block th:replace="fragments/qna/question.html :: block"></block>
+                <block th:replace="fragments/qna/question.html :: block"></block>
+                <block th:replace="fragments/qna/question.html :: block"></block>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+        <!-- Footer -->
+        <footer th:replace="fragments/footer.html :: footer"></footer>
+    </div>
+    <!-- 오른쪽 사이드바 -->
+    <ul th:replace="fragments/right-sidebar.html :: ul"></ul>
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- 스크립트 -->
+<footer th:replace="fragments/script.html :: footer"></footer>
+<!-- 무한 스크롤 -->
+<script src="js/qna/infinite-scroll-docs.min.js"></script>
+<!-- 토클 버튼 -->
+<script src="js/qna/buttonToggle.js"></script>
+</body>
 </html>
