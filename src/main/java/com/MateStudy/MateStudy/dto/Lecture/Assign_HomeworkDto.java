@@ -2,6 +2,7 @@ package com.MateStudy.MateStudy.dto.Lecture;
 
 import com.MateStudy.MateStudy.domain.homework.Assign_Homework;
 import com.MateStudy.MateStudy.domain.lecture.Teaching_Lecture;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -41,6 +42,7 @@ public class Assign_HomeworkDto {
                 .build();
 
     }
+    @Builder
     public Assign_HomeworkDto( String instId, String lecCode, Long subCode,
                               String title, String content, LocalDateTime dueDate, Boolean isDone){
         this.instId = instId;
@@ -65,6 +67,7 @@ public class Assign_HomeworkDto {
                 .isDone(false)
                 .build();
     }
+    @Builder
     public Assign_HomeworkDto(Long hwId, String instId, String lecCode, Long subCode,
                               String title, String content, LocalDateTime dueDate, Boolean isDone){
         this.hwId = hwId;

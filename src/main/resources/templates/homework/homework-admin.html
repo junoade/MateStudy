@@ -22,12 +22,47 @@
             <nav th:replace="fragments/topbar.html :: nav(${name})"></nav>
 
             <!-- Begin Page Content -->
+            <table class="table">
+                <thead class="thead-light">
+                <tr class="text-center">
+                    <th scope="col">instId</th>
+                    <th scope="col">lecCode</th>
+                    <th scope="col">subCode</th>
+                    <th scope="col">title</th>
+                    <th scope="col">content</th>
+                    <th scope="col">dueDate</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-center" th:each="homework : ${allHomeworkList}">
+                    <td>
+                        <span th:text="${homework.instId}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${homework.lecCode}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${homework.subCode}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${homework.title}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${homework.content}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${#temporals.format(homework.dueDate,'yyyy-MM-dd HH:mm')}"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
             <div class="container-fluid">
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">과제 관리</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    <a href="/homework/register" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class="fas fa-plus fa-sm text-white-50"></i> 과제 등록하기</a>
                 </div>
 
@@ -41,7 +76,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            이번달 과제 수
+                                            과제 수
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">3개</div>
                                     </div>

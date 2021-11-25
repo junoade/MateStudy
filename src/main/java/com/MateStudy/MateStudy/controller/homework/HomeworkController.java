@@ -1,6 +1,5 @@
 package com.MateStudy.MateStudy.controller.homework;
 
-import com.MateStudy.MateStudy.domain.lecture.Teaching_Lecture;
 import com.MateStudy.MateStudy.dto.Lecture.Assign_HomeworkDto;
 import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
 import com.MateStudy.MateStudy.dto.security.CustomedMemberDTO;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Optional;
+import java.util.List;
 
 
 @Slf4j
@@ -44,7 +43,13 @@ public class HomeworkController {
 
     @GetMapping("/homework-admin")
     public String homeworkAdmin(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
-        model.addAttribute("name",cmDTO.getName());
+        String id = cmDTO.getId();
+        String name = cmDTO.getName();
+        List<Assign_HomeworkDto> ahdList = teachLectureService.getAllHomework(id);
+
+        model.addAttribute("name",name);
+        model.addAttribute("instId",id);
+        model.addAttribute("allHomeworkList",ahdList);
         return "/homework/homework-admin";
     }
 
@@ -54,11 +59,20 @@ public class HomeworkController {
         return "/homework/homework-student";
     }
 
-    @GetMapping("/homework/register/{lecCode}/{subCode}")
+    @GetMapping("/homework/register")
     public String homeworkRegisterPage(@AuthenticationPrincipal CustomedMemberDTO cmDTO,
+                                        Model model){
+        String id = cmDTO.getId();
+        List<LectureDto> ldList = teachLectureService.getTeachLectureList(id);
+        model.addAttribute("instId",id);
+        model.addAttribute("lectureList",ldList);
+        return "/homework/homework-register";
+    }
+
+    @GetMapping("/homework/register/{lecCode}/{subCode}")
+    public String homeworkRegisterPage2(@AuthenticationPrincipal CustomedMemberDTO cmDTO,
                                    @PathVariable String lecCode, @PathVariable Long subCode,
                                    Model model){
-
         LectureDto lectureDto = lectureService.getLecture(lecCode, subCode);
         model.addAttribute("instId",cmDTO.getId());
         model.addAttribute("lecture",lectureDto);
