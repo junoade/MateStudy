@@ -8,6 +8,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * 시스템에 존재하는 모든 실습 강좌에 대한 테이블 LECTURE와 관련한 엔티티의 Repository
+ * @see Lecture
+ */
 public interface LectureRepository extends JpaRepository<Lecture, String> {
 
     /* 학수번호-분반정보를 통해 현재 등록된 실습 정보가 있는지 반환 */

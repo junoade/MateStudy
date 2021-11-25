@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 public class Assign_Homework extends BaseEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO) // hwId를 추가하면 따로 Id 등록안해서 자동으로 생성하게끔
     private Long hwId;
 
     /* TEACH_LECTURE 엔티티와 맵핑 (등록되어있는 실습 강좌에서 등록한 과제 */
@@ -53,7 +54,7 @@ public class Assign_Homework extends BaseEntity {
     private String content;
 
     @Column(name="dueDate")
-    private LocalDateTime dueDate;
+    private LocalDateTime dueDate; // 수정함
 
     @Column(name="isDone")
     private Boolean isDone;

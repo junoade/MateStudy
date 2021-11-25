@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -24,7 +25,8 @@ public class LectureController {
 
     @GetMapping("/lecture-admin")
     public String lecture(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
-        List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(cmDTO.getName());
+        List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(cmDTO.getId());
+        model.addAttribute("name",cmDTO.getName());
         model.addAttribute("postList", lectureDtoList);
         return "lecture/lecture-admin";
     }
