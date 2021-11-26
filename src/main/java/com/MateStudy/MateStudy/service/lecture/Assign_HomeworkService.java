@@ -1,9 +1,9 @@
 package com.MateStudy.MateStudy.service.lecture;
 
+import com.MateStudy.MateStudy.domain.homework.Assign_Homework;
 import com.MateStudy.MateStudy.domain.lecture.Teaching_Lecture;
 import com.MateStudy.MateStudy.dto.Lecture.Assign_HomeworkDto;
 import com.MateStudy.MateStudy.repository.lecture.Assign_HomeworkRepository;
-import com.MateStudy.MateStudy.repository.lecture.TeachLectureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,13 +45,15 @@ public class Assign_HomeworkService {
      * @param assign_homeworkDto
      */
     @Transactional
-    public void saveHomeworkAuto(Assign_HomeworkDto assign_homeworkDto){
+    public Long saveHomeworkAuto(Assign_HomeworkDto assign_homeworkDto){
         log.info("saving...");
+        Assign_Homework assign_homework = new Assign_Homework();
         try {
-            assign_homeworkRepository.save(assign_homeworkDto.toEntityAuto());
+             assign_homework= assign_homeworkRepository.save(assign_homeworkDto.toEntityAuto());
         }catch(Exception e){
             log.info("invalid user data");
             e.printStackTrace();
         }
+        return assign_homework.getHwId();
     }
 }
