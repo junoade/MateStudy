@@ -105,7 +105,7 @@
                 <!-- Content Row -->
                 <div class="row">
                     <!-- Content Column -->
-                    <div class="col-lg-4 mb-4" th:each="homework : ${homeworkList}">
+                    <div class="col-lg-4 mb-4" th:each="homework,index : ${homeworkList}">
 
                         <!-- 과제 카드 -->
                         <div class="card shadow mb-4">
@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="d-inline-flex align-items-center">
                                     <i class="fas fa-circle text-success"></i>
-                                    <div class="text-dark ml-2">마감 5일전</div>
+                                    <div class="text-dark ml-2" th:text="${remainDate[index.index]}">마감 5일전</div>
                                 </div>
                             </div>
                             <div class="card-body">

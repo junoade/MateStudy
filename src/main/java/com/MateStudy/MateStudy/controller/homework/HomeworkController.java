@@ -1,6 +1,8 @@
 package com.MateStudy.MateStudy.controller.homework;
 
 import com.MateStudy.MateStudy.config.MD5Generator;
+import com.MateStudy.MateStudy.domain.common.DateBefore;
+import com.MateStudy.MateStudy.domain.common.DateComparator;
 import com.MateStudy.MateStudy.dto.FileDto;
 import com.MateStudy.MateStudy.dto.Lecture.Assign_HomeworkDto;
 import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -58,11 +62,17 @@ public class HomeworkController {
         List<Assign_HomeworkDto> ahdList = teachLectureService.getAllHomework(id);
         List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(id);
 
+        DateComparator dateComparator = new DateComparator();
+        Collections.sort(ahdList, dateComparator);
+
+        List<String> remain = DateBefore.getInterval(ahdList);
+
         model.addAttribute("name",name);
         model.addAttribute("role",cmDTO.getAuthorities().toString());
         model.addAttribute("instId",id);
         model.addAttribute("allHomeworkList",ahdList);
         model.addAttribute("lectures",lectureDtoList);
+        model.addAttribute("remainDate",remain);
         return "/homework/homework-admin";
     }
 
@@ -75,6 +85,11 @@ public class HomeworkController {
         List<Assign_HomeworkDto> ahdList = teachLectureService.getHomework(id,lecCode,subCode);
         List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(id);
 
+        DateComparator dateComparator = new DateComparator();
+        Collections.sort(ahdList, dateComparator);
+
+        List<String> remain = DateBefore.getInterval(ahdList);
+
         model.addAttribute("name",name);
         model.addAttribute("role",cmDTO.getAuthorities().toString());
         model.addAttribute("instId",id);
@@ -82,6 +97,7 @@ public class HomeworkController {
         model.addAttribute("subCode",subCode);
         model.addAttribute("homeworkList",ahdList);
         model.addAttribute("lectures",lectureDtoList);
+        model.addAttribute("remainDate",remain);
         return "/homework/homework-admin-detail";
     }
 

@@ -86,7 +86,7 @@ public class MainController {
     @GetMapping("/homework/grade")
     public String grade(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
         model.addAttribute("name",cmDTO.getAuthorities());
-        return "grade";
+        return "homework/grade";
     }
 
     // UI TEST용으로 만들었어요. 맘대로 바꾸세요
