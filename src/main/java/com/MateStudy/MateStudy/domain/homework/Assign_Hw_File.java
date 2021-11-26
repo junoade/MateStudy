@@ -18,12 +18,12 @@ import javax.persistence.*;
 public class Assign_Hw_File {
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="hwId")
     private Assign_Homework hwId;
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="Fid")
     private File Fid; //우리 패키지의 File 클래스임 조심
 }
