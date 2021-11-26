@@ -71,6 +71,7 @@ public class TeachLectureService {
     }
 
     //교수자가 등록한 전체 과제리스트 반환
+    /* TODO 이거 왤캐 비용이 많이 드는 것 같지?? */
     @Transactional
     public List<Assign_HomeworkDto> getAllHomework(String id){
         List<LectureDto> lectureDtoList = getTeachLectureList(id);
