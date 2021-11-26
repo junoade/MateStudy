@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- Sidebar -->
-<ul th:fragment="ul" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+<ul th:fragment="ul" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="staticSidebar_">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{'/main'}">
         <div>
-            <i class="fas fa-school"></i>
+            <i class="fas fa-university"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">DONGGUK UNIV.</div>
     </a>
 
     <!-- Divider -->
@@ -17,10 +16,9 @@
 
     <!-- 과목 리스트 -->
     <div th:each="lecture : ${lectures}">
-        <li class="nav-item" >
-            <a class="nav-link collapsed" th:href="@{'/homework-admin/'+${lecture.lecCode}+'/'+${lecture.subCode}}"
-            >
-                <i class="fab fa-odnoklassniki"></i>
+        <li class="nav-item active" >
+            <a class="nav-link" th:href="@{'/homework-admin/'+${lecture.lecCode}+'/'+${lecture.subCode}}">
+                <i class="fas fa-book"></i>
                 <span th:text="${lecture.lecTitle}">출석</span>
             </a>
         </li>

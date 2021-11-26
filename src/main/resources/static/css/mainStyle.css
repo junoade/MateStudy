@@ -11,6 +11,10 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
+  /* 민석 색깔 추가 */
+  --dday: #e74a3b;
+  --tommorrow: #fd7e14;
+  --free: #1cc88a;
   --blue: #4e73df;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -582,7 +586,13 @@ pre code {
     max-width: 1140px;
   }
 }
-
+.timeline{
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-right: -0.75rem;
+  margin-left: -0.75rem;
+}
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -10199,6 +10209,12 @@ a:focus {
   border-right: 1px solid #e3e6f0;
   height: calc(4.375rem - 2rem);
   margin: auto 1rem;
+}
+
+.topbar .notice{
+  background-color: #0f6848;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .topbar .nav-item .nav-link {
