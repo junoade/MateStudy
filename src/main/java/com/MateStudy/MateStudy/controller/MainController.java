@@ -79,4 +79,16 @@ public class MainController {
         return "grade";
     }
 
+    // UI TEST용으로 만들었어요. 맘대로 바꾸세요
+    @GetMapping("qna")
+    public String qna() {
+        return "qna";
+    }
+
+    // UI TEST용으로 만들었어요. 맘대로 바꾸세요
+    @GetMapping("page2")
+    public String page2() {
+        return "page2";
+    }
+
 }
