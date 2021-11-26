@@ -21,12 +21,12 @@ import javax.persistence.*;
 public class Submit_Hw_File extends BaseEntity {
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="submitId")
     private Submit_Homework submitId;
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="Fid")
     private File Fid; //우리 패키지의 File 클래스임 조심
 
