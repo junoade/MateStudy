@@ -1,9 +1,12 @@
 package com.MateStudy.MateStudy.controller.homework;
 
+import com.MateStudy.MateStudy.config.MD5Generator;
+import com.MateStudy.MateStudy.dto.FileDto;
 import com.MateStudy.MateStudy.dto.Lecture.Assign_HomeworkDto;
 import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
 import com.MateStudy.MateStudy.dto.security.CustomedMemberDTO;
 import com.MateStudy.MateStudy.repository.lecture.LectureRepository;
+import com.MateStudy.MateStudy.service.homework.AhwFileService;
 import com.MateStudy.MateStudy.service.lecture.Assign_HomeworkService;
 import com.MateStudy.MateStudy.service.lecture.LectureService;
 import com.MateStudy.MateStudy.service.lecture.TeachLectureService;
@@ -16,7 +19,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -32,6 +38,9 @@ public class HomeworkController {
 
     @Autowired
     private LectureService lectureService;
+
+    @Autowired
+    private AhwFileService ahwFileService;
 
     @GetMapping("/homework")
     public String homework(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
@@ -87,14 +96,48 @@ public class HomeworkController {
     }
 
     @PostMapping("/homework/register")
-    public String homeworkRegister(Assign_HomeworkDto assignHomeworkDto){
-        assgin_homeworkService.saveHomeworkAuto(assignHomeworkDto);
+    public String homeworkRegister(@RequestParam("file") MultipartFile files, Assign_HomeworkDto assignHomeworkDto){
+        Long hwId = assgin_homeworkService.saveHomeworkAuto(assignHomeworkDto);
+
+        log.info("saveFile...");
+        String origFilename = files.getOriginalFilename();
+        if(!origFilename.equals("")){
+            try{
+                String filename = new MD5Generator(origFilename).toString();
+                String savePath = System.getProperty("user.dir") + "/assignHWFiles";
+                if(!new File(savePath).exists()){
+                    try{
+                        new File(savePath).mkdir();
+                    }catch (Exception e){
+                        e.getStackTrace();
+                    }
+                }
+                String filePath = savePath + "/" + filename;
+                files.transferTo(new File(filePath));
+
+                FileDto fileDto = new FileDto(origFilename,filename,filePath);
+                log.info(fileDto.getFilePath());
+                log.info(fileDto.getFilename());
+                log.info(fileDto.getOriginFilename());
+                ahwFileService.saveAssignedFile(hwId,fileDto);
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
         return "redirect:/homework-admin/"+assignHomeworkDto.getLecCode()+'/'+assignHomeworkDto.getSubCode();
     }
 
     @GetMapping("/homework-student")
     public String homeworkStudent(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
-        model.addAttribute("name",cmDTO.getName());
+        String id = cmDTO.getId();
+        String name = cmDTO.getName();
+        List<Assign_HomeworkDto> ahdList = teachLectureService.getAllHomework(id);
+        List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(id);
+
+        model.addAttribute("name",name);
+        model.addAttribute("role",cmDTO.getAuthorities().toString());
+        model.addAttribute("allHomeworkList",ahdList);
+        model.addAttribute("lectures",lectureDtoList);
         return "/homework/homework-student";
     }
 }
