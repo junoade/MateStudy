@@ -51,9 +51,6 @@
              data-bs-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" th:href="@{'/homework'}">모든 과제</a>
-                <div th:if="${role} == '[INSTRUCTOR]'">
-                    <a th:href="@{''}" class="collapse-item">과제 채점</a>
-                </div>
             </div>
         </div>
     </li>
