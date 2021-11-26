@@ -1,6 +1,6 @@
 # MateStudy
 <div align ="center">
-<img src="https://img.shields.io/badge/-Java 11-007396?style=flat-square&logo=Java"> <img src="https://img.shields.io/badge/Gradle 6.7-02303A.svg?style=flat-square&logo=Gradle"> <img src="http://img.shields.io/badge/-Springboot2.5.6-000000?style=flat-square&logo=SpringBoot">
+<img src="https://img.shields.io/badge/-Java 11-007396?style=flat-square&logo=Java"> <img src="https://img.shields.io/badge/Gradle 7.2-02303A.svg?style=flat-square&logo=Gradle"> <img src="http://img.shields.io/badge/-Springboot2.5.6-000000?style=flat-square&logo=SpringBoot">
 <br/>
 <img src="http://img.shields.io/badge/-Thymeleaf-005F0F?style=flat-square&logo=Thymeleaf"> <img src="http://img.shields.io/badge/-MySQL 8-fbceb1?style=flat-square&logo=MySQL"><br/>
 <img src="https://img.shields.io/github/commit-activity/w/junoade/MateStudy">  
