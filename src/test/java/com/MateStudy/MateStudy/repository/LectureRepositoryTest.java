@@ -55,4 +55,15 @@ public class LectureRepositoryTest {
             Assertions.assertTrue(testStatus);
         }
     }
+
+    @Test
+    @Transactional
+    public void testInsert(){
+        String lecCode="CSE4038";
+        Long subCode=1L;
+        String title = "데이터통신입문";
+        Lecture lecture = Lecture.builder().lecCode(lecCode).subCode(subCode)
+                .lecTitle(title).build();
+        lectureRepository.save(lecture);
+    }
 }

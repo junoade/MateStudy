@@ -27,6 +27,7 @@ public interface TeachLectureRepository extends JpaRepository<Teaching_Lecture, 
 
     /**
      * 현재 세션의 교수자의 정보로 부터 특정 강좌, 분반 찾기
+     * TODO 1126 쿼리문 개선할 수 있지 않을까?
      */
     @Query(value = "SELECT L FROM Member M, Teaching_Lecture L WHERE M.id = L.instId AND M.id = :instId AND L.lecCode= :lecCode AND L.subCode = :subCode")
     Optional<Teaching_Lecture> getCurrentLecture(@Param("instId") String instId, @Param("lecCode") String lecCode, @Param("subCode") Long subCode);

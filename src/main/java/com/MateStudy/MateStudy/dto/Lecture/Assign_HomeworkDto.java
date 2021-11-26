@@ -42,6 +42,7 @@ public class Assign_HomeworkDto {
                 .build();
 
     }
+    /* TODO 한 클래스에 하나의 Buidler인듯 조심하시오_ */
     @Builder
     public Assign_HomeworkDto( String instId, String lecCode, Long subCode,
                               String title, String content, LocalDateTime dueDate, Boolean isDone){

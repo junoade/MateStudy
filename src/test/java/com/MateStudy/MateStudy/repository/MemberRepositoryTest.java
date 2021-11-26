@@ -117,7 +117,7 @@ public class MemberRepositoryTest {
     }
 
     @Test
-    public void testAdminSignUp() {
+    public void testOurSignUp() {
         log.info("INSERT DUMMY MEMBER INTO THE DATABASE");
         final int LENGTH = 4;
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

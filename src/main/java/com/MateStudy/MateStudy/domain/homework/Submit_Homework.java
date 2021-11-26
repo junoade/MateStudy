@@ -28,6 +28,7 @@ import java.util.Date;
 @Table(name = "SUBMIT_HW")
 public class Submit_Homework extends BaseEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO) // hwId를 추가하면 따로 Id 등록안해도 자동으로 생성하게끔
     private Long submitId; // Wrapper 클래스인 Long 쓰는 이유, long과 같은 primitive 타입의 기본값은 0인데, 데이터베이스에서 데이터가 없다는 의미인지, id가 0인지 혼동
 
     /* TAKE_LECUTE 엔티티의 stId - 등록된 실습 강좌에 속하는 학생이 등록하는 과제 */
@@ -37,6 +38,7 @@ public class Submit_Homework extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hwId", nullable = false)
     private Assign_Homework hwId;
+
     /* TEACH_LECTURE 엔티티와 맵핑 (등록되어있는 실습 강좌에서 등록한 과제 */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
