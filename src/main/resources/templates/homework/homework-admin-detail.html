@@ -114,7 +114,6 @@
                                     <div class="col-10"><h6 class="m-0 font-weight-bold text-primary"
                                                             th:text="${homework.title}">실습 2주차 과제</h6>
                                     </div>
-                                    <div class="col-2"><input type="checkbox" data-toggle="switchbutton" data-size="sm" checked></div>
                                 </div>
                                 <div class="d-inline-flex align-items-center">
                                     <i class="fas fa-circle text-success"></i>
@@ -165,6 +164,8 @@
 
     </div>
     <!-- End of Content Wrapper -->
+    <!-- 오른쪽 사이드바 -->
+    <ul th:replace="fragments/right-sidebar.html :: ul"></ul>
 
 </div>
 <!-- End of Page Wrapper -->

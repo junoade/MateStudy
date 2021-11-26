@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <!-- Sidebar -->
 <ul th:fragment="ul" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar_">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="main">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{'/main'}">
         <div>
             <i class="fas fa-school"></i>
         </div>
@@ -16,7 +16,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="main">
+        <a class="nav-link" th:href="@{'/main'}">
             <i class="fas fa-home"></i>
             <span>홈</span></a>
     </li>
@@ -50,10 +50,10 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
              data-bs-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/utilities-color.html">Colors</a>
-                <a class="collapse-item" href="/utilities-border.html">Borders</a>
-                <a class="collapse-item" href="/utilities-animation.html">Animations</a>
-                <a class="collapse-item" href="/utilities-other.html">Other</a>
+                <a class="collapse-item" th:href="@{'/homework'}">모든 과제</a>
+                <div th:if="${role} == '[INSTRUCTOR]'">
+                    <a th:href="@{''}" class="collapse-item">과제 채점</a>
+                </div>
             </div>
         </div>
     </li>
