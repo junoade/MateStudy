@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:text="${homework.title}">제목</div>
+<hr>
+<div th:text="${homework.content}">내용</div>
+<hr>
+<div th:if="${!fileList.isEmpty()}">
+    <a th:href="@{'/download/' + ${fileList.get(0).id}}" th:text="${fileList.get(0).originFilename}"></a>
+</div>
+<hr >
+<div th:if="${submitted == 0}" th:text="${homework.dueDate}">제출 기한</div>
+<hr>
+<div th:if="${submitted == 0}">
+    <a th:href="@{'/homework/submit/'+${homework.hwId}}">제출</a>
+</div>
+<div th:if="${submitted == 1}">
+    <a th:href="@{'/homework/submit/'+${homework.hwId}}">수정</a>
+</div>
+</body>
+</html>

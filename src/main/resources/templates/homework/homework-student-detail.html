@@ -120,21 +120,8 @@
                             </div>
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-center mb-4">
-                                    <a class="text-gray-800 ml-2" th:text="${homework.getFirst().title}">2주차 실습 자료.pdf</a>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <a herf="제출주소" class="btn btn-sm btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-file-upload"></i>
-                                        </span>
-                                        <span class="text">제출하기</span>
-                                    </a>
-                                    <a herf="수정주소" class="btn btn-sm btn-secondary btn-icon-split ml-4">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-edit"></i>
-                                        </span>
-                                        <span class="text">수정하기</span>
-                                    </a>
+                                    <a th:href="@{'/post/student/'+${homework.getFirst().hwId}}" class="text-gray-800 ml-2"
+                                       th:text="${homework.getFirst().title}">2주차 실습 자료.pdf</a>
                                 </div>
                             </div>
                         </div>

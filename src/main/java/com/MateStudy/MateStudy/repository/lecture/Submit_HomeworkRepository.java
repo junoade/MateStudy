@@ -1,5 +1,6 @@
 package com.MateStudy.MateStudy.repository.lecture;
 
+import com.MateStudy.MateStudy.domain.homework.Assign_Homework;
 import com.MateStudy.MateStudy.domain.homework.Submit_Homework;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -29,8 +30,8 @@ public interface Submit_HomeworkRepository extends JpaRepository<Submit_Homework
 
 
     /* 학생이 제출한 특정 과제 hwId를 가져옴 */
-    @Query(value="SELECT S FROM Submit_Homework S WHERE S.stId = :stIds AND S.hwId = :hwId")
-    Optional<Submit_Homework> getMySubmit (@Param("stId") String stId, @Param("hwId") Long hwId);
+    @Query(value="SELECT S FROM Submit_Homework S WHERE S.stId = :stId AND S.hwId = :hwId")
+    Optional<Submit_Homework> getMySubmit (@Param("stId") String stId, @Param("hwId") Assign_Homework hwId);
 
 
     /* 학생이 특정 강좌의 hwId에 과제를 INSERT */

@@ -18,7 +18,7 @@ import javax.persistence.*;
 @ToString(exclude = {"submitId", "Fid"}) // 성능을 위해 fetch Lazy 타입으로 종종한다. 이때 사용
 @Table(name = "SUBMIT_HW_FILE")
 @IdClass(Shw_FileId.class)
-public class Submit_Hw_File extends BaseEntity {
+public class Submit_Hw_File {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)

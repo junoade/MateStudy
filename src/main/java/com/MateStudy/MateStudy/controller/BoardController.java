@@ -113,21 +113,21 @@ public class BoardController {
         return "redirect:/board";
     }
 
-    @GetMapping("/download/{fileId}")
-    public ResponseEntity<Resource> fileDownload(@PathVariable("fileId") Long fileId) throws IOException {
-        FileDto fileDto = fileService.getFile(fileId);
-        Path path = Paths.get(fileDto.getFilePath());
+//    @GetMapping("/download/{fileId}")
+//    public ResponseEntity<Resource> fileDownload(@PathVariable("fileId") Long fileId) throws IOException {
+//        FileDto fileDto = fileService.getFile(fileId);
+//        Path path = Paths.get(fileDto.getFilePath());
+////        Resource resource = new InputStreamResource(Files.newInputStream(path));
+////        return ResponseEntity.ok()
+////                .contentType(MediaType.parseMediaType("application/octet-stream"))
+////                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDto.getOriginFilename() + "\"")
+////                .body(resource);
+//        String contentType = Files.probeContentType(path);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentDisposition(ContentDisposition.builder("attachment").
+//                filename(fileDto.getOriginFilename(), StandardCharsets.UTF_8).build());
+//        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
 //        Resource resource = new InputStreamResource(Files.newInputStream(path));
-//        return ResponseEntity.ok()
-//                .contentType(MediaType.parseMediaType("application/octet-stream"))
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDto.getOriginFilename() + "\"")
-//                .body(resource);
-        String contentType = Files.probeContentType(path);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentDisposition(ContentDisposition.builder("attachment").
-                filename(fileDto.getOriginFilename(), StandardCharsets.UTF_8).build());
-        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
-        Resource resource = new InputStreamResource(Files.newInputStream(path));
-        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
-    }
+//        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+//    }
 }

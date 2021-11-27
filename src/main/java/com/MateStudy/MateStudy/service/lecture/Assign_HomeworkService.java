@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 /**
  * 특정 강좌의 교수자가 해당 강좌에 과제들을 부여하게 하는 Service
@@ -55,5 +56,21 @@ public class Assign_HomeworkService {
             e.printStackTrace();
         }
         return assign_homework.getHwId();
+    }
+
+    @Transactional
+    public Assign_HomeworkDto getHomework(Long hwId){
+        Optional<Assign_Homework> homework = assign_homeworkRepository.findById(hwId);
+        Assign_HomeworkDto result = Assign_HomeworkDto.builder()
+                .hwId(hwId)
+                .instId(homework.get().getInstId())
+                .lecCode(homework.get().getLecCode())
+                .subCode(homework.get().getSubCode())
+                .title(homework.get().getTitle())
+                .content(homework.get().getContent())
+                .dueDate(homework.get().getDueDate())
+                .isDone(homework.get().getIsDone())
+                .build();
+        return result;
     }
 }

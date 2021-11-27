@@ -44,6 +44,13 @@ public class Submit_HomeworkService {
         return hw.isPresent() && hw.get().getIsDone();
     }
 
+    @Transactional
+    public boolean isSubmitted(String stId, Long hwId){
+        Optional<Assign_Homework> assign_homework = assign_homeworkRepository.findById(hwId);
+        Optional<Submit_Homework> homework = submit_homeworkRepostiory.getMySubmit(stId, assign_homework.get());
+        return homework.isPresent();
+    }
+
     /**
      * 과제 제출 정보를 통해 과제를 제출
      *
@@ -83,24 +90,43 @@ public class Submit_HomeworkService {
      * @require hwId가 필요함, 화면단으로부터 작성된 submit_homework 정보
      */
     @Transactional
-    public int saveSubmitHwAuto(Submit_HomeworkDto submit_homeworkDto) {
-        int status = 0;
+    public Long saveSubmitHwAuto(Submit_HomeworkDto submit_homeworkDto) {
+        Long status = 0L;
         log.info("saving.. submit homework");
+        Submit_Homework submit_homework = new Submit_Homework();
         try {
             if (!isDoneHw(submit_homeworkDto.getHwId().getHwId())) {
                 submit_homeworkDto.setGrade(0); // 채점 이전에는 과제 점수 grade는 0이 여야함
-                submit_homeworkRepostiory.save(submit_homeworkDto.toEntityAuto());
-                status = 1;
+                 submit_homework = submit_homeworkRepostiory.save(submit_homeworkDto.toEntityAuto());
+                status = submit_homework.getSubmitId();
                 log.info("과제 채점 완료");
             } else {
                 log.info("마감 기한이 지났습니다.");
             }
         } catch (Exception e) {
-            status = -1;
+            status = -1L;
             log.info("invalid submit homework");
             e.printStackTrace();
         }
         return status;
+    }
+
+
+    @Transactional
+    public Submit_HomeworkDto getHomework(String stId, Long hwId){
+        Optional<Assign_Homework> assign_homework = assign_homeworkRepository.findById(hwId);
+        Optional<Submit_Homework> homework = submit_homeworkRepostiory.getMySubmit(stId, assign_homework.get());
+        Submit_HomeworkDto result = Submit_HomeworkDto.builder()
+                .stId(stId)
+                .submitId(homework.get().getSubmitId())
+                .instId(homework.get().getInstId())
+                .lecCode(homework.get().getLecCode())
+                .subCode(homework.get().getSubCode())
+                .title(homework.get().getTitle())
+                .content(homework.get().getContent())
+                .grade(homework.get().getGrade())
+                .build();
+        return result;
     }
 
     /**
@@ -208,22 +234,22 @@ public class Submit_HomeworkService {
         return result;
     }
 
-    /* 학생이 제출한 특정 과제 hwId를 가져옴 */
-    public Submit_HomeworkDto getMySubmit(String stId, Long hwId) {
-        Optional<Submit_Homework> submit = submit_homeworkRepostiory.getMySubmit(stId, hwId);
-        if (submit.isPresent()) {
-            Submit_HomeworkDto result = new Submit_HomeworkDto(submit.get().getSubmitId(), submit.get().getStId(), submit.get().getInstId(),
-                    submit.get().getLecCode(), submit.get().getSubCode(), submit.get().getHwId(),
-                    submit.get().getTitle(), submit.get().getContent(), submit.get().getGrade());
-            return result;
-        }
-        return null;
-        /*try{}
-        catch (Exception e){
-            e.printStackTrace();
-            throw e;
-        }*/
-    }
+//    /* 학생이 제출한 특정 과제 hwId를 가져옴 */
+//    public Submit_HomeworkDto getMySubmit(String stId, Long hwId) {
+//        Optional<Submit_Homework> submit = submit_homeworkRepostiory.getMySubmit(stId, hwId);
+//        if (submit.isPresent()) {
+//            Submit_HomeworkDto result = new Submit_HomeworkDto(submit.get().getSubmitId(), submit.get().getStId(), submit.get().getInstId(),
+//                    submit.get().getLecCode(), submit.get().getSubCode(), submit.get().getHwId(),
+//                    submit.get().getTitle(), submit.get().getContent(), submit.get().getGrade());
+//            return result;
+//        }
+//        return null;
+//        /*try{}
+//        catch (Exception e){
+//            e.printStackTrace();
+//            throw e;
+//        }*/
+//    }
 
     /* 과제 등록한 내용 삭제 */
 }
