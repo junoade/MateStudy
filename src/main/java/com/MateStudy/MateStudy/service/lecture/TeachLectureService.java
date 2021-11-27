@@ -42,7 +42,7 @@ public class TeachLectureService {
 
     @Transactional
     //교수자의 담당 과목을 모두 반환
-    public List<LectureDto> getTeachLectureList(String id){
+    public List<LectureDto> getLectureDtoList(String id){
         Optional<Member> member = memberRepository.findById(id);
         List<Teaching_Lecture> list = teachingRepository.findByInstId(member.get());
         List<TeachLectureDto> dtoList = new ArrayList<>();
@@ -74,7 +74,7 @@ public class TeachLectureService {
     /* TODO 이거 왤캐 비용이 많이 드는 것 같지?? */
     @Transactional
     public List<Assign_HomeworkDto> getAllHomework(String id){
-        List<LectureDto> lectureDtoList = getTeachLectureList(id);
+        List<LectureDto> lectureDtoList = getLectureDtoList(id);
         List<Assign_HomeworkDto> ahdList = new ArrayList<>();
         for(LectureDto lDto : lectureDtoList){
             List<Assign_Homework> ahList;

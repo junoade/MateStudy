@@ -5,6 +5,7 @@ import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
 import com.MateStudy.MateStudy.dto.MemberDto;
 import com.MateStudy.MateStudy.dto.security.CustomedMemberDTO;
 import com.MateStudy.MateStudy.service.AccountService;
+import com.MateStudy.MateStudy.service.lecture.TakeLectureService;
 import com.MateStudy.MateStudy.service.lecture.TeachLectureService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -25,6 +27,9 @@ public class MainController {
 
     @Autowired
     private TeachLectureService teachLectureService;
+
+    @Autowired
+    private TakeLectureService takeLectureService;
 
     @GetMapping("/")
     public String index() {
@@ -38,10 +43,16 @@ public class MainController {
         log.info("System : Request GetMapping on /main");
         log.info(cmDTO.toString());
         log.info(cmDTO.getAuthorities().toString());
-        List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(cmDTO.getId());
+        String role = cmDTO.getAuthorities().toString();
+        List<LectureDto> lectureDtoList = new ArrayList<>();
+        if(role.equals("[INSTRUCTOR]")){
+             lectureDtoList= teachLectureService.getLectureDtoList(cmDTO.getId());
+        }else if(role.equals("[STUDENT]")){
+            lectureDtoList = takeLectureService.getLectureDtoList(cmDTO.getId());
+        }
 
         model.addAttribute("name",cmDTO.getName());
-        model.addAttribute("role",cmDTO.getAuthorities().toString());
+        model.addAttribute("role",role);
         model.addAttribute("lectures",lectureDtoList);
         return "/main";
     }

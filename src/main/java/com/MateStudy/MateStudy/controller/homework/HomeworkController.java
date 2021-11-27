@@ -3,18 +3,20 @@ package com.MateStudy.MateStudy.controller.homework;
 import com.MateStudy.MateStudy.config.MD5Generator;
 import com.MateStudy.MateStudy.domain.common.DateBefore;
 import com.MateStudy.MateStudy.domain.common.DateComparator;
+import com.MateStudy.MateStudy.domain.lecture.Lecture;
 import com.MateStudy.MateStudy.dto.FileDto;
 import com.MateStudy.MateStudy.dto.Lecture.Assign_HomeworkDto;
 import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
 import com.MateStudy.MateStudy.dto.security.CustomedMemberDTO;
-import com.MateStudy.MateStudy.repository.lecture.LectureRepository;
 import com.MateStudy.MateStudy.service.homework.AhwFileService;
 import com.MateStudy.MateStudy.service.lecture.Assign_HomeworkService;
 import com.MateStudy.MateStudy.service.lecture.LectureService;
+import com.MateStudy.MateStudy.service.lecture.TakeLectureService;
 import com.MateStudy.MateStudy.service.lecture.TeachLectureService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
@@ -41,10 +44,15 @@ public class HomeworkController {
     private TeachLectureService teachLectureService;
 
     @Autowired
+    private TakeLectureService takeLectureService;
+
+    @Autowired
     private LectureService lectureService;
 
     @Autowired
     private AhwFileService ahwFileService;
+
+    private DateComparator dateComparator = new DateComparator();
 
     @GetMapping("/homework")
     public String homework(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
@@ -59,13 +67,18 @@ public class HomeworkController {
     public String homeworkAdmin(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
         String id = cmDTO.getId();
         String name = cmDTO.getName();
-        List<Assign_HomeworkDto> ahdList = teachLectureService.getAllHomework(id);
-        List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(id);
+//        List<Assign_HomeworkDto> ahdList = teachLectureService.getAllHomework(id);
+        List<LectureDto> lectureDtoList = teachLectureService.getLectureDtoList(id);
+        List<Pair<Assign_HomeworkDto, Optional<Lecture>>> ahdList = new ArrayList<>();
+        for(LectureDto lDto : lectureDtoList){
+            List<Pair<Assign_HomeworkDto, Optional<Lecture>>> addList = new ArrayList<>();
+            addList = lectureService.getHomeworkByCodeWithLecture(lDto.getLecCode(),lDto.getSubCode());
+            ahdList.addAll(addList);
+        }
 
-        DateComparator dateComparator = new DateComparator();
         Collections.sort(ahdList, dateComparator);
 
-        List<String> remain = DateBefore.getInterval(ahdList);
+        List<String> remain = DateBefore.getIntervalPair(ahdList);
 
         model.addAttribute("name",name);
         model.addAttribute("role",cmDTO.getAuthorities().toString());
@@ -82,13 +95,13 @@ public class HomeworkController {
                                       Model model){
         String id = cmDTO.getId();
         String name = cmDTO.getName();
-        List<Assign_HomeworkDto> ahdList = teachLectureService.getHomework(id,lecCode,subCode);
-        List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(id);
+//        List<Assign_HomeworkDto> ahdList = teachLectureService.getHomework(id,lecCode,subCode);
+        List<Pair<Assign_HomeworkDto, Optional<Lecture>>> ahdList = lectureService.getHomeworkByCodeWithLecture(lecCode,subCode);
+        List<LectureDto> lectureDtoList = teachLectureService.getLectureDtoList(id);
 
-        DateComparator dateComparator = new DateComparator();
         Collections.sort(ahdList, dateComparator);
 
-        List<String> remain = DateBefore.getInterval(ahdList);
+        List<String> remain = DateBefore.getIntervalPair(ahdList);
 
         model.addAttribute("name",name);
         model.addAttribute("role",cmDTO.getAuthorities().toString());
@@ -147,13 +160,49 @@ public class HomeworkController {
     public String homeworkStudent(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
         String id = cmDTO.getId();
         String name = cmDTO.getName();
-        List<Assign_HomeworkDto> ahdList = teachLectureService.getAllHomework(id);
-        List<LectureDto> lectureDtoList = teachLectureService.getTeachLectureList(id);
+        List<LectureDto> lectureDtoList = takeLectureService.getLectureDtoList(id);
+        List<Pair<Assign_HomeworkDto, Optional<Lecture>>> ahdList = new ArrayList<>();
+        for(LectureDto lDto : lectureDtoList){
+            List<Pair<Assign_HomeworkDto, Optional<Lecture>>> addList = new ArrayList<>();
+            addList = lectureService.getHomeworkByCodeWithLecture(lDto.getLecCode(),lDto.getSubCode());
+            ahdList.addAll(addList);
+        }
+
+        Collections.sort(ahdList, dateComparator);
+
+        List<String> remain = DateBefore.getIntervalPair(ahdList);
 
         model.addAttribute("name",name);
         model.addAttribute("role",cmDTO.getAuthorities().toString());
         model.addAttribute("allHomeworkList",ahdList);
         model.addAttribute("lectures",lectureDtoList);
+        model.addAttribute("remainDate",remain);
         return "/homework/homework-student";
+    }
+
+    @GetMapping("/homework-student/{lecCode}/{subCode}")
+    public String homeworkStudentDetail(@AuthenticationPrincipal CustomedMemberDTO cmDTO,
+                                        @PathVariable String lecCode, @PathVariable Long subCode,
+                                        Model model){
+        String id = cmDTO.getId();
+        String name = cmDTO.getName();
+
+        List<LectureDto> lectureDtoList = takeLectureService.getLectureDtoList(id);
+//        List<Assign_HomeworkDto> ahdList = lectureService.getHomeworkByCode(lecCode,subCode);
+        List<Pair<Assign_HomeworkDto, Optional<Lecture>>> ahdList = lectureService.getHomeworkByCodeWithLecture(lecCode,subCode);
+
+
+        Collections.sort(ahdList, dateComparator);
+
+        List<String> remain = DateBefore.getIntervalPair(ahdList);
+
+        model.addAttribute("name",name);
+        model.addAttribute("role",cmDTO.getAuthorities().toString());
+        model.addAttribute("allHomeworkList",ahdList);
+        model.addAttribute("lectures",lectureDtoList);
+        model.addAttribute("lecCode",lecCode);
+        model.addAttribute("subCode",subCode);
+        model.addAttribute("remainDate",remain);
+        return "/homework/homework-student-detail";
     }
 }
