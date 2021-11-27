@@ -112,7 +112,7 @@
                             <div class="card-header py-3">
                                 <div class="row align-items-center">
                                     <div class="col-10"><h6 class="m-0 font-weight-bold text-primary"
-                                                            th:text="${homework.title}">실습 2주차 과제</h6>
+                                    th:text="${homework.getSecond().get().lecTitle} +'_'+${homework.getFirst().subCode}">실습 2주차 과제</h6>
                                     </div>
                                 </div>
                                 <div class="d-inline-flex align-items-center">
@@ -122,8 +122,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-center mb-4">
-                                    <i class="fas fa-file"></i>
-                                    <a class="text-gray-800 ml-2" href="2주차 실습 자료 파일 주소" th:text="${homework.content} + '파일명으로 변경예정'">2주차 실습 자료.pdf</a>
+                                    <a class="text-gray-800 ml-2" th:text="${homework.getFirst().title}">2주차 실습 자료.pdf</a>
                                 </div>
                                 <h4 class="small font-weight-bold">제출 현황<span
                                         class="float-right">70%</span></h4>
@@ -189,7 +188,7 @@
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="/logout">Logout</a>
+                <a class="btn btn-primary" href="/member/logout">Logout</a>
                 <!-- <a class="btn btn-primary" href="../../../../../../Desktop/소프트웨어공학/플젝/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/login.html">Logout</a> -->
             </div>
         </div>

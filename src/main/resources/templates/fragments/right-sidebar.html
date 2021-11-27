@@ -15,7 +15,7 @@
     <hr class="sidebar-divider">
 
     <!-- 과목 리스트 -->
-    <div th:each="lecture : ${lectures}">
+    <div th:if="${role} == '[INSTRUCTOR]'" th:each="lecture : ${lectures}">
         <li class="nav-item active" >
             <a class="nav-link" th:href="@{'/homework-admin/'+${lecture.lecCode}+'/'+${lecture.subCode}}">
                 <i class="fas fa-book"></i>
@@ -25,6 +25,19 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
     </div>
+
+    <div th:if="${role} == '[STUDENT]'" th:each="lecture : ${lectures}">
+        <li class="nav-item active" >
+            <a class="nav-link" th:href="@{'/homework-student/'+${lecture.lecCode}+'/'+${lecture.subCode}}">
+                <i class="fas fa-book"></i>
+                <span th:text="${lecture.lecTitle}">출석</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+    </div>
+
+
 
 
 </ul>

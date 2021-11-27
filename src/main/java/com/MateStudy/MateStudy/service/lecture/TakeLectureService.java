@@ -2,11 +2,14 @@ package com.MateStudy.MateStudy.service.lecture;
 
 import com.MateStudy.MateStudy.domain.account.Member;
 import com.MateStudy.MateStudy.domain.homework.Submit_Homework;
+import com.MateStudy.MateStudy.domain.lecture.Lecture;
 import com.MateStudy.MateStudy.domain.lecture.Taking_Lecture;
 import com.MateStudy.MateStudy.domain.lecture.Teaching_Lecture;
+import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
 import com.MateStudy.MateStudy.dto.Lecture.Submit_HomeworkDto;
 import com.MateStudy.MateStudy.dto.Lecture.TakeLectureDto;
 import com.MateStudy.MateStudy.repository.MemberRepository;
+import com.MateStudy.MateStudy.repository.lecture.LectureRepository;
 import com.MateStudy.MateStudy.repository.lecture.TakeLectureRepository;
 import com.MateStudy.MateStudy.repository.lecture.TeachLectureRepository;
 import lombok.AllArgsConstructor;
@@ -28,6 +31,9 @@ import java.util.Optional;
 public class TakeLectureService {
     @Autowired
     TakeLectureRepository takeLectureRepository;
+
+    @Autowired
+    LectureRepository lectureRepository;
 
     @Autowired
     TeachLectureRepository teachLectureRepository;
@@ -71,6 +77,36 @@ public class TakeLectureService {
             dtoList.add(dto);
         }
         return dtoList;
+    }
+
+    @Transactional
+    public List<LectureDto> getLectureDtoList(String stId){
+        Optional<Member> member = memberRepository.findById(stId);
+        List<Taking_Lecture> list = takeLectureRepository.findByStId(member.get());
+        List<TakeLectureDto> dtoList = new ArrayList<>();
+
+        for(Taking_Lecture l : list){
+            TakeLectureDto dto = TakeLectureDto.builder()
+                    .stId(l.getStId())
+                    .instId(l.getInstId())
+                    .lecCode(l.getLecCode())
+                    .subCode(l.getSubCode())
+                    .build();
+            dtoList.add(dto);
+        }
+
+        List<LectureDto> lecList = new ArrayList<>();
+
+        for(TakeLectureDto tLDto : dtoList){
+            Optional<Lecture> lecture = lectureRepository.getOneLecture(tLDto.getLecCode(), tLDto.getSubCode());
+            LectureDto lectureDto = LectureDto.builder()
+                    .lecCode(lecture.get().getLecCode())
+                    .lecTitle(lecture.get().getLecTitle())
+                    .subCode(lecture.get().getSubCode())
+                    .build();
+            lecList.add(lectureDto);
+        }
+        return lecList;
     }
 
     /* 학생이 제출한 모든 과제 리스트 반환 */
