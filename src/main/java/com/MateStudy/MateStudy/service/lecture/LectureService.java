@@ -65,7 +65,6 @@ public class LectureService {
     }
 
     @Transactional
-
     public List<Assign_HomeworkDto> getHomeworkByCode(String lecCode, Long subCode){
         Optional<Lecture> lecture = lecRepository.getOneLecture(lecCode, subCode);
         List<Assign_HomeworkDto> ahdList = new ArrayList<>();
@@ -86,6 +85,7 @@ public class LectureService {
         return ahdList;
     }
 
+    @Transactional
     public List<Pair<Assign_HomeworkDto,Optional<Lecture>>> getHomeworkByCodeWithLecture(String lecCode, Long subCode){
         Optional<Lecture> lecture = lecRepository.getOneLecture(lecCode, subCode);
         List<Pair<Assign_HomeworkDto,Optional<Lecture>>> ahdList = new ArrayList<>();

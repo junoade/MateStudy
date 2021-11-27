@@ -61,6 +61,7 @@ public class TakeLectureService {
         }
     }
 
+    @Transactional
     /* 학생이 수강하는 과목을 모두 반환 */
     public List<TakeLectureDto> getTakeLectureList(String stId){
         Optional<Member> member = memberRepository.findById(stId);
