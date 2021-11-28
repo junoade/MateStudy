@@ -28,6 +28,11 @@ public interface Submit_HomeworkRepository extends JpaRepository<Submit_Homework
             " AND S.subCode = :subCode")
     List<Submit_Homework> getMyLectureHw(@Param("stId") String stId, @Param("instId") String instId, @Param("lecCode") String lecCode, @Param("subCode") Long subCode);
 
+    @Query(value="SELECT S FROM Submit_Homework S WHERE S.hwId = :hwId")
+    List<Submit_Homework> getEverySubmitByHwId(@Param("hwId") Assign_Homework hwId);
+
+    @Query(value="SELECT S FROM Submit_Homework S WHERE S.submitId = :submitId")
+    Optional<Submit_Homework> getHomeworkBySubmitId(@Param("submitId") Long submitId);
 
     /* 학생이 제출한 특정 과제 hwId를 가져옴 */
     @Query(value="SELECT S FROM Submit_Homework S WHERE S.stId = :stId AND S.hwId = :hwId")

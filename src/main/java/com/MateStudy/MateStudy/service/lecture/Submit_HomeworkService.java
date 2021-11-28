@@ -111,21 +111,40 @@ public class Submit_HomeworkService {
         return status;
     }
 
+    @Transactional
+    public Submit_HomeworkDto getHomeworkBySubmitId(Long submitId){
+        Optional<Submit_Homework> homework = submit_homeworkRepostiory.getHomeworkBySubmitId(submitId);
+        Submit_HomeworkDto result = Submit_HomeworkDto.builder()
+                .submitId(homework.get().getSubmitId())
+                .instId(homework.get().getInstId())
+                .lecCode(homework.get().getLecCode())
+                .subCode(homework.get().getSubCode())
+                .hwId(homework.get().getHwId())
+                .title(homework.get().getTitle())
+                .content(homework.get().getContent())
+                .grade(homework.get().getGrade())
+                .build();
+        return result;
+    }
 
     @Transactional
     public Submit_HomeworkDto getHomework(String stId, Long hwId){
         Optional<Assign_Homework> assign_homework = assign_homeworkRepository.findById(hwId);
         Optional<Submit_Homework> homework = submit_homeworkRepostiory.getMySubmit(stId, assign_homework.get());
-        Submit_HomeworkDto result = Submit_HomeworkDto.builder()
-                .stId(stId)
-                .submitId(homework.get().getSubmitId())
-                .instId(homework.get().getInstId())
-                .lecCode(homework.get().getLecCode())
-                .subCode(homework.get().getSubCode())
-                .title(homework.get().getTitle())
-                .content(homework.get().getContent())
-                .grade(homework.get().getGrade())
-                .build();
+        Submit_HomeworkDto result = new Submit_HomeworkDto();
+        if(homework.isPresent()){
+            result = Submit_HomeworkDto.builder()
+                    .stId(stId)
+                    .hwId(homework.get().getHwId())
+                    .submitId(homework.get().getSubmitId())
+                    .instId(homework.get().getInstId())
+                    .lecCode(homework.get().getLecCode())
+                    .subCode(homework.get().getSubCode())
+                    .title(homework.get().getTitle())
+                    .content(homework.get().getContent())
+                    .grade(homework.get().getGrade())
+                    .build();
+        }
         return result;
     }
 
@@ -208,6 +227,13 @@ public class Submit_HomeworkService {
         List<Submit_Homework> list = submit_homeworkRepostiory.getEverySubmitHw(stId);
         return getSubmit_homeworkDtos(list);
     }
+    /* 특정 과제에 대한 학생의 모든 과제 리스트 반환*/
+    @Transactional
+    public List<Submit_HomeworkDto> getHomeworks(Long hwId){
+        Optional<Assign_Homework> assign_homework = assign_homeworkRepository.findById(hwId);
+        List<Submit_Homework> list = submit_homeworkRepostiory.getEverySubmitByHwId(assign_homework.get());
+        return getSubmit_homeworkDtos(list);
+    }
 
     /* 특정 강좌에 대한 학생의 모든 과제 리스트 반환 */
     @Transactional
@@ -227,7 +253,7 @@ public class Submit_HomeworkService {
     private List<Submit_HomeworkDto> getSubmit_homeworkDtos(List<Submit_Homework> list) {
         List<Submit_HomeworkDto> result = new ArrayList<>();
         for (Submit_Homework l : list) {
-            Submit_HomeworkDto dto = new Submit_HomeworkDto(l.getStId(), l.getInstId(), l.getLecCode(), l.getSubCode(),
+            Submit_HomeworkDto dto = new Submit_HomeworkDto(l.getSubmitId(), l.getStId(), l.getInstId(), l.getLecCode(), l.getSubCode(),
                     l.getHwId(), l.getTitle(), l.getContent(), l.getGrade());
             result.add(dto);
         }
