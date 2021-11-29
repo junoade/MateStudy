@@ -65,7 +65,7 @@ public class MainController {
             lectureDtoList = takeLectureService.getLectureDtoList(cmDTO.getId());
         }
 
-        List<Pair<Assign_HomeworkDto, Optional<Lecture>>> ahdList = new ArrayList<>();
+        List<Pair<Assign_HomeworkDto, Optional<Lecture>>> ahdList = new ArrayList<>(); // ahd means  assigned homework
         for(LectureDto lDto : lectureDtoList){
             List<Pair<Assign_HomeworkDto, Optional<Lecture>>> addList = new ArrayList<>();
             addList = lectureService.getHomeworkByCodeWithLecture(lDto.getLecCode(),lDto.getSubCode());
@@ -128,10 +128,10 @@ public class MainController {
     }
 
     // UI TEST용으로 만들었어요. 맘대로 바꾸세요
-    @GetMapping("qna")
+    /*@GetMapping("qna")
     public String qna() {
         return "qna";
-    }
+    }*/
 
     // UI TEST용으로 만들었어요. 맘대로 바꾸세요
     @GetMapping("page2")
