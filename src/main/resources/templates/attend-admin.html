@@ -80,9 +80,14 @@
             <br/>
             <p>출석정보:</p>
             <div>
-              <input type="datetime-local" id="userdate" name="userdate"
-                     value="2015-10-10">
-              <input type="submit" value="전송">
+              <input type="date" id="userdate" name="userdate"
+                     value="2021-11-29">
+              <select>
+                <option value="attend">출석</option>
+                <option value="late">지각</option>
+                <option value="absent">결석</option>
+              </select>
+              <input type="submit" value="변경">
             </div>
           </form>
         </div>

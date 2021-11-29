@@ -4499,7 +4499,7 @@ input[type="button"].btn-block {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-width: 0;
+  min-width: 0.2rem;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
@@ -10043,6 +10043,18 @@ a:focus {
   color: #3a3b45 !important;
 }
 
+.text-green{
+  color: #1cc88a !important;
+}
+
+.text-orange{
+  color: #f6c23e !important;
+}
+
+.text-red{
+  color: #e74a3b !important;
+}
+
 .icon-circle {
   height: 2.5rem;
   width: 2.5rem;
@@ -10050,6 +10062,18 @@ a:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.border-left-attend {
+  border-left: 0.5rem solid #36b9cc; !important;
+}
+
+.border-left-late {
+  border-left: 0.5rem solid #6610f2; !important;
+}
+
+.border-left-absent {
+  border-left: 0.5rem solid #5a5c69; !important;
 }
 
 .border-left-primary {
@@ -10069,7 +10093,7 @@ a:focus {
 }
 
 .border-left-success {
-  border-left: 0.25rem solid #1cc88a !important;
+  border-left: 0.5rem solid #1cc88a !important;
 }
 
 .border-bottom-success {

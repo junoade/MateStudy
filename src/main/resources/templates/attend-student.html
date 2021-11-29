@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head.html :: head(title='메인화면')"></head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- 왼쪽 사이드바 -->
+    <ul th:replace="fragments/left-sidebar.html :: ul"></ul>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- ********************** 이름 어떻게 하는지 모르겠어요 ***************************** -->
+            <nav th:replace="fragments/topbar.html :: nav(${name})"></nav>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- 출석률 -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">출석률</h1>
+                    <button th:align="right">새로고침</button>
+                </div>
+
+                <!-- 출석률, 바 그래프 -->
+                <div class="row">
+                    <div class="col-lg-12 mb-0">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">클래스별 출석률</h6>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="small font-weight-bold">수업1 <span
+                                        class="float-right">40%</span></h4>
+                                <div class="progress mb-4">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
+                                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <h4 class="small font-weight-bold">수업2 <span
+                                        class="float-right">60%</span></h4>
+                                <div class="progress mb-4">
+                                    <div class="progress-bar" role="progressbar" style="width: 60%"
+                                         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <h4 class="small font-weight-bold">수업3 <span
+                                        class="float-right">100%</span></h4>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
+                                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Row -->
+                <hr class="sidebar-divider">
+
+                <!-- 달력 -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">출석 체크</h1>
+                </div>
+
+                <div>
+                    <select>
+                        <option value="class1">수업1</option>
+                        <option value="class2">수업2</option>
+                        <option value="class3">수업3</option>
+                    </select>
+                    <input type="submit" value="조회">
+                </div>
+                <!-- Content Row -->
+                <div class="timeline">
+
+                    <!-- week1 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-attend shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">week #1</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-check-circle fa-2x text-green"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- week2 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-absent shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">week #2</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-check-circle fa-2x text-green"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- week3 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-late shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">week #3</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-check-circle fa-2x text-green"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- week4 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-attend shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">week #4</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-check-circle fa-2x text-green"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- week5 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-attend shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">week #5</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-check-circle fa-2x text-green"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- week6 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-absent shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">week #6</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-check-circle fa-2x text-green"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- week7 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-absent shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">week #7</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-check-circle fa-2x text-green"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- week8 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-absent shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">week #8</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-check-circle fa-2x text-green"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- week9 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-absent shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">week #9</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-check-circle fa-2x text-green"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- week10 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-absent shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">week #10</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-check-circle fa-2x text-green"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 과제1 today(red) -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">week #10</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-check-circle fa-2x text-green"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer th:replace="fragments/footer.html :: footer"></footer>
+    </div>
+    <!-- End of Content Wrapper -->
+
+    <!-- 오른쪽 사이드바 -->
+    <ul th:replace="fragments/right-sidebar.html :: ul"></ul>
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<th:block th:replace="modal/ModalManager.html :: logoutModal"></th:block>
+
+<footer th:replace="fragments/script.html :: footer"></footer>
+</body>
+
+</html>
