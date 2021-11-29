@@ -1,6 +1,7 @@
 package com.MateStudy.MateStudy.controller.attendance;
 
 import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
+import com.MateStudy.MateStudy.dto.MemberDto;
 import com.MateStudy.MateStudy.dto.security.CustomedMemberDTO;
 import com.MateStudy.MateStudy.service.lecture.LectureService;
 import com.MateStudy.MateStudy.service.lecture.TakeLectureService;
@@ -34,7 +35,6 @@ public class AttendanceController {
     @Autowired
     private TakeLectureService takeLectureService;
 
-
     /* 실습 관리자 출석 관리 */
     @GetMapping("/attendance-admin")
     public String attendAdmin(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
@@ -45,11 +45,25 @@ public class AttendanceController {
         /* 그외 비즈니스 로직 호출 후 Model 객체에 담아서 뷰로 전달 */
         /* 1. 해당 멤버의 담당 과목 - 사실 해당 페이지는 관리자용 페이지라 여기서 검증하는건 두번 검증하는 거긴 하다. */
         List<LectureDto> lectureDtoList = new ArrayList<>();
+        List<MemberDto> initMemberDtos = new ArrayList<>();
+        String initLecTitle = "";
         if(role.equals("[INSTRUCTOR]")){
             lectureDtoList= teachLectureService.getLectureDtoList(cmDTO.getId());
+            /* 초기화면의 관리 학생 화면 */
+            log.info(lectureDtoList.toString());
+            log.info(lectureDtoList.get(0).toString());
+            initLecTitle = lectureDtoList.get(0).getLecTitle();
+            String initLecCode = lectureDtoList.get(0).getLecCode();
+            Long initSubCode= lectureDtoList.get(0).getSubCode();
+            initLecTitle += "_"+initSubCode;
+            initMemberDtos = teachLectureService.getMyStudents(cmDTO.getId(), initLecCode, initSubCode);
+            log.info(initMemberDtos.toString());
         }else if(role.equals("[STUDENT]")){
             lectureDtoList = takeLectureService.getLectureDtoList(cmDTO.getId());
         }
+
+        /* 2. 자신이 관리하는 모든 학생 정보 */
+
 
         /* 기본 인적 사항 관련 */
         model.addAttribute("id", id);
@@ -58,7 +72,9 @@ public class AttendanceController {
 
         /* right-sidebar에서 필요한 담당 과목 정보*/
         model.addAttribute("lectures", lectureDtoList);
-
+        /* 자신이 관리하는 학생들 */
+        model.addAttribute("initStudents", initMemberDtos);
+        model.addAttribute("initLecTitle", initLecTitle);
         return "attendance/attend-admin";
     }
 

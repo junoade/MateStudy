@@ -8,110 +8,109 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-  <!-- 왼쪽 사이드바 -->
-  <ul th:replace="fragments/left-sidebar.html :: ul"></ul>
+    <!-- 왼쪽 사이드바 -->
+    <ul th:replace="fragments/left-sidebar.html :: ul"></ul>
 
-  <!-- Content Wrapper -->
-  <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
 
-    <!-- Main Content -->
-    <div id="content">
+        <!-- Main Content -->
+        <div id="content">
 
-      <!-- ********************** 이름 어떻게 하는지 모르겠어요 ***************************** -->
-      <nav th:replace="fragments/topbar.html :: nav(${name})"></nav>
+            <!-- ********************** 이름 어떻게 하는지 모르겠어요 ***************************** -->
+            <nav th:replace="fragments/topbar.html :: nav(${name})"></nav>
 
-      <!-- Begin Page Content -->
-      <div class="container-fluid">
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
 
-        <!-- 출석률 -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">출석률</h1>
-          <button th:align="right">새로고침</button>
-        </div>
-
-        <!-- 출석률, 바 그래프 -->
-        <div class="row">
-          <div class="col-lg-12 mb-0">
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">클래스별 출석률</h6>
-              </div>
-              <div class="card-body">
-                <h4 class="small font-weight-bold">수업1 <span
-                        class="float-right">40%</span></h4>
-                <div class="progress mb-4">
-                  <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                       aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                <!-- 출석률 -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                   <!-- <h1 class="h3 mb-0 text-gray-800">출석률</h1>-->
+                    <button th:align="right">새로고침</button>
                 </div>
-                <h4 class="small font-weight-bold">수업2 <span
-                        class="float-right">60%</span></h4>
-                <div class="progress mb-4">
-                  <div class="progress-bar" role="progressbar" style="width: 60%"
-                       aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+
+                <!-- 상단에 출석 관련된 과목 보여줌 -->
+                <!--<div th:replace="attendance/attend-Lecture.html :: lecture-timeline"></div>-->
+
+                <!-- 출석률, 바 그래프 -->
+                <div th:replace="attendance/attend-Lecture.html :: lecture-attendRateAdmin"></div>
+
+                <!-- Content Row -->
+                <hr class="sidebar-divider">
+
+                <!-- 달력 -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h5 class="h3 mb-0 text-gray-800" th:text="${initLecTitle}+' 담당 학생 출석 조회'">담당 학생 출석 체크</h5>
                 </div>
-                <h4 class="small font-weight-bold">수업3 <span
-                        class="float-right">100%</span></h4>
-                <div class="progress">
-                  <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
-                       aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                <!-- Content Row -->
+                <div class="row">
+                    <div class="table-responsive">
+                        <form action="/#" method="post">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th style="width: 10%">이름</th>
+                                    <th style="width: 30%">학번</th>
+                                    <th style="width: 30%">출석 여부</th>
+                                    <th style="width: 30%">출석 관리</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="initStudent: ${initStudents}">
+                                    <input type="hidden" th:name="${_csrf.parameterName}"
+                                           th:value="${_csrf.token}"/>
+                                    <!--<input type="hidden" th:name="submitId" th:value="${homework.submitId}"/>-->
+                                    <td th:text="${initStudent.name}">김범규</td>
+                                    <td th:text="${initStudent.id}">2017112083</td>
+                                    <!--<td th:if="${i}" ></td>-->
+                                    <td>미정</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <label>
+                                                    <select name="attend">
+                                                        <option value="attend">출석</option>
+                                                        <option value="late">지각</option>
+                                                        <option value="absence">결석</option>
+                                                        <option value="vacancy">공결</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            <!-- 수정 필요 -->
+                            <div class="col-4" style="margin: auto">
+                                <button type="submit" class="btn btn-primary" style="width:50%">갱신</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-              </div>
+
             </div>
-          </div>
+            <!-- /.container-fluid -->
+
         </div>
+        <!-- End of Main Content -->
 
-        <!-- Content Row -->
-        <hr class="sidebar-divider">
-
-        <!-- 달력 -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">출석 체크</h1>
-        </div>
-        <!-- Content Row -->
-        <div class="row">
-
-          <form id="frm" action="action.jsp">
-            <p>수업:</p>
-            <select>
-              <option value="class1">수업1</option>
-              <option value="class2">수업2</option>
-              <option value="class3">수업3</option>
-            </select>
-            <br/>
-            <p>출석정보:</p>
-            <div>
-              <input type="date" id="userdate" name="userdate"
-                     value="2021-11-29">
-              <select>
-                <option value="attend">출석</option>
-                <option value="late">지각</option>
-                <option value="absent">결석</option>
-              </select>
-              <input type="submit" value="변경">
-            </div>
-          </form>
-        </div>
-
-      </div>
-      <!-- /.container-fluid -->
-
+        <!-- Footer -->
+        <footer th:replace="fragments/footer.html :: footer"></footer>
     </div>
-    <!-- End of Main Content -->
+    <!-- End of Content Wrapper -->
 
-    <!-- Footer -->
-    <footer th:replace="fragments/footer.html :: footer"></footer>
-  </div>
-  <!-- End of Content Wrapper -->
-
-  <!-- 오른쪽 사이드바 -->
-  <ul th:replace="fragments/right-sidebar.html :: ul"></ul>
+    <!-- 오른쪽 사이드바 -->
+    <ul th:replace="fragments/right-sidebar.html :: ul"></ul>
 
 </div>
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
-  <i class="fas fa-angle-up"></i>
+    <i class="fas fa-angle-up"></i>
 </a>
 
 <!-- Logout Modal-->

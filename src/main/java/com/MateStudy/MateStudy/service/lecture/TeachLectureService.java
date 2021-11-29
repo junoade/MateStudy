@@ -7,6 +7,7 @@ import com.MateStudy.MateStudy.domain.lecture.Teaching_Lecture;
 import com.MateStudy.MateStudy.dto.Lecture.Assign_HomeworkDto;
 import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
 import com.MateStudy.MateStudy.dto.Lecture.TeachLectureDto;
+import com.MateStudy.MateStudy.dto.MemberDto;
 import com.MateStudy.MateStudy.repository.MemberRepository;
 import com.MateStudy.MateStudy.repository.lecture.Assign_HomeworkRepository;
 import com.MateStudy.MateStudy.repository.lecture.LectureRepository;
@@ -119,7 +120,7 @@ public class TeachLectureService {
 
     /* 교수자의 학번, 등록하고자 하는 학수번호, 분반 정보 입력시 "학습 중 강좌"에 교수자 등록*/
     @Transactional
-    public void setInstructor(String id, String lecCode, long subCode){
+    public void setInstructor(String id, String lecCode, Long subCode){
         Optional<Lecture> lecture = lectureRepository.getOneLecture(lecCode, subCode);
         Optional<Member> instructor = memberRepository.findByName(id);
 
@@ -136,4 +137,36 @@ public class TeachLectureService {
         }
     }
 
+    /* 교수자, 학수번호, 분반번호로 관리하는 모든 학생 정보 반환 */
+    @Transactional
+    public List<MemberDto> getMyStudents(String instId, String lecCode, Long subCode){
+       List<Member> students = memberRepository.getClassStudents(instId, lecCode, subCode);
+       List<MemberDto> dtos = new ArrayList<>();
+       for(Member s: students){
+           /* 비밀번호는 보안상 굳이 담지 않았다. */
+           MemberDto memberDto = MemberDto.builder()
+                   .id(s.getId())
+                   .name(s.getName())
+                   .phone(s.getPhone())
+                   .build();
+           dtos.add(memberDto);
+       }
+       return dtos;
+    }
+    /* 교수자 정보로 자신이 담당하는 모든 학생 정보 반환 */
+    @Transactional
+    public List<MemberDto> getClassStudents(String instId){
+        List<Member> students = memberRepository.getMyStudents(instId);
+        List<MemberDto> dtos = new ArrayList<>();
+        for(Member s: students){
+            /* 비밀번호는 보안상 굳이 담지 않았다. */
+            MemberDto memberDto = MemberDto.builder()
+                    .id(s.getId())
+                    .name(s.getName())
+                    .phone(s.getPhone())
+                    .build();
+            dtos.add(memberDto);
+        }
+        return dtos;
+    }
 }

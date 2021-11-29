@@ -31,7 +31,7 @@ public class Submit_Homework extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO) // hwId를 추가하면 따로 Id 등록안해도 자동으로 생성하게끔
     private Long submitId; // Wrapper 클래스인 Long 쓰는 이유, long과 같은 primitive 타입의 기본값은 0인데, 데이터베이스에서 데이터가 없다는 의미인지, id가 0인지 혼동
 
-    /* TAKE_LECUTE 엔티티의 stId - 등록된 실습 강좌에 속하는 학생이 등록하는 과제 */
+    /* ASSIGN_HOMEWORK 엔티티와 맵핑 - 강의에서 부여한 과제들 */
     /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stId", nullable = true)
     private Taking_Lecture stId;*/
@@ -39,7 +39,7 @@ public class Submit_Homework extends BaseEntity {
     @JoinColumn(name = "hwId", nullable = false)
     private Assign_Homework hwId;
 
-    /* TEACH_LECTURE 엔티티와 맵핑 (등록되어있는 실습 강좌에서 등록한 과제 */
+    /* TAKE_LECTURE 엔티티와 맵핑 - 강의를 듣는 학생이 가지는 제출한 과제들 */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "instId", referencedColumnName = "instId",insertable = false, updatable = false),
