@@ -288,7 +288,7 @@ public class HomeworkController {
 
     @PutMapping("/homework/submit")
     public String homeworkEdit(@RequestParam("file") MultipartFile files, Submit_HomeworkDto submitHomeworkDto){
-        submit_homeworkService.saveSubmitHwWithId(submitHomeworkDto);
+//        submit_homeworkService.saveSubmitHwWithId(submitHomeworkDto);
         Long submitId = submitHomeworkDto.getSubmitId();
 
         log.info("saveFile...");
