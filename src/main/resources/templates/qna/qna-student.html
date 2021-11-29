@@ -25,6 +25,9 @@
                 <div class="d-inline-flex mb-4">
                     <button type="button" class="btn btn-primary toggle-btn">최근 질문</button>
                     <button type="button" class="btn btn-secondary toggle-btn ml-2">나의 질문</button>
+                    <!--<button type="button" class="btn btn-secondary toggle-btn ml-3"
+                            th:onclick="'location.href=\'/qna-register/'+${lecCode}+'/'+${subCode}+'\''">질문 등록</button>-->
+                    <a th:href="@{'/qna/register/'+${lecCode}+'/'+${subCode}}" class="btn btn-secondary toggle-btn ml-3" role="button">질문 등록</a>
                 </div>
 
                 <!-- Content Row -->
