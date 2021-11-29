@@ -152,13 +152,7 @@
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2021</span>
-                </div>
-            </div>
-        </footer>
+        <footer th:replace="fragments/footer.html :: footer"></footer>
         <!-- End of Footer -->
 
     </div>
@@ -177,7 +171,8 @@
 <!-- Logout Modal-->
 <th:block th:replace="modal/ModalManager.html :: logoutModal"></th:block>
 
-<footer th:replace="fragments/script.html :: footer"></footer>
+<!-- scripts -->
+<footer th:replace="fragments/script.html :: script"></footer>
 </body>
 
 </html>

@@ -44,8 +44,11 @@
 </div>
 <!-- End of Page Wrapper -->
 
-<!-- 스크립트 -->
-<footer th:replace="fragments/script.html :: footer"></footer>
+<!-- Logout Modal-->
+<th:block th:replace="modal/ModalManager.html :: logoutModal"></th:block>
+
+<!-- scripts -->
+<footer th:replace="fragments/script.html :: script"></footer>
 <!-- 무한 스크롤 -->
 <script src="js/qna/infinite-scroll-docs.min.js"></script>
 <!-- 토클 버튼 -->
