@@ -31,11 +31,17 @@
             <i class="fab fa-odnoklassniki"></i>
             <span>출석</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionSidebar">
+        <div th:if="${role} == '[INSTRUCTOR]'" id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/attandance.html">출석 확인</a>
+                <a class="collapse-item" th:href="@{'/attendance-admin'}">관리자 출석 확인</a>
             </div>
         </div>
+        <div th:if="${role} == '[STUDENT]'" id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" th:href="@{'/attendance-student'}">학생 출석 확인</a>
+            </div>
+        </div>
+
     </li>
 
     <hr class="sidebar-divider">
@@ -67,9 +73,9 @@
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-bs-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/login.html">Login</a>
-                <a class="collapse-item" href="/register.html">Register</a>
-                <a class="collapse-item" href="/forgot-password.html">Forgot Password</a>
+                <a class="collapse-item" th:href="@{'/qna'}">모든 질문</a>
+                <!--<a class="collapse-item" href="/register.html">Register</a>
+                <a class="collapse-item" href="/forgot-password.html">Forgot Password</a>-->
             </div>
         </div>
     </li>
