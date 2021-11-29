@@ -44,7 +44,6 @@ public class Submit_HomeworkDto {
                 .build();
     }
 
-    @Builder
     public Submit_HomeworkDto(String stId, String instId, String lecCode, Long subCode, Assign_Homework hwId,
                               String title, String content, Integer grade) {
         this.stId = stId;

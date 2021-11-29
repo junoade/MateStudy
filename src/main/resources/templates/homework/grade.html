@@ -25,7 +25,7 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">실습과제 2주차 채점</h1>
+                <h1 class="h3 mb-2 text-gray-800" th:text="${assign.title}+' - 채점'">실습과제 2주차 채점</h1>
 
                 <!-- DataTales Example -->
                 <div class="card shadow mt-4 mb-4">
@@ -37,72 +37,35 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>제출자</th>
-                                    <th>학번</th>
-                                    <th>파일이름</th>
-                                    <th>제출날짜</th>
-                                    <th>채점점수</th>
-                                    <th style="width: 10%">채점하기</th>
+                                    <th style="width: 10%">제출자</th>
+                                    <th style="width: 20%">학번</th>
+                                    <th style="width: 40%">내용</th>
+                                    <th style="width: 10%">채점점수</th>
+                                    <th style="width: 20%">채점하기</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>제출자</th>
-                                    <th>학번</th>
-                                    <th>파일이름</th>
-                                    <th>제출날짜</th>
-                                    <th>채점점수</th>
+                                    <th style="width: 10%">제출자</th>
+                                    <th style="width: 20%">학번</th>
+                                    <th style="width: 40%">내용</th>
+                                    <th style="width: 10%">채점점수</th>
                                     <th style="width: 20%">채점하기</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                <tr>
-                                    <td>김범규</td>
-                                    <td>2017112083</td>
-                                    <td><a href="파일경로">2017112083_김범규_2주차.pdf</a></td>
-                                    <td>2021/11/11</td>
-                                    <td>70</td>
+                                <tr th:each="homework: ${homeworkList}">
+                                    <td th:text="${homework.stId}">김범규</td>
+                                    <td th:text="${homework.stId}">2017112083</td>
+                                    <td th:text="${homework.content}">내용</td>
+                                    <td th:text="${homework.grade}">70</td>
                                     <td>
-                                        <form>
+                                        <form action="/grade" method="post">
+                                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                            <input type="hidden" th:name="submitId" th:value="${homework.submitId}"/>
                                             <div class="row">
                                                 <div class="col-8"><input type="number" class="form-control"
-                                                                          placeholder="점수 입력"></div>
-                                                <div class="col-4">
-                                                    <button type="submit" class="btn btn-primary">확인</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>박동국</td>
-                                    <td>2018112345</td>
-                                    <td><a href="파일경로">2017112345_박동국_2주차.pdf</a></td>
-                                    <td>2021/11/10</td>
-                                    <td>65</td>
-                                    <td>
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-8"><input type="number" class="form-control"
-                                                                          placeholder="점수 입력"></div>
-                                                <div class="col-4">
-                                                    <button type="submit" class="btn btn-primary">확인</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>배고파</td>
-                                    <td>2016147523</td>
-                                    <td><a href="파일경로">2016147523_배고파_2주차.pdf</a></td>
-                                    <td>2021/11/10</td>
-                                    <td>미채점</td>
-                                    <td>
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-8"><input type="number" class="form-control"
-                                                                          placeholder="점수 입력"></div>
+                                                                          name="grade" placeholder="점수 입력"></div>
                                                 <div class="col-4">
                                                     <button type="submit" class="btn btn-primary">확인</button>
                                                 </div>

@@ -93,6 +93,7 @@ public class LectureService {
         ahList = assign_homeworkRepository.getAssignedHomeworksByCode(lecCode,subCode);
         for(Assign_Homework ah : ahList){
             Assign_HomeworkDto ahDto = Assign_HomeworkDto.builder()
+                    .hwId(ah.getHwId())
                     .instId(ah.getInstId())
                     .lecCode(ah.getLecCode())
                     .subCode(ah.getSubCode())
