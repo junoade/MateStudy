@@ -28,4 +28,5 @@ public class LectureController {
         model.addAttribute("postList", lectureDtoList);
         return "lecture/lecture-admin";
     }
+
 }

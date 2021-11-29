@@ -29,8 +29,12 @@
                     <button th:align="right">새로고침</button>
                 </div>
 
+                <!-- 출석 과목 전체 조회-->
+                <!--<div th:replace="attendance/attend-Lecture.html :: lecture-timeline"></div>-->
                 <!-- 출석률, 바 그래프 -->
-                <div class="row">
+                <div th:replace="attendance/attend-Lecture.html :: lecture-attendRateStudent"></div>
+
+                <!--<div class="row">
                     <div class="col-lg-12 mb-0">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -58,14 +62,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
                 <!-- Content Row -->
                 <hr class="sidebar-divider">
 
                 <!-- 달력 -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">출석 체크</h1>
+                    <h1 class="h3 mb-0 text-gray-800">출석 체크 상세 조회</h1>
                 </div>
 
                 <div>

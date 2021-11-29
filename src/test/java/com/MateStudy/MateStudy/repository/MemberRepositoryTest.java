@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -146,4 +147,30 @@ public class MemberRepositoryTest {
         Member member = result.get();
         log.info(member.toString());
     }
+
+
+    /* 교수자가 관리하는 모든 학생 정보 반환 테스트*/
+    @Test
+    @Transactional
+    public void testGetMyStudents(){
+        String instId="2017120002";
+        List<Member> memberList = memRepository.getMyStudents(instId);
+        for(Member member : memberList){
+            log.info(member.getName());
+        }
+    }
+
+    /* 교수자, 학수번호, 분반 정보로 해당 강좌의 학생 반환 테스트 */
+    @Test
+    @Transactional
+    public void testGetClassStudents(){
+        String instId = "2017120002";
+        String lecCode = "CSE4036";
+        Long subCode = 1L;
+        List<Member> memberList = memRepository.getClassStudents(instId, lecCode, subCode);
+        for (Member member : memberList){
+            log.info(member.getName());
+        }
+    }
+
 }

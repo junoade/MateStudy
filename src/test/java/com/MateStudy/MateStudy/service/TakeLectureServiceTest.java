@@ -45,9 +45,9 @@ public class TakeLectureServiceTest {
     public void testSetStudent() {
         boolean testStatus = false;
         String[] dummyIdInfo = {"2017112095", "2016112144", "2017112129", "2017112083"};
-        String instId = "2017120003";
-        String lecCode = "CSE4038";
-        Long subCode = 2L;
+        String instId = "2017120002";
+        String lecCode = "CSE4036";
+        Long subCode = 1L;
         try {
             for (String s : dummyIdInfo) {
                 takeLectureService.setStudent(s, instId, lecCode, subCode);
