@@ -173,7 +173,7 @@ public class QnaController {
     @PostMapping("/qna/register")
     public String qnaRegister(QuestionDto qnaDto){
         qnaService.saveQuestion(qnaDto);
-        return "redirect:/qna-student";
+        return "redirect:/qna";
     }
 
     @PostMapping("/qna/reply")
