@@ -1,11 +1,15 @@
 package com.MateStudy.MateStudy.controller.QnA;
 
+import com.MateStudy.MateStudy.domain.question.Question;
 import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
+import com.MateStudy.MateStudy.dto.Lecture.TeachLectureDto;
 import com.MateStudy.MateStudy.dto.qna.QuestionDto;
+import com.MateStudy.MateStudy.dto.qna.ReplyDto;
 import com.MateStudy.MateStudy.dto.security.CustomedMemberDTO;
 import com.MateStudy.MateStudy.service.lecture.LectureService;
 import com.MateStudy.MateStudy.service.lecture.TakeLectureService;
 import com.MateStudy.MateStudy.service.lecture.TeachLectureService;
+import com.MateStudy.MateStudy.service.qna.QnaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +37,9 @@ public class QnaController {
     @Autowired
     private TakeLectureService takeLectureService;
 
+    @Autowired
+    private QnaService qnaService;
+
     /* 전체 질문 조회 컨셉 */
     @GetMapping("/qna")
     public String qna(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model) {
@@ -46,8 +53,16 @@ public class QnaController {
         List<LectureDto> lectureDtoList = new ArrayList<>();
         if(role.equals("[INSTRUCTOR]")){
             lectureDtoList= teachLectureService.getLectureDtoList(cmDTO.getId());
+            List<QuestionDto> questionList = qnaService.getAllQuestions(lectureDtoList);
+            List<ReplyDto> replyList = qnaService.getAllReply(questionList);
+            model.addAttribute("questionList",questionList);
+            model.addAttribute("replyList",replyList);
         }else if(role.equals("[STUDENT]")){
             lectureDtoList = takeLectureService.getLectureDtoList(cmDTO.getId());
+            List<QuestionDto> questionList = qnaService.getAllQuestions(lectureDtoList);
+            List<ReplyDto> replyList = qnaService.getAllReply(questionList);
+            model.addAttribute("questionList",questionList);
+            model.addAttribute("replyList",replyList);
         }
 
         /* 기본 인적 사항 관련 */
@@ -74,10 +89,17 @@ public class QnaController {
         List<LectureDto> lectureDtoList = new ArrayList<>();
         if(role.equals("[INSTRUCTOR]")){
             lectureDtoList= teachLectureService.getLectureDtoList(cmDTO.getId());
+
         }else if(role.equals("[STUDENT]")){
             lectureDtoList = takeLectureService.getLectureDtoList(cmDTO.getId());
+
         }
 
+        //질문 리스트 정보
+        List<QuestionDto> questionList = qnaService.getQuestionByCode(lecCode, subCode);
+        List<ReplyDto> replyList = qnaService.getAllReply(questionList);
+        model.addAttribute("questionList",questionList);
+        model.addAttribute("replyList",replyList);
         /* 기본 인적 사항 관련 */
         model.addAttribute("id", id);
         model.addAttribute("name", name);
@@ -108,6 +130,12 @@ public class QnaController {
             lectureDtoList = takeLectureService.getLectureDtoList(cmDTO.getId());
         }
 
+        //질문 리스트 정보
+        List<QuestionDto> questionList = qnaService.getQuestionByCode(lecCode, subCode);
+        List<ReplyDto> replyList = qnaService.getAllReply(questionList);
+        model.addAttribute("questionList",questionList);
+        model.addAttribute("replyList",replyList);
+
         /* 기본 인적 사항 관련 */
         model.addAttribute("id", id);
         model.addAttribute("name", name);
@@ -127,28 +155,32 @@ public class QnaController {
     public String qnaRegisterPage(@AuthenticationPrincipal CustomedMemberDTO cmDTO, @PathVariable String lecCode,
                                   @PathVariable Long subCode, Model model){
         String role = cmDTO.getAuthorities().toString();
-
         LectureDto lectureDto = lectureService.getLecture(lecCode, subCode);
         if(role.equals("[INSTRUCTOR]")){
            model.addAttribute("instId", cmDTO.getId());
         }else if(role.equals("[STUDENT]")){
+            TeachLectureDto tDto = teachLectureService.getTeachLecture(lecCode,subCode);
+            model.addAttribute("instId",tDto.getInstId().getId());
             model.addAttribute("stId", cmDTO.getId());
         }
 
         model.addAttribute("lecture", lectureDto);
 
         return "/qna/qna-register";
-
     }
 
 
     @PostMapping("/qna/register")
     public String qnaRegister(QuestionDto qnaDto){
+        qnaService.saveQuestion(qnaDto);
+        return "redirect:/qna-student";
+    }
 
-
-
-
-        return "redirect:/qna-student/";
+    @PostMapping("/qna/reply")
+    public String reply(ReplyDto replyDto){
+        log.info("saving comment...");
+        qnaService.saveReply(replyDto);
+        return "redirect:/qna";
     }
 
 }

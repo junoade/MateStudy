@@ -31,4 +31,7 @@ public interface TeachLectureRepository extends JpaRepository<Teaching_Lecture, 
      */
     @Query(value = "SELECT L FROM Member M, Teaching_Lecture L WHERE M.id = L.instId AND M.id = :instId AND L.lecCode= :lecCode AND L.subCode = :subCode")
     Optional<Teaching_Lecture> getCurrentLecture(@Param("instId") String instId, @Param("lecCode") String lecCode, @Param("subCode") Long subCode);
+
+    @Query(value = "SELECT L FROM Teaching_Lecture L WHERE L.lecCode= :lecCode AND L.subCode = :subCode")
+    Optional<Teaching_Lecture> getTeachLecture(@Param("lecCode") String lecCode, @Param("subCode") Long subCode);
 }

@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<block th:fragment="block">
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="border-bottom pb-2">
-                    <span class="text text-primary">이름</span>
-                    <span class="text ml-2">3시간 전</span>
+<block th:fragment="block(replyList, qno)">
+    <div th:each="reply : ${replyList}">
+        <div th:if="${qno} == ${reply.qno}">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="border-bottom pb-2">
+                        <span class="text text-primary" th:text="${reply.title}">이름</span>
+                        <span class="text ml-2" th:text="${reply.date}">3시간 전</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="border-bottom pb-4">
+                        <span class="text text-dark" th:text="${reply.content}">내용</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="border-bottom pb-4">
-                            <span class="text text-dark">중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다중간
-                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
-                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
-                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
-                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
-                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
-                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.고사 3번 문제 질문이 있습니다.
-                                따로 이메일 보냈습니다.</span>
-                </div>
-            </div>
-        </div>
+    </div>
 </block>
 </html>
