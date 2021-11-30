@@ -1,6 +1,7 @@
 package com.MateStudy.MateStudy.controller.homework;
 
 import com.MateStudy.MateStudy.config.MD5Generator;
+import com.MateStudy.MateStudy.domain.account.Member;
 import com.MateStudy.MateStudy.domain.common.DateBefore;
 import com.MateStudy.MateStudy.domain.common.DateComparator;
 import com.MateStudy.MateStudy.domain.lecture.Lecture;
@@ -37,10 +38,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Slf4j
@@ -371,9 +369,15 @@ public class HomeworkController {
         model.addAttribute("homework",homework);
         model.addAttribute("dueDate",homework.getDueDate());
 
-        /*제출한 학생수 관련부*/
-        /*List<MemberDto> studentDtos = teachLectureService.getMyStudents(cmDTO.getId(), homework.getLecCode(), homework.getSubCode());
-        model.addAttribute("students", studentDtos);*/
+        /*제출한 학생 관련부*/
+        List<MemberDto> studentDtos = teachLectureService.getMyStudents(cmDTO.getId(), homework.getLecCode(), homework.getSubCode());
+        //Boolean[] submitStatus = new Boolean[studentDtos.size()];
+        Map<MemberDto, Boolean> studentMap = new HashMap<>(studentDtos.size());
+        for (MemberDto studentDto : studentDtos) {
+            Boolean temp = submit_homeworkService.isSubmitted(studentDto.getId(), hwId);
+            studentMap.put(studentDto, temp);
+        }
+        model.addAttribute("students", studentMap);
 
         /*if(submit_homeworkService.isSubmitted(stId, hwId)){
             Submit_HomeworkDto subHomework = submit_homeworkService.getHomework(stId, hwId);
