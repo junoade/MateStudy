@@ -1,8 +1,11 @@
 package com.MateStudy.MateStudy.controller.attendance;
 
+import com.MateStudy.MateStudy.dto.AttendDto;
 import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
+import com.MateStudy.MateStudy.dto.Lecture.Submit_HomeworkDto;
 import com.MateStudy.MateStudy.dto.MemberDto;
 import com.MateStudy.MateStudy.dto.security.CustomedMemberDTO;
+import com.MateStudy.MateStudy.service.AttendService;
 import com.MateStudy.MateStudy.service.lecture.LectureService;
 import com.MateStudy.MateStudy.service.lecture.TakeLectureService;
 import com.MateStudy.MateStudy.service.lecture.TeachLectureService;
@@ -13,7 +16,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +40,10 @@ public class AttendanceController {
     @Autowired
     private TakeLectureService takeLectureService;
 
+    @Autowired
+    private AttendService attendService;
+
+
     /* 실습 관리자 출석 관리 */
     @GetMapping("/attendance-admin")
     public String attendAdmin(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model){
@@ -47,6 +56,7 @@ public class AttendanceController {
         List<LectureDto> lectureDtoList = new ArrayList<>();
         List<MemberDto> initMemberDtos = new ArrayList<>();
         String initLecTitle = "";
+
         if(role.equals("[INSTRUCTOR]")){
             lectureDtoList= teachLectureService.getLectureDtoList(cmDTO.getId());
             /* 초기화면의 관리 학생 화면 */
@@ -55,6 +65,10 @@ public class AttendanceController {
             initLecTitle = lectureDtoList.get(0).getLecTitle();
             String initLecCode = lectureDtoList.get(0).getLecCode();
             Long initSubCode= lectureDtoList.get(0).getSubCode();
+
+            model.addAttribute("initLecCode", initLecCode);
+            model.addAttribute("initSubCode", initSubCode);
+
             initLecTitle += "_"+initSubCode;
             initMemberDtos = teachLectureService.getMyStudents(cmDTO.getId(), initLecCode, initSubCode);
             log.info(initMemberDtos.toString());
@@ -75,6 +89,7 @@ public class AttendanceController {
         /* 자신이 관리하는 학생들 */
         model.addAttribute("initStudents", initMemberDtos);
         model.addAttribute("initLecTitle", initLecTitle);
+        model.addAttribute("lecCode");
         return "attendance/attend-admin";
     }
 
@@ -103,6 +118,24 @@ public class AttendanceController {
         /* right-sidebar에서 필요한 담당 과목 정보*/
         model.addAttribute("lectures", lectureDtoList);
         return "attendance/attend-student";
+    }
+
+
+    @PostMapping("/attend")
+    public String setGrade(HttpServletRequest request){
+        Long submitId = Long.parseLong(request.getParameter("submitId"));
+        String stId = request.getParameter("stId");
+        String instId = request.getParameter("instId");
+        String lecCode = request.getParameter("lecCode");
+        Long subCode = Long.parseLong(request.getParameter("subCode"));
+        Long week = Long.parseLong(request.getParameter("week"));
+
+        //Submit_HomeworkDto homework = submit_homeworkService.getHomeworkBySubmitId(submitId);
+        Long attedId = attendService.setAttendStatus(stId, instId, lecCode, subCode, week);
+        //String grade = Integer.parseInt(request.getParameter("grade"));
+        String status = request.getParameter("status");
+        //submit_homeworkService.gradeSubmitHw(submitId, grade);
+        return "redirect:/attendance-admin/";
     }
 
 }
