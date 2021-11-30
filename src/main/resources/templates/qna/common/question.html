@@ -37,10 +37,10 @@
             <div class="col-12 d-flex justify-content-center">
                 <!-- data-bs-target을 밑에 div id와 맞춰야 저 div만 접었다 폈다가 됨-->
                 <button type="button" class="btn btn-primary ml-3" data-bs-toggle="collapse" data-bs-target="#comment" role="button"
-                        aria-expanded="false" aria-controls="comment">댓글 보기</button>
+                        aria-expanded="false" aria-controls="comment">답변 보기</button>
             </div>
             <div class="collapse" id="comment">
-                <block th:replace="fragments/qna/comment.html :: block"></block>
+                <block th:replace="qna/common/comment.html :: block"></block>
             </div>
         </div>
     </div>

@@ -16,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(exclude = {}) // 성능을 위해 fetch Lazy 타입으로 종종한다. 이때 사용
+@ToString(exclude = {"instId", "lecCode", "subCode", "stId"}) // 성능을 위해 fetch Lazy 타입으로 종종한다. 이때 사용
 @Table(name = "ATTENDANCE")
 public class Attend extends BaseEntity {
 
@@ -40,6 +40,8 @@ public class Attend extends BaseEntity {
     private String lecCode;
     @Column(name="subCode", nullable = false)
     private Long subCode;
+    @Column(name="stId", nullable = false)
+    private String stId;
 
     /* 해당 과목에서 주차 정보등을 담는다 */
     @Column(name="week")
