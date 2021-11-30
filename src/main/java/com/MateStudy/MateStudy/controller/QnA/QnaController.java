@@ -54,11 +54,15 @@ public class QnaController {
         if(role.equals("[INSTRUCTOR]")){
             lectureDtoList= teachLectureService.getLectureDtoList(cmDTO.getId());
             List<QuestionDto> questionList = qnaService.getAllQuestions(lectureDtoList);
+            List<ReplyDto> replyList = qnaService.getAllReply(questionList);
             model.addAttribute("questionList",questionList);
+            model.addAttribute("replyList",replyList);
         }else if(role.equals("[STUDENT]")){
             lectureDtoList = takeLectureService.getLectureDtoList(cmDTO.getId());
             List<QuestionDto> questionList = qnaService.getAllQuestions(lectureDtoList);
+            List<ReplyDto> replyList = qnaService.getAllReply(questionList);
             model.addAttribute("questionList",questionList);
+            model.addAttribute("replyList",replyList);
         }
 
         /* 기본 인적 사항 관련 */
@@ -166,11 +170,12 @@ public class QnaController {
     @PostMapping("/qna/register")
     public String qnaRegister(QuestionDto qnaDto){
         qnaService.saveQuestion(qnaDto);
-        return "redirect:/qna";
+        return "redirect:/qna-student";
     }
 
     @PostMapping("/qna/reply")
-    public String reply(@PathVariable Long qno, ReplyDto replyDto){
+    public String reply(ReplyDto replyDto){
+        log.info("saving comment...");
         qnaService.saveReply(replyDto);
         return "redirect:/qna";
     }

@@ -23,7 +23,7 @@ public class Reply extends BaseEntity {
     @JoinColumn(name = "qno")
     private Question qno;
 
-    @Column(name="title", nullable = false)
+    @Column(name="title")
     private String title;
 
     @Column(name="content", nullable = false)

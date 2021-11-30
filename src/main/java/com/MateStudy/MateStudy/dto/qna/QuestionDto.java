@@ -20,6 +20,9 @@ public class QuestionDto {
     private String title;
     private String content;
     private String date;
+    private String stName;
+    private String instName;
+    private String lecTitle;
 
     public Question toEntity(){
         return Question.builder()
@@ -35,7 +38,8 @@ public class QuestionDto {
 
     @Builder
     public QuestionDto(Long qno, String stId, String instId, String lecCode, Long subCode,
-                       String title, String content, String remainDate) {
+                       String title, String content, String remainDate,
+                       String stName, String instName, String lecTitle) {
         this.qno = qno;
         this.stId = stId;
         this.instId = instId;
@@ -44,5 +48,8 @@ public class QuestionDto {
         this.title = title;
         this.content = content;
         this.date = remainDate;
+        this.stName = stName;
+        this.instName = instName;
+        this.lecTitle = lecTitle;
     }
 }

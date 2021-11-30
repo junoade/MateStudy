@@ -28,7 +28,7 @@
                 </div>
 
                 <!-- Content Row -->
-                <block th:replace="qna/common/question.html :: block(questionList = ${questionList})"></block>
+                <block th:replace="qna/common/question.html :: block(questionList = ${questionList}, role = ${role})"></block>
             </div>
             <!-- /.container-fluid -->
         </div>

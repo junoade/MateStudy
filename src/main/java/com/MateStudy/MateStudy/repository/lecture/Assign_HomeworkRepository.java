@@ -21,5 +21,4 @@ public interface Assign_HomeworkRepository extends JpaRepository<Assign_Homework
 
     @Query(value="SELECT H FROM Assign_Homework H WHERE H.lecCode = :lecCode AND H.subCode = :subCode")
     List<Assign_Homework> getAssignedHomeworksByCode(@Param("lecCode") String lecCode, @Param("subCode") Long subCode);
-
 }
