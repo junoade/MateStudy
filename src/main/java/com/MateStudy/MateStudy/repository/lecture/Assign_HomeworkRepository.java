@@ -21,4 +21,14 @@ public interface Assign_HomeworkRepository extends JpaRepository<Assign_Homework
 
     @Query(value="SELECT H FROM Assign_Homework H WHERE H.lecCode = :lecCode AND H.subCode = :subCode")
     List<Assign_Homework> getAssignedHomeworksByCode(@Param("lecCode") String lecCode, @Param("subCode") Long subCode);
+
+    @Query(value="SELECT COUNT(H.hwId) FROM Assign_Homework H WHERE H.isDone=true")
+    Long getCountDoneHw();
+
+    /* 마감된 과목의 제출 학생 수 반환 */
+    @Query(value="SELECT COUNT(S.submitId) FROM Submit_Homework S, Assign_Homework A WHERE S.hwId=A.hwId AND A.hwId = :hwId AND A.isDone = true", nativeQuery = true)
+    Long getCountSumbitFromDoneHw(@Param("hwId") String hwId);
+
+    @Query(value="SELECT COUNT(S.submitId) FROM Submit_Homework S, Assign_Homework A WHERE S.hwId=A.hwId AND A.hwId = :hwId AND A.isDone = false", nativeQuery = true)
+    Long getCountNotSubmitHw(@Param("hwId") String hwId);
 }
