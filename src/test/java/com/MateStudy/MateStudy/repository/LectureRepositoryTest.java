@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.transaction.TestTransaction;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
@@ -37,12 +38,11 @@ public class LectureRepositoryTest {
         log.info("INSERT DUMMY MEMBER INTO THE DATABASE");
         boolean testStatus = false;
         try {
-            final int SIZE = 5;
-            String[] dummyLecCode = {"CSE4058", "CSE4058", "CSE4036", "CSE4036", "CSE4041", "CSE4041", "CSE4038", "CSE4038"};
-            long[] dummySubCode = {1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L,};
-            String[] dummyTitle = {"소프트웨어공학개론", "소프트웨어공학개론", "인공지능", "인공지능",
+            String[] dummyLecCode = {"CSE2017","CSE2017","CSE4058", "CSE4058", "CSE4036", "CSE4036", "CSE4041", "CSE4041", "CSE4038", "CSE4038"};
+            long[] dummySubCode = {1L,2L,1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L,};
+            String[] dummyTitle = {"자료구조","자료구조","소프트웨어공학개론", "소프트웨어공학개론", "인공지능", "인공지능",
                     "데이터베이스프로그래밍", "데이터베이스프로그래밍", "데이터통신입문", "데이터통신입문"};
-            for (int i = 0; i < SIZE; i++) {
+            for (int i = 0; i < dummyLecCode.length; i++) {
                 Lecture lecture = Lecture.builder().lecCode(dummyLecCode[i]).subCode(dummySubCode[i])
                         .lecTitle(dummyTitle[i]).build();
                 lectureRepository.save(lecture);
@@ -53,6 +53,7 @@ public class LectureRepositoryTest {
             e.printStackTrace();
         } finally {
             Assertions.assertTrue(testStatus);
+            //TestTransaction.flagForCommit();
         }
     }
 
