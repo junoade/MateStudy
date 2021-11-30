@@ -21,7 +21,7 @@ public class DateBefore {
         LocalDate now = LocalDate.now();
 
         if(ChronoUnit.DAYS.between(now,due) == 0){
-            return "D-Day";
+            return "오늘";
         }
         return ChronoUnit.DAYS.between(now,due) + "일 전";
     }

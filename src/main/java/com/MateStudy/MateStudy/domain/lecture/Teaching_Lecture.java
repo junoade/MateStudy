@@ -42,6 +42,6 @@ public class Teaching_Lecture extends BaseEntity {
     private String lecCode;
 
     @Column(name="subCode")
-    private long subCode;
+    private Long subCode;
 
 }

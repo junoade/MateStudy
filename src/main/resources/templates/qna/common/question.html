@@ -1,27 +1,21 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<block th:fragment="block">
+<block th:fragment="block (questionList)">
     <!-- Content Row -->
-    <div class="row rounded shadow bg-white p-4 ml-0 mr-0 mb-5">
+    <div class="row rounded shadow bg-white p-4 ml-0 mr-0 mb-5" th:each="ques : ${questionList}">
         <div class="row mb-4">
             <div class="col-12">
                 <div class="border-bottom pb-2">
-                    <span class="text text-primary">이름</span>
-                    <span class="text ml-2">1일 전</span>
+                    <span class="text text-primary"
+                          th:text="${ques.title} + ' (' + ${ques.lecCode}+'_'+${ques.subCode} + ')'">제목</span>
+                    <span class="text ml-2" th:text="${ques.date}">1일 전</span>
                 </div>
             </div>
         </div>
         <div class="row mb-4">
             <div class="col-12">
                 <div class="border-bottom pb-4">
-                            <span class="text text-dark">중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다중간
-                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
-                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
-                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
-                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
-                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.
-                                중간고사 3번 문제 질문이 있습니다. 따로 이메일 보냈습니다.고사 3번 문제 질문이 있습니다.
-                                따로 이메일 보냈습니다.</span>
+                            <span class="text text-dark" th:text="${ques.content}">내용</span>
                 </div>
             </div>
         </div>

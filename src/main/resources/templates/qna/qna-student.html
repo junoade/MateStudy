@@ -31,10 +31,7 @@
                 </div>
 
                 <!-- Content Row -->
-                <block th:replace="qna/common/question.html :: block"></block>
-                <block th:replace="qna/common/question.html :: block"></block>
-                <block th:replace="qna/common/question.html :: block"></block>
-                <block th:replace="qna/common/question.html :: block"></block>
+                <block th:replace="qna/common/question.html :: block(questionList = ${questionList})"></block>
             </div>
             <!-- /.container-fluid -->
         </div>

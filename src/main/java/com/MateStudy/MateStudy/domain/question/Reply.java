@@ -20,8 +20,12 @@ public class Reply extends BaseEntity {
     private Long rno;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "qno")
     private Question qno;
 
+    @Column(name="title", nullable = false)
     private String title;
+
+    @Column(name="content", nullable = false)
     private String content;
 }

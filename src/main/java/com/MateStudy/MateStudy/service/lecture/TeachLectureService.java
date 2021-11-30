@@ -137,6 +137,17 @@ public class TeachLectureService {
         }
     }
 
+    @Transactional
+    public TeachLectureDto getTeachLecture(String lecCode, Long subCode){
+        Teaching_Lecture t = teachingRepository.getTeachLecture(lecCode, subCode).get();
+        TeachLectureDto tDto = TeachLectureDto.builder()
+                .instId(t.getInstId())
+                .lecCode(t.getLecCode())
+                .subCode(t.getSubCode())
+                .build();
+        return tDto;
+    }
+
     /* 교수자, 학수번호, 분반번호로 관리하는 모든 학생 정보 반환 */
     @Transactional
     public List<MemberDto> getMyStudents(String instId, String lecCode, Long subCode){
