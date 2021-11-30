@@ -39,7 +39,7 @@
                 </div>
                 <div>
                     <h3>마감 날짜</h3>
-                    <span th:text="${dueDate}">마감날짜</span>
+                    <span th:text="${#temporals.format(dueDate, 'yyyy-MM/dd HH시 mm분')}">마감날짜</span>
                 </div>
                 <!-- 과제 제출 여부 -->
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
