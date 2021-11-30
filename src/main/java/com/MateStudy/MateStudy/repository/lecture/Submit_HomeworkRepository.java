@@ -47,4 +47,8 @@ public interface Submit_HomeworkRepository extends JpaRepository<Submit_Homework
 
     /* 학생이 특정 강좌의 hwId에 올린 과제를 삭제 */
     /* deleteBy 이용하기 */
+
+    @Query(value="SELECT COUNT(S.submitId) FROM Submit_Homework S WHERE S.hwId=:hwId")
+    Long getCountSubmitHw(@Param("hwId") String hwId);
+
 }
