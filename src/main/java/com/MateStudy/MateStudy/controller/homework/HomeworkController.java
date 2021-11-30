@@ -1,6 +1,7 @@
 package com.MateStudy.MateStudy.controller.homework;
 
 import com.MateStudy.MateStudy.config.MD5Generator;
+import com.MateStudy.MateStudy.domain.account.Member;
 import com.MateStudy.MateStudy.domain.common.DateBefore;
 import com.MateStudy.MateStudy.domain.common.DateComparator;
 import com.MateStudy.MateStudy.domain.lecture.Lecture;
@@ -11,6 +12,7 @@ import com.MateStudy.MateStudy.dto.Lecture.Submit_HomeworkDto;
 import com.MateStudy.MateStudy.dto.MemberDto;
 import com.MateStudy.MateStudy.dto.security.CustomedMemberDTO;
 import com.MateStudy.MateStudy.service.FileService;
+import com.MateStudy.MateStudy.service.MemberService;
 import com.MateStudy.MateStudy.service.homework.AhwFileService;
 import com.MateStudy.MateStudy.service.homework.ShwFileService;
 import com.MateStudy.MateStudy.service.lecture.*;
@@ -37,10 +39,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Slf4j
@@ -70,6 +69,9 @@ public class HomeworkController {
 
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    private MemberService memberService;
 
 
     private DateComparator dateComparator = new DateComparator();
@@ -345,6 +347,9 @@ public class HomeworkController {
         }
         Assign_HomeworkDto homework = assgin_homeworkService.getHomework(hwId);
         List<FileDto> fileList = ahwFileService.getFileDtoByHwId(hwId);
+
+
+
         model.addAttribute("instId",stId);
         model.addAttribute("submitted",0);
         model.addAttribute("homework",homework);
@@ -356,8 +361,6 @@ public class HomeworkController {
     @GetMapping("/post/admin/{hwId}")
     public String postAdminPage(@AuthenticationPrincipal CustomedMemberDTO cmDTO,
                                   @PathVariable Long hwId, Model model){
-        String adminId = cmDTO.getId();
-
         /* 일단 필수적으로 보내주는 부분 */
         model.addAttribute("name",cmDTO.getName());
         List<LectureDto> lectureDtoList = teachLectureService.getLectureDtoList(cmDTO.getId()); // 교수자라서
@@ -371,9 +374,15 @@ public class HomeworkController {
         model.addAttribute("homework",homework);
         model.addAttribute("dueDate",homework.getDueDate());
 
-        /*제출한 학생수 관련부*/
-        /*List<MemberDto> studentDtos = teachLectureService.getMyStudents(cmDTO.getId(), homework.getLecCode(), homework.getSubCode());
-        model.addAttribute("students", studentDtos);*/
+        /*제출한 학생 관련부*/
+        List<MemberDto> studentDtos = teachLectureService.getMyStudents(cmDTO.getId(), homework.getLecCode(), homework.getSubCode());
+        //Boolean[] submitStatus = new Boolean[studentDtos.size()];
+        Map<MemberDto, Boolean> studentMap = new HashMap<>(studentDtos.size());
+        for (MemberDto studentDto : studentDtos) {
+            Boolean temp = submit_homeworkService.isSubmitted(studentDto.getId(), hwId);
+            studentMap.put(studentDto, temp);
+        }
+        model.addAttribute("students", studentMap);
 
         /*if(submit_homeworkService.isSubmitted(stId, hwId)){
             Submit_HomeworkDto subHomework = submit_homeworkService.getHomework(stId, hwId);
@@ -397,11 +406,36 @@ public class HomeworkController {
 
 
     @GetMapping("/grade/{hwId}")
-    public String grade(@PathVariable Long hwId, Model model){
+    public String grade(@AuthenticationPrincipal CustomedMemberDTO cmDTO,@PathVariable Long hwId, Model model){
+
+        /* 일단 필수적으로 보내주는 부분 */
+        model.addAttribute("name",cmDTO.getName());
+        List<LectureDto> lectureDtoList = teachLectureService.getLectureDtoList(cmDTO.getId()); // 교수자라서
+        model.addAttribute("lectures",lectureDtoList);
+        model.addAttribute("role", cmDTO.getAuthorities().toString());
+
+
         Assign_HomeworkDto assign_homeworkDto = assgin_homeworkService.getHomework(hwId);
         List<Submit_HomeworkDto> homeworks = submit_homeworkService.getHomeworks(hwId);
         model.addAttribute("assign",assign_homeworkDto);
-        model.addAttribute("homeworkList",homeworks);
+        //model.addAttribute("homeworkList",homeworks);
+        List<Pair<Integer, List<FileDto>>> studentFileList = new ArrayList<>();
+        /*해당 강좌의 학생 관련부*/
+        Map<Submit_HomeworkDto, String> map = new HashMap<>();
+        for(int i = 0; i< homeworks.size(); i++){
+            String memberName = memberService.getMemberName(homeworks.get(i).getStId());
+            map.put(homeworks.get(i), memberName);
+
+            /* 학생이 제출한 파일들을 같이 보여주기 위해서 */
+            List<FileDto> fileDto = shwFileService.getFileDtoBySubmitId(homeworks.get(i).getSubmitId());
+            Pair<Integer, List<FileDto>> pair = Pair.of(i, fileDto);
+            studentFileList.add(pair);
+        }
+        model.addAttribute("homeworkList",map);
+
+        /*학생이 제출한 파일들을 같이 보여주기 위해서 */
+        model.addAttribute("fileList", studentFileList);
+
         return "/homework/grade";
     }
 
