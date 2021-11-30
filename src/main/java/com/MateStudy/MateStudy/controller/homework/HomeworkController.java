@@ -369,6 +369,7 @@ public class HomeworkController {
         List<FileDto> fileList = ahwFileService.getFileDtoByHwId(hwId);
         model.addAttribute("fileList",fileList);
         model.addAttribute("homework",homework);
+        model.addAttribute("dueDate",homework.getDueDate());
 
         /*제출한 학생수 관련부*/
         /*List<MemberDto> studentDtos = teachLectureService.getMyStudents(cmDTO.getId(), homework.getLecCode(), homework.getSubCode());
