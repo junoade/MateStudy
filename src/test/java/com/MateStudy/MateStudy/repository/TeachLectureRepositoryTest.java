@@ -1,5 +1,6 @@
 package com.MateStudy.MateStudy.repository;
 
+import com.MateStudy.MateStudy.domain.lecture.Lecture;
 import com.MateStudy.MateStudy.domain.lecture.Teaching_Lecture;
 import com.MateStudy.MateStudy.repository.lecture.TeachLectureRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -46,4 +47,20 @@ public class TeachLectureRepositoryTest {
         Optional<Teaching_Lecture> currentLecture = tlRepository.getCurrentLecture(instId,"CSE4058", subCode);
         Assertions.assertTrue(currentLecture.isPresent());
     }
+
+/*    @Test
+    @Transactional
+    public void testInsertTeacher(){
+        String instId = "2017120002";
+        String lecCode = "CSE2017";
+        Long subCode = 1L;
+        Teaching_Lecture tl = Teaching_Lecture.builder()
+                .instId(instId)
+                .lecCode(lecCode)
+                .subCode(subCode);
+        tlRepository.save(tl);
+    }*/
+
+
+
 }

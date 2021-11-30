@@ -47,8 +47,8 @@ public class MemberRepositoryTest {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         /*최초 실행시*/
-        String[] dummyIdInfo = {"2017110000", "2016112000", "2017112001", "2017112002"};
-        String[] dummyNameInfo = {"최학생", "김학생", "이학생", "범학생"};
+        String[] dummyIdInfo = {"2017112095", "2016112144", "2017112129", "2017112083"};
+        String[] dummyNameInfo = {"최준호", "김민석", "이정욱", "김범규"};
         String[] dummyEmailInfo = {"stdTest@test.com", "stdTest2@test.kr", "stdTest3@test.com", "stdTest4@test.com"};
         String[] dummyPhoneInfo = {"010-1200-0000", "010-1200-0001", "010-1200-0002", "010-1200-0003"};
 
