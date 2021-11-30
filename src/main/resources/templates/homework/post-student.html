@@ -21,38 +21,38 @@
             <!-- ********************** 이름 어떻게 하는지 모르겠어요 ***************************** -->
             <nav th:replace="fragments/topbar.html :: nav(${name})"></nav>
 
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-                <div>
+            <div class="card shadow mb-5">
+                <div class="card-header py-3">
                     <h1 th:text="${homework.title}">제목</h1>
-                    <hr>
+                </div>
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <h4 class="small font-weight-bold">내용: </h4>
+                        <span th:text="${homework.content}">내용</span>
+                        <hr class="sidebar-divider">
+                    </div>
+                    <div th:if="${!fileList.isEmpty()}">
+                        <a th:href="@{'/download/' + ${fileList.get(0).id}}"
+                           th:text="${fileList.get(0).originFilename}"></a>
+                        <hr>
+                    </div>
+                    <div th:if="${submitted == 0}"><h4 class="small font-weight-bold">제출 기한</h4>
+                        <span th:text="${homework.dueDate}">제출 기한</span>
+                        <hr>
+                    </div>
+                    <div th:if="${submitted == 1}"><h4 class="small font-weight-bold">점수</h4>
+                        <span th:text="${homework.grade}">점수</span>
+                        <hr>
+                    </div>
+                    <div th:if="${submitted == 0}">
+                        <a th:href="@{'/homework/submit/'+${homework.hwId}}">제출</a>
+                    </div>
+                    <div th:if="${submitted == 1}">
+                        <a th:href="@{'/homework/submit/'+${homework.hwId.hwId}}">수정</a>
+                    </div>
                 </div>
 
-                <div><h3>내용 :</h3>
-                    <span th:text="${homework.content}">내용</span>
-                    <hr>
-                </div>
-                <div th:if="${!fileList.isEmpty()}">
-                    <a th:href="@{'/download/' + ${fileList.get(0).id}}"
-                       th:text="${fileList.get(0).originFilename}"></a>
-                    <hr>
-                </div>
-                <div th:if="${submitted == 0}"><h3>제출 기한</h3>
-                    <span th:text="${homework.dueDate}">제출 기한</span>
-                    <hr>
-                </div>
-                <div th:if="${submitted == 1}"><h3>점수</h3>
-                    <span th:text="${homework.grade}">점수</span>
-                    <hr>
-                </div>
-                <div th:if="${submitted == 0}">
-                    <a th:href="@{'/homework/submit/'+${homework.hwId}}">제출</a>
-                </div>
-                <div th:if="${submitted == 1}">
-                    <a th:href="@{'/homework/submit/'+${homework.hwId.hwId}}">수정</a>
-                </div>
             </div>
-
             <!-- /.container-fluid -->
 
         </div>
