@@ -37,6 +37,10 @@
                        th:text="${fileList.get(0).originFilename}"></a>
                     <hr>
                 </div>
+                <div>
+                    <h3>마감 날짜</h3>
+                    <span th:text="${dueDate}">마감날짜</span>
+                </div>
                 <!--<div th:if="${submitted == 0}"><h3>제출 기한</h3>
                     <span th:text="${homework.dueDate}">제출 기한</span>
                     <hr>
