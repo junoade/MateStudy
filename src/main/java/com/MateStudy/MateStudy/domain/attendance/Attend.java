@@ -50,4 +50,5 @@ public class Attend extends BaseEntity {
     /* 출석 여부 yet, attend, late, absence, vacancy */
     @Column(name="status", columnDefinition = "varchar(255) DEFAULT 'YET' CHECK (status IN ('YET', 'ATTEND', 'LATE', 'ABSENCE', 'VACANCY'))")
     private String status;
+
 }

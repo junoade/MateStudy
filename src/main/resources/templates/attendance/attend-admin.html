@@ -25,7 +25,7 @@
 
                 <!-- 출석률 -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                   <!-- <h1 class="h3 mb-0 text-gray-800">출석률</h1>-->
+                    <!-- <h1 class="h3 mb-0 text-gray-800">출석률</h1>-->
                     <button th:align="right">새로고침</button>
                 </div>
 
@@ -45,48 +45,60 @@
                 <!-- Content Row -->
                 <div class="row">
                     <div class="table-responsive">
-                        <form action="/#" method="post">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th style="width: 10%">이름</th>
-                                    <th style="width: 30%">학번</th>
-                                    <th style="width: 30%">출석 여부</th>
-                                    <th style="width: 30%">출석 관리</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="initStudent: ${initStudents}">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th style="width: 10%">이름</th>
+                                <th style="width: 20%">학번</th>
+                                <th style="10%">주차</th>
+                                <th style="width: 30%">출석 여부</th>
+                                <th style="width: 30%">출석 관리</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="initStudent: ${initStudents}">
+                                <form action="/attend" method="post">
                                     <input type="hidden" th:name="${_csrf.parameterName}"
                                            th:value="${_csrf.token}"/>
-                                    <!--<input type="hidden" th:name="submitId" th:value="${homework.submitId}"/>-->
+                                    <input type="hidden" th:name="stId" th:value="${initStudent.id}"/>
+                                    <input type="hidden" th:name="instId" th:value="${id}"/>
+                                    <input type="hidden" th:name="lecCode" th:value="${initLecCode}"/>
+                                    <input type="hidden" th:name="subCode" th:value="${initSubCode}"/>
                                     <td th:text="${initStudent.name}">김범규</td>
                                     <td th:text="${initStudent.id}">2017112083</td>
+                                    <td>
+                                        <div class="row">
+                                            <input type="number" th:name="week" th:value="${initStudent}"/>
+                                        </div>
+                                    </td>
                                     <!--<td th:if="${i}" ></td>-->
                                     <td>미정</td>
                                     <td>
                                         <div class="row">
                                             <div class="col-8">
                                                 <label>
-                                                    <select name="attend">
-                                                        <option value="attend">출석</option>
-                                                        <option value="late">지각</option>
-                                                        <option value="absence">결석</option>
-                                                        <option value="vacancy">공결</option>
+                                                    <select th:name="status">
+                                                        <option th:value="attend">출석</option>
+                                                        <option th:value="late">지각</option>
+                                                        <option th:value="absence">결석</option>
+                                                        <option th:value="vacancy">공결</option>
                                                     </select>
                                                 </label>
+                                                <div class="col-4">
+                                                    <button type="submit" class="btn btn-primary">확인</button>
+                                                </div>
                                             </div>
                                         </div>
-
                                     </td>
-                                </tr>
+                                </form>
+                            </tr>
 
-                                </tbody>
-                            </table>
-                            <!-- 수정 필요 -->
-                            <div class="col-4" style="margin: auto">
-                                <button type="submit" class="btn btn-primary" style="width:50%">갱신</button>
-                            </div>
+                            </tbody>
+                        </table>
+                        <!-- 수정 필요 -->
+                        <div class="col-4" style="margin: auto">
+                            <button type="submit" class="btn btn-primary" style="width:50%">갱신</button>
+                        </div>
                         </form>
                     </div>
                 </div>
