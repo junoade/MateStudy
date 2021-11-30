@@ -325,6 +325,12 @@ public class HomeworkController {
                                   @PathVariable Long hwId, Model model){
         String stId = cmDTO.getId();
 
+        /* 일단 필수적으로 보내줌 */
+        model.addAttribute("name",cmDTO.getName());
+        List<LectureDto> lectureDtoList = takeLectureService.getLectureDtoList(cmDTO.getId());
+        model.addAttribute("lectures",lectureDtoList);
+        model.addAttribute("role", cmDTO.getAuthorities().toString());
+
         if(submit_homeworkService.isSubmitted(stId, hwId)){
             Submit_HomeworkDto subHomework = submit_homeworkService.getHomework(stId, hwId);
             log.info("submitId : "+subHomework.getSubmitId());
@@ -341,6 +347,7 @@ public class HomeworkController {
         model.addAttribute("submitted",0);
         model.addAttribute("homework",homework);
         model.addAttribute("fileList",fileList);
+
         return "/homework/post-student";
     }
 

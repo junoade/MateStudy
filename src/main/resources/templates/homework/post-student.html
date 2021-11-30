@@ -1,27 +1,83 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-    <h1 th:text="${homework.title}">제목</h1><hr></div>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<div ><h3>내용 :</h3>
-    <span th:text="${homework.content}">내용</span><hr></div>
-<div th:if="${!fileList.isEmpty()}">
-    <a th:href="@{'/download/' + ${fileList.get(0).id}}" th:text="${fileList.get(0).originFilename}"></a>
-    <hr></div>
-<div th:if="${submitted == 0}"><h3>제출 기한</h3>
-    <span th:text="${homework.dueDate}">제출 기한</span><hr></div>
-<div th:if="${submitted == 1}" ><h3>점수</h3>
-    <span th:text="${homework.grade}">점수</span><hr></div>
-<div th:if="${submitted == 0}">
-    <a th:href="@{'/homework/submit/'+${homework.hwId}}">제출</a>
+<head th:replace="fragments/head.html :: head('과제 제출 조회')"></head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- 왼쪽 사이드바 -->
+    <ul th:replace="fragments/left-sidebar.html :: ul"></ul>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Top bar -->
+            <!-- ********************** 이름 어떻게 하는지 모르겠어요 ***************************** -->
+            <nav th:replace="fragments/topbar.html :: nav(${name})"></nav>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <div>
+                    <h1 th:text="${homework.title}">제목</h1>
+                    <hr>
+                </div>
+
+                <div><h3>내용 :</h3>
+                    <span th:text="${homework.content}">내용</span>
+                    <hr>
+                </div>
+                <div th:if="${!fileList.isEmpty()}">
+                    <a th:href="@{'/download/' + ${fileList.get(0).id}}"
+                       th:text="${fileList.get(0).originFilename}"></a>
+                    <hr>
+                </div>
+                <div th:if="${submitted == 0}"><h3>제출 기한</h3>
+                    <span th:text="${homework.dueDate}">제출 기한</span>
+                    <hr>
+                </div>
+                <div th:if="${submitted == 1}"><h3>점수</h3>
+                    <span th:text="${homework.grade}">점수</span>
+                    <hr>
+                </div>
+                <div th:if="${submitted == 0}">
+                    <a th:href="@{'/homework/submit/'+${homework.hwId}}">제출</a>
+                </div>
+                <div th:if="${submitted == 1}">
+                    <a th:href="@{'/homework/submit/'+${homework.hwId.hwId}}">수정</a>
+                </div>
+            </div>
+
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer th:replace="fragments/footer.html :: footer"></footer>
+
+    </div>
+    <!-- End of Content Wrapper -->
+    <!-- 오른쪽 사이드바 -->
+    <ul th:replace="fragments/right-sidebar.html :: ul"></ul>
 </div>
-<div th:if="${submitted == 1}">
-    <a th:href="@{'/homework/submit/'+${homework.hwId.hwId}}">수정</a>
-</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<th:block th:replace="modal/ModalManager.html :: logoutModal"></th:block>
+
+<!-- scripts -->
+<footer th:replace="fragments/script.html :: script"></footer>
 </body>
+
 </html>
