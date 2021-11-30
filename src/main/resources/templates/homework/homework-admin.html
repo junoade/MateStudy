@@ -120,7 +120,8 @@
                             </div>
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-center mb-4">
-                                    <a class="text-gray-800 ml-2" th:text="${homework.getFirst().title}">2주차 실습 자료.pdf</a>
+                                    <a th:href="@{'/post/admin/'+${homework.getFirst().hwId}}"
+                                            class="text-gray-800 ml-2" th:text="${homework.getFirst().title}">2주차 실습 자료.pdf</a>
                                 </div>
                                 <h4 class="small font-weight-bold">제출 현황<span
                                         class="float-right">70%</span></h4>

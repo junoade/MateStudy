@@ -37,20 +37,25 @@
                        th:text="${fileList.get(0).originFilename}"></a>
                     <hr>
                 </div>
-                <div th:if="${submitted == 0}"><h3>제출 기한</h3>
+                <div>
+                    <h3>마감 날짜</h3>
+                    <span th:text="${dueDate}">마감날짜</span>
+                </div>
+                <!--<div th:if="${submitted == 0}"><h3>제출 기한</h3>
                     <span th:text="${homework.dueDate}">제출 기한</span>
                     <hr>
-                </div>
-                <div th:if="${submitted == 1}"><h3>점수</h3>
+                </div>-->
+
+                <!--<div th:if="${submitted == 1}"><h3>점수</h3>
                     <span th:text="${homework.grade}">점수</span>
                     <hr>
-                </div>
-                <div th:if="${submitted == 0}">
+                </div>-->
+                <!--<div th:if="${submitted == 0}">
                     <a th:href="@{'/homework/submit/'+${homework.hwId}}">제출</a>
                 </div>
                 <div th:if="${submitted == 1}">
                     <a th:href="@{'/homework/submit/'+${homework.hwId.hwId}}">수정</a>
-                </div>
+                </div>-->
             </div>
 
             <!-- /.container-fluid -->

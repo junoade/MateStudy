@@ -8,6 +8,7 @@ import com.MateStudy.MateStudy.dto.FileDto;
 import com.MateStudy.MateStudy.dto.Lecture.Assign_HomeworkDto;
 import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
 import com.MateStudy.MateStudy.dto.Lecture.Submit_HomeworkDto;
+import com.MateStudy.MateStudy.dto.MemberDto;
 import com.MateStudy.MateStudy.dto.security.CustomedMemberDTO;
 import com.MateStudy.MateStudy.service.FileService;
 import com.MateStudy.MateStudy.service.homework.AhwFileService;
@@ -69,6 +70,7 @@ public class HomeworkController {
 
     @Autowired
     private FileService fileService;
+
 
     private DateComparator dateComparator = new DateComparator();
 
@@ -325,6 +327,12 @@ public class HomeworkController {
                                   @PathVariable Long hwId, Model model){
         String stId = cmDTO.getId();
 
+        /* 일단 필수적으로 보내줌 */
+        model.addAttribute("name",cmDTO.getName());
+        List<LectureDto> lectureDtoList = takeLectureService.getLectureDtoList(cmDTO.getId());
+        model.addAttribute("lectures",lectureDtoList);
+        model.addAttribute("role", cmDTO.getAuthorities().toString());
+
         if(submit_homeworkService.isSubmitted(stId, hwId)){
             Submit_HomeworkDto subHomework = submit_homeworkService.getHomework(stId, hwId);
             log.info("submitId : "+subHomework.getSubmitId());
@@ -341,8 +349,52 @@ public class HomeworkController {
         model.addAttribute("submitted",0);
         model.addAttribute("homework",homework);
         model.addAttribute("fileList",fileList);
+
         return "/homework/post-student";
     }
+
+    @GetMapping("/post/admin/{hwId}")
+    public String postAdminPage(@AuthenticationPrincipal CustomedMemberDTO cmDTO,
+                                  @PathVariable Long hwId, Model model){
+        String adminId = cmDTO.getId();
+
+        /* 일단 필수적으로 보내주는 부분 */
+        model.addAttribute("name",cmDTO.getName());
+        List<LectureDto> lectureDtoList = teachLectureService.getLectureDtoList(cmDTO.getId()); // 교수자라서
+        model.addAttribute("lectures",lectureDtoList);
+        model.addAttribute("role", cmDTO.getAuthorities().toString());
+
+        /* 과제 정보에 맞는 정보 보내주는 부분 */
+        Assign_HomeworkDto homework = assgin_homeworkService.getHomework(hwId);
+        List<FileDto> fileList = ahwFileService.getFileDtoByHwId(hwId);
+        model.addAttribute("fileList",fileList);
+        model.addAttribute("homework",homework);
+        model.addAttribute("dueDate",homework.getDueDate());
+
+        /*제출한 학생수 관련부*/
+        /*List<MemberDto> studentDtos = teachLectureService.getMyStudents(cmDTO.getId(), homework.getLecCode(), homework.getSubCode());
+        model.addAttribute("students", studentDtos);*/
+
+        /*if(submit_homeworkService.isSubmitted(stId, hwId)){
+            Submit_HomeworkDto subHomework = submit_homeworkService.getHomework(stId, hwId);
+            log.info("submitId : "+subHomework.getSubmitId());
+            List<FileDto> fileList = shwFileService.getFileDtoBySubmitId(subHomework.getSubmitId());
+            model.addAttribute("submitted",1);
+            model.addAttribute("homework",subHomework);
+            model.addAttribute("fileList",fileList);
+//            return "redirect:/homework/submit/"+hwId;
+            return "/homework/post-student";
+        }
+        Assign_HomeworkDto homework = assgin_homeworkService.getHomework(hwId);
+        List<FileDto> fileList = ahwFileService.getFileDtoByHwId(hwId);
+        model.addAttribute("instId",stId);
+        model.addAttribute("submitted",0);
+        model.addAttribute("homework",homework);
+        model.addAttribute("fileList",fileList);*/
+
+        return "/homework/post-admin";
+    }
+
 
     @GetMapping("/grade/{hwId}")
     public String grade(@PathVariable Long hwId, Model model){
