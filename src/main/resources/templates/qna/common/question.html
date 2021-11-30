@@ -23,7 +23,7 @@
         <div class="row mb-4">
 
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                <input type="hidden" name="qno" th:value="${ques.qno}"/>
+                <input type="hidden" name="question" th:value="${ques.qno}"/>
                 <input type="hidden" name="title" th:value="${name}"/>
                 <div class="col-10">
                     <textarea class="form-control " name="content" id="commentText" rows="2"></textarea>

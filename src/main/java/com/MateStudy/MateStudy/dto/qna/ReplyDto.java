@@ -12,6 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class ReplyDto {
     private Long rno;
+    private Question question;
     private Long qno;
     private String title;
     private String content;
@@ -23,6 +24,7 @@ public class ReplyDto {
     public Reply toEntity(){
         return Reply.builder()
                 .rno(rno)
+                .qno(question)
                 .title(title)
                 .content(content)
                 .build();

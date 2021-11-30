@@ -97,8 +97,9 @@ public class QnaController {
 
         //질문 리스트 정보
         List<QuestionDto> questionList = qnaService.getQuestionByCode(lecCode, subCode);
+        List<ReplyDto> replyList = qnaService.getAllReply(questionList);
         model.addAttribute("questionList",questionList);
-
+        model.addAttribute("replyList",replyList);
         /* 기본 인적 사항 관련 */
         model.addAttribute("id", id);
         model.addAttribute("name", name);
@@ -131,7 +132,9 @@ public class QnaController {
 
         //질문 리스트 정보
         List<QuestionDto> questionList = qnaService.getQuestionByCode(lecCode, subCode);
+        List<ReplyDto> replyList = qnaService.getAllReply(questionList);
         model.addAttribute("questionList",questionList);
+        model.addAttribute("replyList",replyList);
 
         /* 기본 인적 사항 관련 */
         model.addAttribute("id", id);
