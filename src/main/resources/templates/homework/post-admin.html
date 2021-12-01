@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <div>
                         <h4 class="small font-weight-bold">내용: </h4>
-                        <span th:text="${homework.content}">내용</span>
+                        <span style="white-space:pre;" th:text="${homework.content}">내용</span>
                         <hr class="sidebar-divider">
                     </div>
                     <div th:if="${!fileList.isEmpty()}">
@@ -37,8 +37,8 @@
                         <hr>
                     </div>
                     <div>
-                        <h4 class="small font-weight-bold">마감날짜</h4>
-                        <span th:text="${dueDate}">마감날짜</span>
+                        <h3>마감 날짜</h3>
+                        <span th:text="${#temporals.format(dueDate, 'yyyy-MM/dd HH시 mm분')}">마감날짜</span>
                     </div>
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
