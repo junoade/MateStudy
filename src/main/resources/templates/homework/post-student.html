@@ -37,7 +37,7 @@
                         <hr>
                     </div>
                     <div th:if="${submitted == 0}"><h4 class="small font-weight-bold">제출 기한</h4>
-                        <span th:text="${homework.dueDate}">제출 기한</span>
+                        <span th:text="${#temporals.format(homework.dueDate, 'yyyy-MM/dd HH시 mm분')}">마감날짜</span>
                         <hr>
                     </div>
                     <div th:if="${submitted == 1}"><h4 class="small font-weight-bold">점수</h4>
