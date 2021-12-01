@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <div>
                         <h4 class="small font-weight-bold">내용: </h4>
-                        <span th:text="${homework.content}">내용</span>
+                        <span style="white-space:pre;" th:text="${homework.content}">내용</span>
                         <hr class="sidebar-divider">
                     </div>
                     <div th:if="${!fileList.isEmpty()}">
