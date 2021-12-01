@@ -32,6 +32,7 @@ public class AttendDto {
                 .build();
     }
 
+
     public AttendDto(String status, Long week, String stId, String instId, String lecCode, Long subCode){
         this.status = status;
         this.week = week;
@@ -41,7 +42,7 @@ public class AttendDto {
         this.subCode = subCode;
     }
 
-    /* submitId 명시적으로 지정시 */
+    /* attendId 명시적으로 지정시 */
     public Attend toEntityWithId() {
         return Attend.builder()
                 .attendId(attendId)
@@ -53,7 +54,7 @@ public class AttendDto {
                 .subCode(subCode)
                 .build();
     }
-
+    @Builder
     public AttendDto(Long attendId, String status, Long week, String stId, String instId, String lecCode, Long subCode){
         this.attendId = attendId;
         this.status = status;

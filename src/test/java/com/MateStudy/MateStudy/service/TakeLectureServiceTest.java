@@ -44,9 +44,11 @@ public class TakeLectureServiceTest {
     @Transactional
     public void testSetStudent() {
         boolean testStatus = false;
-        String[] dummyIdInfo = {"2017112095", "2016112144", "2017112129", "2017112083"};
+        //String[] dummyIdInfo = {"2017112095", "2016112144", "2017112129", "2017112083"};
+        String[] dummyIdInfo = {"2017110169", "2017119308", "2017113511", "2017110140"};
+
         String instId = "2017120002";
-        String lecCode = "CSE4036";
+        String lecCode = "CSE2017";
         Long subCode = 1L;
         try {
             for (String s : dummyIdInfo) {
@@ -59,7 +61,7 @@ public class TakeLectureServiceTest {
             e.printStackTrace();
         }
         TestTransaction.flagForCommit();
-        //Assertions.assertTrue(testStatus);
+        Assertions.assertTrue(testStatus);
     }
 
     /* 학생이 수강하는 과목을 모두 반환 */

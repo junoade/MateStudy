@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Sidebar -->
+<ul th:fragment="attend-right-sidebar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="staticSidebar_">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{'/main'}">
+        <div>
+            <i class="fas fa-university"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">DONGGUK UNIV.</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- 과목 리스트 -->
+    <div th:if="${role} == '[INSTRUCTOR]'" th:each="lecture : ${lectures}">
+        <li class="nav-item active" >
+            <a class="nav-link" th:href="@{'/attendance-admin-detail/'+${lecture.lecCode}+'/'+${lecture.subCode}}">
+                <i class="fas fa-book"></i>
+                <span th:text="${lecture.lecTitle}">오른쪽 과목명</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+    </div>
+
+    <div th:if="${role} == '[STUDENT]'" th:each="lecture : ${lectures}">
+        <li class="nav-item active" >
+            <a class="nav-link" th:href="@{'/attendance-student-detail/'+${lecture.lecCode}+'/'+${lecture.subCode}}">
+                <i class="fas fa-book"></i>
+                <span th:text="${lecture.lecTitle}">오른쪽 과목명</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+    </div>
+
+
+
+
+</ul>
+</html>

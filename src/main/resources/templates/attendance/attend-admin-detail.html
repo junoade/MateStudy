@@ -34,7 +34,8 @@
                 <!-- Content Row -->
                 <div class="card shadow mt-4 mb-4">
                     <div class="card-header py-3">
-                        <h6 class="mb-0 font-weight-bold text-primary" th:text="${initLecTitle}+' 담당 학생 출석 조회'">담당 학생 출석 체크</h6>
+                        <h6 class="mb-0 font-weight-bold text-primary"
+                            th:text="${thisLecTitle}+'_'+${thisSubCode}+' 담당 학생 출석 조회'">담당 학생 출석 체크</h6>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -50,25 +51,29 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="initStudent: ${initStudents}">
+                                    <tr th:each="member: ${members}">
                                         <!--<form action="/attend" method="post">-->
+                                        <td th:text="${member.name}">학생이름</td>
+                                        <td th:text="${member.id}">학번</td>
+                                        <!--<form action="#" method="post">-->
                                             <!--<input type="hidden" th:name="${_csrf.parameterName}"
                                                    th:value="${_csrf.token}"/>
-                                            <input type="hidden" th:name="stId" th:value="${initStudent.id}"/>
+                                            <input type="hidden" th:name="stId" th:value="${member.id}"/>
                                             <input type="hidden" th:name="instId" th:value="${id}"/>
-                                            <input type="hidden" th:name="lecCode" th:value="${initLecCode}"/>
-                                            <input type="hidden" th:name="subCode" th:value="${initSubCode}"/>-->
-                                            <td th:text="${initStudent.name}">김범규</td>
-                                            <td th:text="${initStudent.id}">2017112083</td>
+                                            <input type="hidden" th:name="lecCode" th:value="${thisLecCode}"/>
+                                            <input type="hidden" th:name="subCode" th:value="${thisSubCode}"/>-->
                                             <td>
+                                                <!--th:text ="${map.getKey().getWeek()}"-->
                                                 <div class="row">
                                                     <label>
-                                                        <input type="number" th:name="week" th:value="${initStudent}"/>
+                                                        <input type="number" th:name="week"
+                                                               th:placeholder="1주차"/>
                                                     </label>
                                                 </div>
                                             </td>
                                             <!--<td th:if="${i}" ></td>-->
-                                            <td>미정</td>
+                                            <!--<td th:text="${map.getValue().get(0).getStatus()}"></td>-->
+                                            <th>미정</th>
                                             <td>
                                                 <div class="row">
                                                     <div class="col-8 d-flex justify-content-center align-self-center">
@@ -83,18 +88,16 @@
                                                         </label>
                                                     </div>
                                                     <div class="col-4 d-flex align-self-center">
-                                                        <button type="submit" class="btn btn-primary">확인</button>
+                                                        <button type="submit" class="btn btn-primary">수정</button>
                                                     </div>
                                                 </div>
                                             </td>
                                         <!--</form>-->
+                                        <!--</form>-->
                                     </tr>
                                     </tbody>
                                 </table>
-                                <div class="d-flex justify-content-center" style="margin: auto">
-                                    <button type="submit" class="btn btn-primary" style="width:10%">갱신</button>
-                                </div>
-                                </form>
+                                <!--</form>-->
                             </div>
                         </div>
                     </div>

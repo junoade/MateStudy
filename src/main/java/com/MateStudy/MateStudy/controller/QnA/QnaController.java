@@ -1,5 +1,6 @@
 package com.MateStudy.MateStudy.controller.QnA;
 
+import com.MateStudy.MateStudy.domain.common.QnoCompare;
 import com.MateStudy.MateStudy.domain.question.Question;
 import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
 import com.MateStudy.MateStudy.dto.Lecture.TeachLectureDto;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -40,6 +42,10 @@ public class QnaController {
     @Autowired
     private QnaService qnaService;
 
+    private QnoCompare qnoCompare = new QnoCompare();
+
+
+
     /* 전체 질문 조회 컨셉 */
     @GetMapping("/qna")
     public String qna(@AuthenticationPrincipal CustomedMemberDTO cmDTO, Model model) {
@@ -54,12 +60,14 @@ public class QnaController {
         if(role.equals("[INSTRUCTOR]")){
             lectureDtoList= teachLectureService.getLectureDtoList(cmDTO.getId());
             List<QuestionDto> questionList = qnaService.getAllQuestions(lectureDtoList);
+            Collections.sort(questionList, qnoCompare);
             List<ReplyDto> replyList = qnaService.getAllReply(questionList);
             model.addAttribute("questionList",questionList);
             model.addAttribute("replyList",replyList);
         }else if(role.equals("[STUDENT]")){
             lectureDtoList = takeLectureService.getLectureDtoList(cmDTO.getId());
             List<QuestionDto> questionList = qnaService.getAllQuestions(lectureDtoList);
+            Collections.sort(questionList, qnoCompare);
             List<ReplyDto> replyList = qnaService.getAllReply(questionList);
             model.addAttribute("questionList",questionList);
             model.addAttribute("replyList",replyList);
@@ -97,6 +105,7 @@ public class QnaController {
 
         //질문 리스트 정보
         List<QuestionDto> questionList = qnaService.getQuestionByCode(lecCode, subCode);
+        Collections.sort(questionList, qnoCompare);
         List<ReplyDto> replyList = qnaService.getAllReply(questionList);
         model.addAttribute("questionList",questionList);
         model.addAttribute("replyList",replyList);
@@ -132,6 +141,7 @@ public class QnaController {
 
         //질문 리스트 정보
         List<QuestionDto> questionList = qnaService.getQuestionByCode(lecCode, subCode);
+        Collections.sort(questionList, qnoCompare);
         List<ReplyDto> replyList = qnaService.getAllReply(questionList);
         model.addAttribute("questionList",questionList);
         model.addAttribute("replyList",replyList);
