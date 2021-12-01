@@ -3,6 +3,7 @@ package com.MateStudy.MateStudy.controller;
 
 import com.MateStudy.MateStudy.domain.common.DateBefore;
 import com.MateStudy.MateStudy.domain.common.DateComparator;
+import com.MateStudy.MateStudy.domain.common.QnoCompare;
 import com.MateStudy.MateStudy.domain.lecture.Lecture;
 import com.MateStudy.MateStudy.dto.Lecture.Assign_HomeworkDto;
 import com.MateStudy.MateStudy.dto.Lecture.LectureDto;
@@ -54,6 +55,7 @@ public class MainController {
     }
 
     private DateComparator dateComparator = new DateComparator();
+    private QnoCompare qnoCompare = new QnoCompare();
 
     /* 로그인시 데이터베이스의 Member를 스프링 시큐리티가 인가할 CustomedMemberDTO로 전환 고려*/
     @GetMapping("/main")
@@ -68,12 +70,14 @@ public class MainController {
         if(role.equals("[INSTRUCTOR]")){
             lectureDtoList= teachLectureService.getLectureDtoList(cmDTO.getId());
             List<QuestionDto> questionList = qnaService.getAllQuestions(lectureDtoList);
+            Collections.sort(questionList, qnoCompare);
             List<ReplyDto> replyList = qnaService.getAllReply(questionList);
             model.addAttribute("questionList",questionList);
             model.addAttribute("replyList",replyList);
                 }else if(role.equals("[STUDENT]")){
             lectureDtoList = takeLectureService.getLectureDtoList(cmDTO.getId());
             List<QuestionDto> questionList = qnaService.getAllQuestions(lectureDtoList);
+            Collections.sort(questionList, qnoCompare);
             List<ReplyDto> replyList = qnaService.getAllReply(questionList);
             model.addAttribute("questionList",questionList);
             model.addAttribute("replyList",replyList);
