@@ -21,69 +21,50 @@
             <!-- ********************** 이름 어떻게 하는지 모르겠어요 ***************************** -->
             <nav th:replace="fragments/topbar.html :: nav(${name})"></nav>
 
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-                <div>
+            <div class="card shadow mb-5">
+                <div class="card-header py-3">
                     <h1 th:text="${homework.title}">제목</h1>
-                    <hr>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h4 class="small font-weight-bold">내용: </h4>
+                        <span th:text="${homework.content}">내용</span>
+                        <hr class="sidebar-divider">
+                    </div>
+                    <div th:if="${!fileList.isEmpty()}">
+                        <a th:href="@{'/download/' + ${fileList.get(0).id}}"
+                           th:text="${fileList.get(0).originFilename}"></a>
+                        <hr>
+                    </div>
+                    <div>
+                        <h4 class="small font-weight-bold">마감날짜</h4>
+                        <span th:text="${dueDate}">마감날짜</span>
+                    </div>
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th style="width: 10%">이름</th>
+                            <th style="width: 30%">학번</th>
+                            <th style="width: 30%">제출 여부</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="student: ${students}">
+                            <input type="hidden" th:name="${_csrf.parameterName}"
+                                   th:value="${_csrf.token}"/>
+                            <!--<input type="hidden" th:name="submitId" th:value="${homework.submitId}"/>-->
+                            <td th:text="${student.key.name}">학생이름</td>
+                            <td th:text="${student.key.id}">학번</td>
+                            <!--<td th:if="${i}" ></td>-->
+                            <td th:if="${student.value}">제출</td>
+                            <td th:unless="${student.value}">미제출</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
                 </div>
 
-                <div><h3>내용 :</h3>
-                    <span th:text="${homework.content}">내용</span>
-                    <hr>
-                </div>
-                <div th:if="${!fileList.isEmpty()}">
-                    <a th:href="@{'/download/' + ${fileList.get(0).id}}"
-                       th:text="${fileList.get(0).originFilename}"></a>
-                    <hr>
-                </div>
-                <div>
-                    <h3>마감 날짜</h3>
-                    <span th:text="${dueDate}">마감날짜</span>
-                </div>
-                <!-- 과제 제출 여부 -->
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th style="width: 10%">이름</th>
-                        <th style="width: 30%">학번</th>
-                        <th style="width: 30%">제출 여부</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="student: ${students}">
-                        <input type="hidden" th:name="${_csrf.parameterName}"
-                               th:value="${_csrf.token}"/>
-                        <!--<input type="hidden" th:name="submitId" th:value="${homework.submitId}"/>-->
-                        <td th:text="${student.key.name}">학생이름</td>
-                        <td th:text="${student.key.id}">학번</td>
-                        <!--<td th:if="${i}" ></td>-->
-                        <td th:if="${student.value}">제출</td>
-                        <td th:unless="${student.value}">미제출</td>
-                    </tr>
-
-                    </tbody>
-                </table>
-
-                <!--<div th:if="${submitted == 0}"><h3>제출 기한</h3>
-                    <span th:text="${homework.dueDate}">제출 기한</span>
-                    <hr>
-                </div>-->
-
-                <!--<div th:if="${submitted == 1}"><h3>점수</h3>
-                    <span th:text="${homework.grade}">점수</span>
-                    <hr>
-                </div>-->
-                <!--<div th:if="${submitted == 0}">
-                    <a th:href="@{'/homework/submit/'+${homework.hwId}}">제출</a>
-                </div>
-                <div th:if="${submitted == 1}">
-                    <a th:href="@{'/homework/submit/'+${homework.hwId.hwId}}">수정</a>
-                </div>-->
             </div>
-
-            <!-- /.container-fluid -->
-
         </div>
         <!-- End of Main Content -->
 
