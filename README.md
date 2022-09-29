@@ -36,7 +36,7 @@
 사용사례 명세, 클래스 다이어그램 설계, DB 설계등의 내용과<br/>
 애자일 방법론으로 스프린트 백로그 작성 및<br/>
 스프린트 회고 과정에 관한 문서, 백엔드 개발 과정에서 참고한 문서들이 다음의 노션 링크에 정리되어있다.<br/>
-https://periodic-leopard-f2d.notion.site/21-11-06-21-12-01-86cb225a9ed9452b9b4cc85d5e0e42b0
+https://junoade.notion.site/21-11-06-21-12-01-MateStudy-86cb225a9ed9452b9b4cc85d5e0e42b0
 
 ### DB 관련 설정
 ---
